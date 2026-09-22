@@ -1,0 +1,630 @@
+/* ============================================================
+   Dolce Florencia — Pastelería artesanal
+   Maqueta base (Fase 1: Planteamiento y Estructura)
+   Paleta de marca + estilos globales + componentes
+   ============================================================ */
+
+/* ---------- Variables de marca ---------- */
+:root {
+  --df-crema: #fbf3e8;
+  --df-crema-oscuro: #f1e2cc;
+  --df-cafe: #5b3a29;
+  --df-cafe-oscuro: #3e271b;
+  --df-dorado: #c9a24b;
+  --df-dorado-oscuro: #a8823a;
+  --df-rosado: #efc3c6;
+  --df-texto: #2e201a;
+  --df-blanco: #fffdf9;
+  --df-gris: #75675c;
+  --df-sombra: rgba(62, 39, 27, 0.14);
+  --df-radius: 16px;
+  --df-font-titulo: "Playfair Display", Georgia, "Times New Roman", serif;
+  --df-font-cuerpo: "Lato", "Segoe UI", Arial, sans-serif;
+}
+
+/* ---------- Base ---------- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--df-font-cuerpo);
+  color: var(--df-texto);
+  background-color: var(--df-crema);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--df-font-titulo);
+  color: var(--df-cafe-oscuro);
+}
+
+a {
+  color: var(--df-cafe);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--df-dorado-oscuro);
+}
+
+/* ---------- Utilidades ---------- */
+.df-eyebrow {
+  display: inline-block;
+  font-family: var(--df-font-cuerpo);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--df-dorado-oscuro);
+  margin-bottom: 0.5rem;
+}
+
+.df-section {
+  padding: 4.5rem 0;
+}
+
+.df-section-title {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+}
+
+.df-section-lead {
+  color: var(--df-gris);
+  max-width: 640px;
+}
+
+.df-divider-title {
+  width: 64px;
+  height: 3px;
+  background: var(--df-dorado);
+  border: 0;
+  opacity: 1;
+  margin: 0.5rem 0 1.25rem;
+}
+
+/* ---------- Botones ---------- */
+.df-btn {
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.df-btn-primary {
+  background: var(--df-cafe);
+  color: var(--df-blanco);
+}
+
+.df-btn-primary:hover {
+  background: var(--df-cafe-oscuro);
+  color: var(--df-blanco);
+}
+
+.df-btn-gold {
+  background: var(--df-dorado);
+  color: var(--df-cafe-oscuro);
+}
+
+.df-btn-gold:hover {
+  background: var(--df-dorado-oscuro);
+  color: var(--df-blanco);
+}
+
+.df-btn-outline {
+  background: transparent;
+  color: var(--df-cafe);
+  border-color: var(--df-cafe);
+}
+
+.df-btn-outline:hover {
+  background: var(--df-cafe);
+  color: var(--df-blanco);
+}
+
+/* ---------- Navbar ---------- */
+.df-navbar {
+  background: var(--df-cafe-oscuro);
+}
+
+.df-navbar .navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--df-font-titulo);
+  font-size: 1.35rem;
+  color: var(--df-blanco);
+}
+
+.df-navbar .navbar-brand:hover {
+  color: var(--df-dorado);
+}
+
+.df-navbar .nav-link {
+  color: var(--df-crema);
+  font-weight: 500;
+  padding-right: 0.9rem;
+  padding-left: 0.9rem;
+}
+
+.df-navbar .nav-link:hover,
+.df-navbar .nav-link.active {
+  color: var(--df-dorado);
+}
+
+/* ---------- Hero ---------- */
+.df-hero {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(201, 162, 75, 0.25), transparent 55%),
+    radial-gradient(ellipse at 85% 80%, rgba(201, 162, 75, 0.18), transparent 50%),
+    var(--df-crema-oscuro);
+  padding: 5rem 0 4.5rem;
+}
+
+.df-hero h1 {
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+}
+
+.df-hero-tagline {
+  font-family: var(--df-font-titulo);
+  font-style: italic;
+  color: var(--df-cafe);
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+}
+
+.df-hero .lead {
+  color: var(--df-gris);
+}
+
+.df-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--df-blanco);
+  border: 1px solid var(--df-dorado);
+  color: var(--df-cafe);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+
+/* Visual decorativo del hero (pastel) */
+.df-cake-visual {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
+
+.df-cake-visual .cake {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, #f9e9d0, transparent 60%),
+    linear-gradient(160deg, #8a5a35, #5b3a29 70%);
+  box-shadow: 0 24px 48px var(--df-sombra);
+}
+
+.df-cake-visual .cake::before {
+  content: "";
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  width: 72%;
+  height: 20%;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, #c9735f 0 20%, #e58e7a 20% 40%, #f0b27a 40% 60%, #c9735f 60% 80%, #e58e7a 80%);
+}
+
+.df-cake-visual .ring {
+  position: absolute;
+  top: -4%;
+  left: -4%;
+  right: -4%;
+  bottom: -4%;
+  border-radius: 50%;
+  border: 2px dashed var(--df-dorado);
+  opacity: 0.55;
+}
+
+/* ---------- Tarjetas de características ---------- */
+.df-feature-card {
+  background: var(--df-blanco);
+  border: 1px solid var(--df-crema-oscuro);
+  border-radius: var(--df-radius);
+  padding: 1.75rem;
+  height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.df-feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px var(--df-sombra);
+}
+
+.df-feature-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--df-crema-oscuro);
+  color: var(--df-cafe);
+  margin-bottom: 1rem;
+}
+
+.df-feature-card h3 {
+  font-size: 1.15rem;
+}
+
+/* ---------- Tarjetas de producto ---------- */
+.df-product-card {
+  background: var(--df-blanco);
+  border: 1px solid var(--df-crema-oscuro);
+  border-radius: var(--df-radius);
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.df-product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px var(--df-sombra);
+}
+
+.df-product-img {
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 253, 249, 0.9);
+}
+.ph-torta { background: linear-gradient(135deg, #a06a45, #6e4527); }
+.ph-cheesecake { background: linear-gradient(135deg, #e8b98a, #c9805a); }
+.ph-cupcake { background: linear-gradient(135deg, #eac9a0, #cf937b); }
+.ph-chocolate { background: linear-gradient(135deg, #7a4a2e, #4a2c1a); }
+.ph-tiramisu { background: linear-gradient(135deg, #c98c62, #8a5a35); }
+.ph-doggy { background: linear-gradient(135deg, #b7a7ff, #7f6fd0); }
+.ph-pinky { background: linear-gradient(135deg, #f2c9c2, #e58e7a); }
+.ph-yellow { background: linear-gradient(135deg, #f0d48a, #d9a441); }
+.ph-cream { background: linear-gradient(135deg, #f5e7cd, #dfbf93); }
+
+.df-product-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.df-product-body h3 {
+  font-size: 1.1rem;
+}
+
+.df-product-body p {
+  color: var(--df-gris);
+  font-size: 0.92rem;
+  flex-grow: 1;
+}
+
+.df-price {
+  font-family: var(--df-font-titulo);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--df-cafe);
+}
+
+.df-badge-dog {
+  background: var(--df-rosado);
+  color: var(--df-cafe-oscuro);
+  border: 1px solid #d99a9f;
+}
+
+.df-badge-ar {
+  background: var(--df-crema-oscuro);
+  color: var(--df-cafe);
+  border: 1px solid var(--df-dorado);
+}
+
+/* ---------- Filtros (maqueta) ---------- */
+.df-filters .btn {
+  border-radius: 999px;
+  border: 1px solid var(--df-cafe);
+  color: var(--df-cafe);
+  font-weight: 600;
+}
+
+.df-filters .btn.active {
+  background: var(--df-cafe);
+  color: var(--df-blanco);
+}
+
+/* ---------- Paso a paso / stepper ---------- */
+.df-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.df-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  background: var(--df-blanco);
+  border: 1px solid var(--df-crema-oscuro);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--df-gris);
+}
+
+.df-step .num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--df-crema-oscuro);
+  color: var(--df-cafe);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.df-step.active {
+  border-color: var(--df-dorado);
+  color: var(--df-cafe-oscuro);
+  background: #fff8ec;
+}
+
+.df-step.active .num {
+  background: var(--df-dorado);
+  color: var(--df-blanco);
+}
+
+/* ---------- Tarjetas de formulario / info ---------- */
+.df-card {
+  background: var(--df-blanco);
+  border: 1px solid var(--df-crema-oscuro);
+  border-radius: var(--df-radius);
+  padding: 1.75rem;
+}
+
+.df-estimate {
+  background: linear-gradient(135deg, #fff8ec, var(--df-crema-oscuro));
+  border: 1px solid var(--df-dorado);
+  border-radius: var(--df-radius);
+  padding: 1.25rem;
+}
+
+.df-estimate .big {
+  font-family: var(--df-font-titulo);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--df-cafe-oscuro);
+}
+
+/* ---------- Timeline de entrega ---------- */
+.df-timeline {
+  position: relative;
+  margin: 1.5rem 0;
+  padding-left: 1.5rem;
+  border-left: 3px solid var(--df-crema-oscuro);
+}
+
+.df-timeline-item {
+  position: relative;
+  padding: 0 0 1.75rem 1.25rem;
+}
+
+.df-timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -1.5rem;
+  top: 0.25rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  background: var(--df-crema);
+  border: 3px solid var(--df-dorado);
+}
+
+.df-timeline-item.done::before {
+  background: var(--df-dorado);
+}
+
+.df-timeline-item h5 {
+  margin-bottom: 0.15rem;
+}
+
+.df-timeline-item p {
+  margin-bottom: 0;
+  color: var(--df-gris);
+  font-size: 0.9rem;
+}
+
+.df-timeline-item.current {
+  animation: df-pulse 2s ease-in-out infinite;
+}
+
+@keyframes df-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+/* ---------- Calendario (maqueta) ---------- */
+.df-cal {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.df-cal th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--df-gris);
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.df-cal td {
+  text-align: center;
+  padding: 0.35rem;
+}
+
+.df-cal .day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  margin: 0 auto;
+  border-radius: 50%;
+  color: var(--df-cafe);
+  border: 1px solid transparent;
+}
+
+.df-cal .day:hover {
+  background: var(--df-crema-oscuro);
+}
+
+.df-cal .day.reserved {
+  background: var(--df-crema-oscuro);
+  color: var(--df-gris);
+  text-decoration: line-through;
+}
+
+.df-cal .day.selected {
+  background: var(--df-dorado);
+  color: var(--df-blanco);
+  font-weight: 700;
+}
+
+.df-radio-card {
+  border: 2px solid var(--df-crema-oscuro);
+  border-radius: var(--df-radius);
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.df-radio-card:has(input:checked) {
+  border-color: var(--df-dorado);
+  background: #fff8ec;
+}
+
+/* ---------- Footer ---------- */
+.df-footer {
+  background: var(--df-cafe-oscuro);
+  color: var(--df-crema);
+}
+
+.df-footer h5 {
+  color: var(--df-dorado);
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+
+.df-footer a {
+  color: var(--df-crema);
+  text-decoration: none;
+}
+
+.df-footer a:hover {
+  color: var(--df-dorado);
+}
+
+.df-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.df-footer ul li {
+  margin-bottom: 0.5rem;
+}
+
+.df-footer-bottom {
+  border-top: 1px solid rgba(255, 253, 249, 0.12);
+  padding: 1rem 0;
+  font-size: 0.85rem;
+  text-align: center;
+  color: rgba(251, 243, 232, 0.7);
+}
+
+/* ---------- Banner interno de página ---------- */
+.df-page-header {
+  background: linear-gradient(160deg, var(--df-cafe) 0%, var(--df-cafe-oscuro) 70%);
+  color: var(--df-blanco);
+  padding: 3.5rem 0 3rem;
+  text-align: center;
+}
+
+.df-page-header h1 {
+  color: var(--df-blanco);
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.df-page-header .breadcrumb {
+  justify-content: center;
+  --bs-breadcrumb-divider-color: rgba(251, 243, 232, 0.55);
+}
+
+.df-page-header .breadcrumb a {
+  color: var(--df-dorado);
+  text-decoration: none;
+}
+
+.df-page-header .breadcrumb-item.active {
+  color: var(--df-crema);
+}
+
+/* ---------- Mapa / placeholder contacto ---------- */
+.df-map-placeholder {
+  min-height: 280px;
+  border-radius: var(--df-radius);
+  background:
+    repeating-linear-gradient(45deg, #e7d8bd 0 14px, #efe2cb 14px 28px),
+    var(--df-crema-oscuro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--df-cafe);
+  padding: 2rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .df-section {
+    padding: 3rem 0;
+  }
+
+  .df-hero {
+    padding: 3.5rem 0 3rem;
+    text-align: center;
+  }
+
+  .df-divider-title {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .df-section-lead {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

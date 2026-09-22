@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dolce Florencia — pastelería artesanal: menú con realidad aumentada, pedidos a domicilio, reservas y zona pet-friendly en Cochabamba.">
+  <title>Dolce Florencia | Pastelería artesanal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dolce.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top df-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="24" r="23" fill="#c9a24b"/>
+          <path d="M15 30a9 9 0 0 1 18 0z" fill="#fffdf9"/>
+          <path d="M16.5 30h15l-2 7h-11z" fill="#5b3a29"/>
+          <circle cx="24" cy="18" r="2.4" fill="#3e271b"/>
+        </svg>
+        <span>Dolce <span class="text-warning">Florencia</span></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarMenu">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="nosotros.html">Nosotros</a></li>
+          <li class="nav-item"><a class="nav-link" href="menu.html">Menú</a></li>
+          <li class="nav-item"><a class="nav-link" href="pedidos.html">Pedidos</a></li>
+          <li class="nav-item"><a class="nav-link" href="reservas.html">Reservas</a></li>
+          <li class="nav-item"><a class="nav-link" href="seguimiento.html">Seguimiento</a></li>
+          <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero con la propuesta de valor -->
+  <header class="df-hero">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7">
+          <span class="df-hero-badge">Pastelería artesanal · Cochabamba</span>
+          <h1>Dolce Florencia</h1>
+          <p class="df-hero-tagline">El sabor de la tradición italiana, con experiencia digital.</p>
+          <p class="lead mb-4">
+            Ver, elegir y disfrutar: visualiza cada postre en tu mesa con realidad aumentada,
+            pide a domicilio con tiempo de entrega estimado y reserva tu mesa —incluso con tu perro—
+            sin llamadas ni esperas.
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="menu.html" class="df-btn df-btn-primary">Ver el menú</a>
+            <a href="reservas.html" class="df-btn df-btn-outline">Reservar una mesa</a>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="df-cake-visual">
+            <div class="ring"></div>
+            <div class="cake"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Propuesta de valor / pilares -->
+  <section class="df-section">
+    <div class="container">
+      <div class="text-center mb-5">
+        <span class="df-eyebrow">Nuestra propuesta de valor</span>
+        <h2 class="df-section-title">¿Por qué elegir Dolce Florencia?</h2>
+        <hr class="df-divider-title">
+        <p class="df-section-lead mx-auto">
+          Una pastelería tradicional con herramientas digitales pensadas para que comprar
+          un postre sea tan fácil y confiable como caminar hasta el mostrador.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="df-feature-card text-center">
+            <span class="df-feature-icon">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 4v6c0 4-3 7-7 8-4-1-7-4-7-8V7z"/><path d="M9 12l2 2 4-4"/></svg>
+            </span>
+            <h3>Menú en AR</h3>
+            <p class="mb-0">Mira cómo queda cada postre en tu mesa, en 3D, antes de pedirlo desde el celular.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="df-feature-card text-center">
+            <span class="df-feature-icon">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21s-7-6-7-11a7 7 0 1 1 14 0c0 5-7 11-7 11z"/></svg>
+            </span>
+            <h3>Entrega estimada</h3>
+            <p class="mb-0">Calculamos distancia y tiempo con tu ubicación, y lo revalidamos en el servidor.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="df-feature-card text-center">
+            <span class="df-feature-icon">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17v-2a4 4 0 0 1 4-4h1"/><path d="M15 11h1a4 4 0 0 1 4 4v2"/><circle cx="9" cy="7" r="3"/><circle cx="16" cy="8" r="2.5"/></svg>
+            </span>
+            <h3>Zona pet-friendly</h3>
+            <p class="mb-0">Reserva sillón o zona pet-friendly: tu mejor amigo también es bienvenido.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="df-feature-card text-center">
+            <span class="df-feature-icon">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg>
+            </span>
+            <h3>Seguimiento en vivo</h3>
+            <p class="mb-0">Sigue tu pedido paso a paso: pendiente, preparando, en camino y entregado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Destacados del menú -->
+  <section class="df-section" style="background: var(--df-crema-oscuro);">
+    <div class="container">
+      <div class="d-flex flex-wrap justify-content-between align-items-end mb-4 gap-3">
+        <div>
+          <span class="df-eyebrow">Destacados</span>
+          <h2 class="df-section-title mb-0">Del horno a tu mesa</h2>
+        </div>
+        <a href="menu.html" class="df-btn df-btn-outline">Ver menú completo</a>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <article class="df-product-card">
+            <div class="df-product-img ph-torta">
+              <svg width="72" height="72" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M12 24h24v14H12z" fill="#fffdf9" opacity=".9"/><path d="M12 24c0-6 5-11 12-11s12 5 12 11" fill="#e8b98a"/><circle cx="24" cy="9" r="3" fill="#c9735f"/></svg>
+            </div>
+            <div class="df-product-body">
+              <div class="mb-2"><span class="badge df-badge-ar rounded-pill">Realidad aumentada</span></div>
+              <h3>Torta Redonda Clásica</h3>
+              <p>Bizcocho de vainilla con relleno de crema italiana y frutas frescas de temporada.</p>
+              <div class="d-flex justify-content-between align-items-center mt-auto">
+                <span class="df-price">Bs. 120</span>
+                <a href="menu.html" class="df-btn df-btn-gold btn-sm">Ver en tu mesa</a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-4">
+          <article class="df-product-card">
+            <div class="df-product-img ph-cheesecake">
+              <svg width="72" height="72" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M10 30h28l-4 10H14z" fill="#fffdf9" opacity=".9"/><path d="M10 30l14-16 14 16z" fill="#f5e7cd"/><circle cx="24" cy="14" r="3" fill="#c9735f"/></svg>
+            </div>
+            <div class="df-product-body">
+              <div class="mb-2"><span class="badge df-badge-ar rounded-pill">Realidad aumentada</span></div>
+              <h3>Cheesecake de Frutos Rojos</h3>
+              <p>Cremoso, horneado a fuego lento y coronado con coulis de frutos rojos.</p>
+              <div class="d-flex justify-content-between align-items-center mt-auto">
+                <span class="df-price">Bs. 45</span>
+                <a href="menu.html" class="df-btn df-btn-gold btn-sm">Ver en tu mesa</a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-4">
+          <article class="df-product-card">
+            <div class="df-product-img ph-doggy">
+              <svg width="72" height="72" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M14 30h20l-3 10H17z" fill="#fffdf9" opacity=".9"/><path d="M15 30c0-6 4-10 9-10s9 4 9 10" fill="#f5e7cd"/><circle cx="24" cy="16" r="3" fill="#5b3a29"/></svg>
+            </div>
+            <div class="df-product-body">
+              <div class="mb-2"><span class="badge df-badge-dog rounded-pill">Apto para perros</span></div>
+              <h3>Torta Canina Especial</h3>
+              <p>Elaborada con ingredientes aptos para tu mascota: arroz, zanahoria y sin azúcar.</p>
+              <div class="d-flex justify-content-between align-items-center mt-auto">
+                <span class="df-price">Bs. 60</span>
+                <a href="menu.html" class="df-btn df-btn-gold btn-sm">Ver en tu mesa</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA reservas -->
+  <section class="df-section">
+    <div class="container">
+      <div class="df-card text-center shadow-sm">
+        <span class="df-eyebrow">Reservas</span>
+        <h2 class="df-section-title">Tu mesa te espera</h2>
+        <hr class="df-divider-title mx-auto">
+        <p class="df-section-lead mx-auto mb-4">
+          Elige fecha y hora, y elige dónde sentarte: mesa estándar, sillón junto a la ventana
+          o nuestra zona pet-friendly. Confirmas en segundos y listo.
+        </p>
+        <div class="d-flex flex-wrap gap-3 justify-content-center">
+          <a href="reservas.html" class="df-btn df-btn-primary">Reservar ahora</a>
+          <a href="pedidos.html" class="df-btn df-btn-outline">Hacer un pedido</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="df-footer">
+    <div class="container py-5">
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="24" r="23" fill="#c9a24b"/>
+              <path d="M15 30a9 9 0 0 1 18 0z" fill="#fffdf9"/>
+              <path d="M16.5 30h15l-2 7h-11z" fill="#5b3a29"/>
+              <circle cx="24" cy="18" r="2.4" fill="#3e271b"/>
+            </svg>
+            <span class="fs-4" style="font-family: var(--df-font-titulo);">Dolce Florencia</span>
+          </div>
+          <p>Pastelería artesanal de inspiración italiana que combina tradición en el obrador con una experiencia digital moderna.</p>
+          <span class="df-eyebrow">Propuesta de valor</span>
+          <p class="fst-italic mb-0">"Ver, elegir y disfrutar: tu postre favorito, en tu mesa y a tu tiempo."</p>
+        </div>
+        <div class="col-lg-2 col-md-6 col-6">
+          <h5>Navegación</h5>
+          <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="menu.html">Menú</a></li>
+            <li><a href="pedidos.html">Pedidos</a></li>
+            <li><a href="reservas.html">Reservas</a></li>
+            <li><a href="seguimiento.html">Seguimiento</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6 col-6">
+          <h5>Contacto</h5>
+          <ul>
+            <li>Av. Ayacucho 1234, Cochabamba</li>
+            <li>+591 7123-4567</li>
+            <li>hola@dolceflorencia.com</li>
+            <li>Mar a Dom · 8:00 – 20:00</li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h5>Experiencia</h5>
+          <ul>
+            <li>Menú con realidad aumentada</li>
+            <li>Entrega con tiempo estimado</li>
+            <li>Reservas: mesa, sillón y zona pet-friendly</li>
+            <li>Seguimiento de tu pedido en línea</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="df-footer-bottom">
+      <div class="container">© 2026 Dolce Florencia · Pastelería artesanal · Diseño Web II — Proyecto Fase 2</div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

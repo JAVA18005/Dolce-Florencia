@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Reservas en Dolce Florencia — elige fecha, hora y ubicación: mesa, sillón o zona pet-friendly.">
+  <title>Reservas | Dolce Florencia</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dolce.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top df-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="24" r="23" fill="#c9a24b"/>
+          <path d="M15 30a9 9 0 0 1 18 0z" fill="#fffdf9"/>
+          <path d="M16.5 30h15l-2 7h-11z" fill="#5b3a29"/>
+          <circle cx="24" cy="18" r="2.4" fill="#3e271b"/>
+        </svg>
+        <span>Dolce <span class="text-warning">Florencia</span></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarMenu">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="nosotros.html">Nosotros</a></li>
+          <li class="nav-item"><a class="nav-link" href="menu.html">Menú</a></li>
+          <li class="nav-item"><a class="nav-link" href="pedidos.html">Pedidos</a></li>
+          <li class="nav-item"><a class="nav-link active" href="reservas.html">Reservas</a></li>
+          <li class="nav-item"><a class="nav-link" href="seguimiento.html">Seguimiento</a></li>
+          <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="df-page-header">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Reservas</li>
+        </ol>
+      </nav>
+      <h1>Reserva tu mesa</h1>
+      <p class="lead mb-0 text-white-50">Fecha, hora y quién te acompaña — incluidas las patitas peludas</p>
+    </div>
+  </header>
+
+  <section class="df-section">
+    <div class="container">
+      <div class="row g-4">
+        <!-- Calendario -->
+        <div class="col-lg-6">
+          <div class="df-card">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <button class="btn btn-sm" style="color: var(--df-cafe);" aria-label="Mes anterior">&larr;</button>
+              <div class="text-center">
+                <span class="df-eyebrow mb-0">Calendario</span>
+                <h2 style="font-size: 1.3rem;" class="mb-0">Septiembre 2026</h2>
+              </div>
+              <button class="btn btn-sm" style="color: var(--df-cafe);" aria-label="Mes siguiente">&rarr;</button>
+            </div>
+
+            <table class="df-cal">
+              <thead>
+                <tr>
+                  <th>Lun</th><th>Mar</th><th>Mié</th><th>Jue</th><th>Vie</th><th>Sáb</th><th>Dom</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td><td></td>
+                  <td><span class="day">1</span></td>
+                  <td><span class="day">2</span></td>
+                  <td><span class="day">3</span></td>
+                  <td><span class="day">4</span></td>
+                  <td><span class="day">5</span></td>
+                </tr>
+                <tr>
+                  <td><span class="day">6</span></td>
+                  <td><span class="day">7</span></td>
+                  <td><span class="day">8</span></td>
+                  <td><span class="day reserved">9</span></td>
+                  <td><span class="day">10</span></td>
+                  <td><span class="day reserved">11</span></td>
+                  <td><span class="day">12</span></td>
+                </tr>
+                <tr>
+                  <td><span class="day">13</span></td>
+                  <td><span class="day">14</span></td>
+                  <td><span class="day reserved">15</span></td>
+                  <td><span class="day">16</span></td>
+                  <td><span class="day">17</span></td>
+                  <td><span class="day">18</span></td>
+                  <td><span class="day">19</span></td>
+                </tr>
+                <tr>
+                  <td><span class="day">20</span></td>
+                  <td><span class="day selected">21</span></td>
+                  <td><span class="day">22</span></td>
+                  <td><span class="day">23</span></td>
+                  <td><span class="day">24</span></td>
+                  <td><span class="day reserved">25</span></td>
+                  <td><span class="day">26</span></td>
+                </tr>
+                <tr>
+                  <td><span class="day">27</span></td>
+                  <td><span class="day">28</span></td>
+                  <td><span class="day">29</span></td>
+                  <td><span class="day">30</span></td>
+                  <td></td><td></td><td></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="d-flex gap-4 mt-3 small text-secondary flex-wrap">
+              <span><span class="badge rounded-circle me-1" style="width: 12px; height: 12px; background: var(--df-dorado); display: inline-block;"></span> Disponible</span>
+              <span><span class="badge rounded-circle me-1" style="width: 12px; height: 12px; background: var(--df-crema-oscuro); border: 1px solid var(--df-crema-oscuro); display: inline-block;"></span> Reservada</span>
+              <span><span class="badge rounded-circle me-1" style="width: 12px; height: 12px; background: var(--df-cafe); display: inline-block;"></span> Seleccionada</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulario de reserva -->
+        <div class="col-lg-6">
+          <div class="df-card">
+            <span class="df-eyebrow">Detalle de la reserva</span>
+            <h2 style="font-size: 1.5rem;">Completa tu reserva</h2>
+            <hr class="df-divider-title">
+            <form>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="fecha">Fecha</label>
+                  <input type="date" class="form-control" id="fecha" value="2026-09-21">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="hora">Hora</label>
+                  <select class="form-select" id="hora">
+                    <option>16:00</option>
+                    <option selected>18:00</option>
+                    <option>19:30</option>
+                    <option>21:00</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="personas">Número de personas</label>
+                  <input type="number" class="form-control" id="personas" min="1" max="12" value="2">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="nombreReserva">Nombre</label>
+                  <input type="text" class="form-control" id="nombreReserva" placeholder="Tu nombre">
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Tipo de ubicación</label>
+                  <div class="row g-2">
+                    <div class="col-md-4">
+                      <label class="df-radio-card d-block text-center">
+                        <input class="form-check-input d-none" type="radio" name="ubicacion" value="mesa" checked>
+                        <div class="fw-bold">Mesa estándar</div>
+                        <div class="small text-secondary">En el salón principal</div>
+                      </label>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="df-radio-card d-block text-center">
+                        <input class="form-check-input d-none" type="radio" name="ubicacion" value="sillon">
+                        <div class="fw-bold">Sillón</div>
+                        <div class="small text-secondary">Junto a la ventana</div>
+                      </label>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="df-radio-card d-block text-center">
+                        <input class="form-check-input d-none" type="radio" name="ubicacion" value="pet_friendly">
+                        <div class="fw-bold">Zona pet-friendly</div>
+                        <div class="small text-secondary">Puedes asistir con tu perro</div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="conMascota">
+                    <label class="form-check-label" for="conMascota">
+                      Asistiré con mi mascota
+                    </label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="notas">Notas (opcional)</label>
+                  <textarea class="form-control" id="notas" rows="2" placeholder="Ej. mesita para cumpleaños, silla para bebé..."></textarea>
+                </div>
+                <div class="col-12">
+                  <button type="button" class="df-btn df-btn-primary w-100">Confirmar reserva</button>
+                </div>
+              </div>
+            </form>
+            <p class="small text-secondary mt-3 mb-0">
+              Fase 1: maqueta estática. La reserva se guardará en la base de datos a través de
+              <code>/api/reservas</code> en fases posteriores, y se mostrará aquí el resumen confirmado.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="df-footer">
+    <div class="container py-5">
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="24" r="23" fill="#c9a24b"/>
+              <path d="M15 30a9 9 0 0 1 18 0z" fill="#fffdf9"/>
+              <path d="M16.5 30h15l-2 7h-11z" fill="#5b3a29"/>
+              <circle cx="24" cy="18" r="2.4" fill="#3e271b"/>
+            </svg>
+            <span class="fs-4" style="font-family: var(--df-font-titulo);">Dolce Florencia</span>
+          </div>
+          <p>Pastelería artesanal de inspiración italiana que combina tradición en el obrador con una experiencia digital moderna.</p>
+          <span class="df-eyebrow">Propuesta de valor</span>
+          <p class="fst-italic mb-0">"Ver, elegir y disfrutar: tu postre favorito, en tu mesa y a tu tiempo."</p>
+        </div>
+        <div class="col-lg-2 col-md-6 col-6">
+          <h5>Navegación</h5>
+          <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="menu.html">Menú</a></li>
+            <li><a href="pedidos.html">Pedidos</a></li>
+            <li><a href="reservas.html">Reservas</a></li>
+            <li><a href="seguimiento.html">Seguimiento</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6 col-6">
+          <h5>Contacto</h5>
+          <ul>
+            <li>Av. Ayacucho 1234, Cochabamba</li>
+            <li>+591 7123-4567</li>
+            <li>hola@dolceflorencia.com</li>
+            <li>Mar a Dom · 8:00 – 20:00</li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h5>Experiencia</h5>
+          <ul>
+            <li>Menú con realidad aumentada</li>
+            <li>Entrega con tiempo estimado</li>
+            <li>Reservas: mesa, sillón y zona pet-friendly</li>
+            <li>Seguimiento de tu pedido en línea</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="df-footer-bottom">
+      <div class="container">© 2026 Dolce Florencia · Pastelería artesanal · Diseño Web II — Proyecto Fase 2</div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
