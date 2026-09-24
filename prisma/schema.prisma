@@ -306,3 +306,12 @@ model Ajuste {
   clave String @id
   valor String
 }
+
+// Rate limit persistente para peticiones públicas (por IP y por código)
+model PeticionRateLimit {
+  clave    String   @id
+  intentos Int      @default(1)
+  expiraEn DateTime
+
+  @@index([expiraEn])
+}

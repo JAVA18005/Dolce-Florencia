@@ -1,29 +1,34 @@
-import { generarEnlaceWhatsApp } from '@/lib/whatsapp';
+import { Metadata } from 'next';
+import { obtenerFechasBloqueadas } from '@/lib/servicios/disponibilidad';
+import FormularioReserva from '@/components/publico/FormularioReserva';
 
-export default function ReservasPage() {
-  const enlaceWhatsApp = generarEnlaceWhatsApp(
-    '¡Hola Dolce Florencia! Me gustaría consultar disponibilidad para reservar una mesa.'
-  );
+export const metadata: Metadata = {
+  title: 'Reservar Mesa | Dolce Florencia - Cafetería & Pastelería',
+  description:
+    'Reserva tu mesa en Dolce Florencia. Disfruta de un ambiente cálido en interior o al aire libre en nuestra terraza pet friendly.',
+};
+
+export const dynamic = 'force-dynamic';
+
+export default async function ReservasPage() {
+  const fechasBloqueadas = await obtenerFechasBloqueadas();
 
   return (
-    <section className="wrap" style={{ paddingBlock: '80px' }}>
-      <div className="proximamente-card">
-        <span className="eyebrow">Reservas de mesa</span>
-        <h2>Tu mesa te espera</h2>
-        <p>
-          El sistema automático de reservas de mesa (interior, exterior y sofá)
-          estará listo en la siguiente fase. Puedes reservar tu lugar y avisarnos
-          si vienes con tu mascota escribiéndonos por WhatsApp.
-        </p>
-        <a
-          href={enlaceWhatsApp}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="button"
-        >
-          Consultar reserva por WhatsApp <span>↗</span>
-        </a>
-      </div>
-    </section>
+    <div className="pagina-formulario-wrap">
+      <header className="pagina-formulario-hero">
+        <div className="wrap">
+          <span className="eyebrow">Cafetería & Salón de Té</span>
+          <h1 className="pagina-formulario-titulo">Reserva tu Mesa</h1>
+          <p className="pagina-formulario-subtitulo">
+            Asegura tu lugar para disfrutar de una tarde dulce. Horario de atención: 15:00 a 22:00.
+            Turnos de 90 minutos con 15 minutos de tolerancia. ¡Somos Pet Friendly!
+          </p>
+        </div>
+      </header>
+
+      <main className="wrap pagina-formulario-contenido">
+        <FormularioReserva fechasBloqueadas={fechasBloqueadas} />
+      </main>
+    </div>
   );
 }

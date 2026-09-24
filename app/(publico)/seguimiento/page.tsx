@@ -1,29 +1,29 @@
-import { generarEnlaceWhatsApp } from '@/lib/whatsapp';
+import { Metadata } from 'next';
+import FormularioSeguimiento from '@/components/publico/FormularioSeguimiento';
+
+export const metadata: Metadata = {
+  title: 'Consultar Estado de Solicitud | Dolce Florencia',
+  description:
+    'Consulta el estado de tu pedido, reserva de mesa o evento utilizando tu código DF-XXXXXX y los últimos 4 dígitos de tu teléfono.',
+};
 
 export default function SeguimientoPage() {
-  const enlaceWhatsApp = generarEnlaceWhatsApp(
-    '¡Hola Dolce Florencia! Me gustaría consultar el estado de mi pedido.'
-  );
-
   return (
-    <section className="wrap" style={{ paddingBlock: '80px' }}>
-      <div className="proximamente-card">
-        <span className="eyebrow">Estado de pedidos</span>
-        <h2>Tu pedido, en conversación</h2>
-        <p>
-          El seguimiento por código y teléfono se activará en la Fase 2 junto con
-          el panel de pedidos. Si ya realizaste una solicitud y deseas saber cómo
-          va tu entrega o retiro, consúltanos directamente por WhatsApp.
-        </p>
-        <a
-          href={enlaceWhatsApp}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="button"
-        >
-          Consultar estado por WhatsApp <span>↗</span>
-        </a>
-      </div>
-    </section>
+    <div className="pagina-formulario-wrap">
+      <header className="pagina-formulario-hero">
+        <div className="wrap">
+          <span className="eyebrow">Atención al Cliente</span>
+          <h1 className="pagina-formulario-titulo">Seguimiento de Solicitud</h1>
+          <p className="pagina-formulario-subtitulo">
+            Verifica en tiempo real el estado de confirmación y preparación de tu pedido,
+            reserva o evento registrado.
+          </p>
+        </div>
+      </header>
+
+      <main className="wrap pagina-formulario-contenido">
+        <FormularioSeguimiento />
+      </main>
+    </div>
   );
 }

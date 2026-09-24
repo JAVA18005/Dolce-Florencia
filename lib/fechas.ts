@@ -28,15 +28,13 @@ export function obtenerHoyBolivia(): Date {
 }
 
 /**
- * Convierte una fecha a string YYYY-MM-DD en America/La_Paz.
+ * Convierte una fecha (@db.Date UTC medianoche) a string "YYYY-MM-DD".
  */
 export function fechaAYMD(fecha: Date): string {
-  return new Intl.DateTimeFormat('en-CA', {
-    timeZone: ZONA_HORARIA_BOLIVIA,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).format(fecha);
+  const y = fecha.getUTCFullYear();
+  const m = String(fecha.getUTCMonth() + 1).padStart(2, '0');
+  const d = String(fecha.getUTCDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 }
 
 /**
@@ -56,10 +54,49 @@ export function obtenerHoraActualHHMM(): string {
  */
 export function formatearFechaEspanol(fecha: Date): string {
   return new Intl.DateTimeFormat('es-BO', {
-    timeZone: ZONA_HORARIA_BOLIVIA,
+    timeZone: 'UTC',
     weekday: 'long',
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   }).format(fecha);
 }
+
+export const HORIZONTE_DIAS_RESERVA = 60; // 2 meses
+export const HORIZONTE_DIAS_EVENTO = 180; // 6 meses
+
+/**
+ * Parsea un string "YYYY-MM-DD" a Date en UTC medianoche para @db.Date.
+ */
+export function parseYMDToDate(ymd: string): Date | null {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(ymd)) return null;
+  const [year, month, day] = ymd.split('-').map(Number);
+  const d = new Date(Date.UTC(year, month - 1, day));
+  if (isNaN(d.getTime())) return null;
+  return d;
+}
+
+/**
+ * Verifica si una fecha cae entre hoy (inclusive) y el horizonte máximo en días.
+ */
+export function esFechaFuturaValida(fecha: Date, maxDias: number): boolean {
+  const hoy = obtenerHoyBolivia();
+  const limite = new Date(hoy.getTime() + maxDias * 24 * 60 * 60 * 1000);
+
+  const fechaUtc = new Date(Date.UTC(fecha.getUTCFullYear(), fecha.getUTCMonth(), fecha.getUTCDate()));
+  return fechaUtc.getTime() >= hoy.getTime() && fechaUtc.getTime() <= limite.getTime();
+}
+
+/**
+ * Valida si una hora "HH:mm" se encuentra dentro del rango de atención para reservas.
+ * ARQUITECTURA.md §10: 15:00 a 22:00, última hora de llegada: 21:30.
+ */
+export function esHoraLlegadaValida(
+  hora: string,
+  horaApertura = '15:00',
+  ultimaLlegada = '21:30'
+): boolean {
+  if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(hora)) return false;
+  return hora >= horaApertura && hora <= ultimaLlegada;
+}
+

@@ -1,29 +1,34 @@
-import { generarEnlaceWhatsApp } from '@/lib/whatsapp';
+import { Metadata } from 'next';
+import { obtenerFechasBloqueadas } from '@/lib/servicios/disponibilidad';
+import FormularioEvento from '@/components/publico/FormularioEvento';
 
-export default function EventosPage() {
-  const enlaceWhatsApp = generarEnlaceWhatsApp(
-    '¡Hola Dolce Florencia! Me gustaría consultar sobre la organización de un evento o celebración especial.'
-  );
+export const metadata: Metadata = {
+  title: 'Eventos y Celebraciones | Dolce Florencia - Cafetería & Pastelería',
+  description:
+    'Celebra tus momentos especiales con Dolce Florencia. Salón exclusivo para reuniones íntimas o servicio de catering dulce para tus eventos.',
+};
+
+export const dynamic = 'force-dynamic';
+
+export default async function EventosPage() {
+  const fechasBloqueadas = await obtenerFechasBloqueadas();
 
   return (
-    <section className="wrap" style={{ paddingBlock: '80px' }}>
-      <div className="proximamente-card">
-        <span className="eyebrow">Celebraciones y eventos</span>
-        <h2>Momentos para recordar</h2>
-        <p>
-          Cumpleaños, aniversarios y reuniones en nuestro local o con entrega de
-          repostería. Coordinamos todos los detalles, temáticas y porciones
-          directamente contigo.
-        </p>
-        <a
-          href={enlaceWhatsApp}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="button"
-        >
-          Conversar sobre mi evento <span>↗</span>
-        </a>
-      </div>
-    </section>
+    <div className="pagina-formulario-wrap">
+      <header className="pagina-formulario-hero">
+        <div className="wrap">
+          <span className="eyebrow">Celebraciones Inolvidables</span>
+          <h1 className="pagina-formulario-titulo">Eventos & Celebraciones</h1>
+          <p className="pagina-formulario-subtitulo">
+            Haz de tu cumpleaños, baby shower o festejo una experiencia memorable. Elige entre
+            celebrar en nuestro local o coordinar una mesa dulce y torta a medida con entrega.
+          </p>
+        </div>
+      </header>
+
+      <main className="wrap pagina-formulario-contenido">
+        <FormularioEvento fechasBloqueadas={fechasBloqueadas} />
+      </main>
+    </div>
   );
 }
