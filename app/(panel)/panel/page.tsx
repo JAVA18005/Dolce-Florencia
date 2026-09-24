@@ -144,37 +144,34 @@ export default async function PanelDashboardPage() {
             </Link>
           )}
 
-          {puede(usuario.rol, 'ventas.registrar') && (
-            <div className="panel-modulo-tarjeta">
-              <span className="modulo-tag">Caja</span>
-              <h2 className="modulo-titulo">Ventas & Cobros</h2>
-              <p className="modulo-desc">
-                Registro de consumos y cobro en caja con efectivo, QR o transferencia.
-              </p>
-              <span className="modulo-estado-fase">Hito 3</span>
-            </div>
-          )}
-
           {puede(usuario.rol, 'dashboard.ver') && (
-            <div className="panel-modulo-tarjeta tarjeta-admin">
-              <span className="modulo-tag">Exclusivo Admin</span>
-              <h2 className="modulo-titulo">Métricas & Dashboard</h2>
-              <p className="modulo-desc">
-                Ventas realizadas, ticket promedio, horas pico y ranking de productos.
-              </p>
-              <span className="modulo-estado-fase">Hito 4</span>
-            </div>
+            <Link href="/panel/dashboard" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div className="panel-modulo-tarjeta tarjeta-admin">
+                <span className="modulo-tag">Exclusivo Admin</span>
+                <h2 className="modulo-titulo">Métricas & Dashboard</h2>
+                <p className="modulo-desc">
+                  Ventas realizadas, ticket promedio, horas pico y ranking de productos.
+                </p>
+                <span className="modulo-estado-fase" style={{ background: '#d3f9d8', color: '#2b8a3e' }}>
+                  Disponible ↗
+                </span>
+              </div>
+            </Link>
           )}
 
           {puede(usuario.rol, 'productos.gestionar') && (
-            <div className="panel-modulo-tarjeta tarjeta-admin">
-              <span className="modulo-tag">Exclusivo Admin</span>
-              <h2 className="modulo-titulo">Catálogo de Productos</h2>
-              <p className="modulo-desc">
-                Gestión de menú, precios en centavos, fotos y modelos 3D AR.
-              </p>
-              <span className="modulo-estado-fase">Hito 4</span>
-            </div>
+            <Link href="/panel/productos" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div className="panel-modulo-tarjeta tarjeta-admin">
+                <span className="modulo-tag">Exclusivo Admin</span>
+                <h2 className="modulo-titulo">Catálogo de Productos</h2>
+                <p className="modulo-desc">
+                  Gestión de menú, precios en centavos, fotos y modelos 3D AR.
+                </p>
+                <span className="modulo-estado-fase" style={{ background: '#d3f9d8', color: '#2b8a3e' }}>
+                  Disponible ↗
+                </span>
+              </div>
+            </Link>
           )}
         </section>
 

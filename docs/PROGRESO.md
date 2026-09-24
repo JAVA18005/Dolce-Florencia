@@ -11,8 +11,8 @@
 | **Fases 1 y 2 (Base & Front)** | **Cerradas** | Tests unitarios y build pasando | Commits consolidados |
 | **Hito 1 (Auth del Personal)** | **Cerrado** | Tests de bcrypt, tokens opacos y login | Commit `63b1b3a` |
 | **Hito 2 (Personal, Auditoría & Salón)** | **Cerrado** | 18 tests y build limpio | Commit `f8abf4c` |
-| **Hito 3 (Ventas de Salón, Caja & Pedidos)** | **Completado y probado** | 7 tests (124 total) y build limpio | Migración `agregar_mesa_cuenta_unica_abierta_id` aplicada |
-| **Hito 4 (Dashboard, Productos & Storage)** | **Pendiente** | — | Programado post-Hito 3 |
+| **Hito 3 (Ventas de Salón, Caja & Pedidos)** | **Cerrado** | 7 tests y build limpio | Commit `85bd41c` |
+| **Hito 4 (Dashboard de Métricas & Catálogo)** | **Completado y probado** | 5 tests (129 total) y build limpio | Sin migraciones requeridas |
 
 ---
 

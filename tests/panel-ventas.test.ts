@@ -486,4 +486,42 @@ describe('Hito 3: Ventas de Salón, Caja, Pedido a Venta y Estados Derivados', (
     });
     expect(auditVentaPedido).not.toBeNull();
   });
+
+  afterAll(async () => {
+    await prisma.ventaItem.deleteMany({
+      where: {
+        venta: {
+          registradaPor: { email: { in: [adminEmail, meseroEmail] } },
+        },
+      },
+    });
+    await prisma.venta.deleteMany({
+      where: {
+        OR: [
+          { registradaPor: { email: { in: [adminEmail, meseroEmail] } } },
+          { pedido: { clienteNombre: { startsWith: 'Test Ventas' } } },
+        ],
+      },
+    });
+    await prisma.pedidoItem.deleteMany({
+      where: {
+        pedido: { clienteNombre: { startsWith: 'Test Ventas' } },
+      },
+    });
+    await prisma.pedido.deleteMany({
+      where: { clienteNombre: { startsWith: 'Test Ventas' } },
+    });
+    await prisma.reserva.deleteMany({
+      where: { clienteNombre: { startsWith: 'Test Ventas' } },
+    });
+    await prisma.auditoria.deleteMany({
+      where: { usuario: { email: { in: [adminEmail, meseroEmail] } } },
+    });
+    await prisma.sesion.deleteMany({
+      where: { usuario: { email: { in: [adminEmail, meseroEmail] } } },
+    });
+    await prisma.usuario.deleteMany({
+      where: { email: { in: [adminEmail, meseroEmail] } },
+    });
+  });
 });

@@ -100,3 +100,34 @@ export function esHoraLlegadaValida(
   return hora >= horaApertura && hora <= ultimaLlegada;
 }
 
+/**
+ * Calcula los límites exactos de inicio y fin (en UTC) para períodos analíticos según America/La_Paz (UTC-4).
+ * Bolivia no tiene cambio de horario (siempre UTC-4).
+ */
+export function obtenerRangoPeriodoBolivia(periodo: 'hoy' | 'semana' | 'mes'): { inicio: Date; fin: Date } {
+  const hoyUtc = obtenerHoyBolivia();
+  const year = hoyUtc.getUTCFullYear();
+  const month = hoyUtc.getUTCMonth();
+  const day = hoyUtc.getUTCDate();
+
+  // 23:59:59.999 hora La Paz = +4 horas UTC del día siguiente
+  const fin = new Date(Date.UTC(year, month, day + 1, 3, 59, 59, 999));
+
+  let inicio: Date;
+  if (periodo === 'hoy') {
+    // 00:00:00 hora La Paz = 04:00:00 UTC
+    inicio = new Date(Date.UTC(year, month, day, 4, 0, 0, 0));
+  } else if (periodo === 'semana') {
+    // Lunes de la semana actual
+    const diaSemana = hoyUtc.getUTCDay(); // 0 = Domingo, 1 = Lunes, ...
+    const diasDesdeLunes = diaSemana === 0 ? 6 : diaSemana - 1;
+    inicio = new Date(Date.UTC(year, month, day - diasDesdeLunes, 4, 0, 0, 0));
+  } else {
+    // 1 de este mes
+    inicio = new Date(Date.UTC(year, month, 1, 4, 0, 0, 0));
+  }
+
+  return { inicio, fin };
+}
+
+

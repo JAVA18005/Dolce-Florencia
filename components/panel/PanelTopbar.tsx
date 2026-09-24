@@ -38,6 +38,15 @@ export default function PanelTopbar({ usuario, rutaActual }: PanelTopbarProps) {
             Inicio
           </Link>
 
+          {puede(usuario.rol, 'dashboard.ver') && (
+            <Link
+              href="/panel/dashboard"
+              className={`panel-nav-link ${rutaActual?.startsWith('/panel/dashboard') ? 'activo' : ''}`}
+            >
+              Dashboard
+            </Link>
+          )}
+
           {puede(usuario.rol, 'ventas.registrar') && (
             <Link
               href="/panel/ventas"
@@ -89,6 +98,15 @@ export default function PanelTopbar({ usuario, rutaActual }: PanelTopbarProps) {
               className={`panel-nav-link ${rutaActual?.startsWith('/panel/calendario') ? 'activo' : ''}`}
             >
               Calendario
+            </Link>
+          )}
+
+          {puede(usuario.rol, 'productos.gestionar') && (
+            <Link
+              href="/panel/productos"
+              className={`panel-nav-link ${rutaActual?.startsWith('/panel/productos') ? 'activo' : ''}`}
+            >
+              Productos
             </Link>
           )}
 

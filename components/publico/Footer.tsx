@@ -57,6 +57,12 @@ export default function Footer() {
       <div className="wrap footer-bottom">
         <span>© {new Date().getFullYear()} Dolce Florencia</span>
         <span>Hecho para celebrar. Hecho para recordar.</span>
+        <Link
+          href="/panel/login"
+          style={{ fontSize: '12px', color: 'inherit', opacity: 0.65, textDecoration: 'none' }}
+        >
+          Acceso personal
+        </Link>
         <button
           className="motion-toggle"
           type="button"
