@@ -38,6 +38,15 @@ export default function PanelTopbar({ usuario, rutaActual }: PanelTopbarProps) {
             Inicio
           </Link>
 
+          {puede(usuario.rol, 'ventas.registrar') && (
+            <Link
+              href="/panel/ventas"
+              className={`panel-nav-link ${rutaActual?.startsWith('/panel/ventas') ? 'activo' : ''}`}
+            >
+              Ventas & Caja
+            </Link>
+          )}
+
           {puede(usuario.rol, 'pedidos.gestionar') && (
             <Link
               href="/panel/pedidos"

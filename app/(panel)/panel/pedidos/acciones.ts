@@ -40,3 +40,18 @@ export async function cancelarPedidoAction(
     return { error: error.message || 'Error al cancelar el pedido.' };
   }
 }
+
+export async function entregarPedidoAction(
+  pedidoId: string
+): Promise<{ error?: string; ventaId?: string; exito?: boolean }> {
+  try {
+    const { entregarPedido } = await import('@/lib/servicios/pedidos-panel');
+    const res = await entregarPedido(pedidoId);
+    revalidatePath('/panel/pedidos');
+    revalidatePath('/panel/ventas');
+    return { exito: true, ventaId: res.venta.id };
+  } catch (error: any) {
+    return { error: error.message || 'Error al entregar pedido y generar comanda.' };
+  }
+}
+

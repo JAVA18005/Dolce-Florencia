@@ -19,17 +19,25 @@ export interface MesaConEstado {
   habilitada: boolean;
   orden: number;
   estadoDerivado: EstadoMesaDerivado;
+  cuentasAbiertas: number;
+  ventaActivaId?: string | null;
+  totalVentaActivaCentavos?: number;
 }
 
 /**
- * Lista todas las mesas del local calculando su estado derivado actual.
+ * Lista todas las mesas del local calculando su estado derivado actual (§5.2).
+ * - OCUPADA: existe venta en PENDIENTE_COBRO (mesas normales/sofá).
+ * - La barra (permiteVariasCuentas = true): nunca se bloquea como OCUPADA, muestra número de cuentas abiertas.
+ * - RESERVADA: existe reserva CONFIRMADA para hoy y no está ocupada.
+ * - FUERA_DE_SERVICIO: habilitada = false.
+ * - LIBRE: cualquier otro caso.
  */
 export async function listarMesas(): Promise<MesaConEstado[]> {
   await exigirSesionServidor('mesas.ver');
 
   const hoy = obtenerHoyBolivia();
 
-  const [mesas, reservasHoy] = await Promise.all([
+  const [mesas, reservasHoy, ventasAbiertas] = await Promise.all([
     prisma.mesa.findMany({
       orderBy: { orden: 'asc' },
     }),
@@ -41,17 +49,48 @@ export async function listarMesas(): Promise<MesaConEstado[]> {
       },
       select: { mesaId: true },
     }),
+    prisma.venta.findMany({
+      where: {
+        estado: 'PENDIENTE_COBRO',
+        mesaId: { not: null },
+      },
+      select: {
+        id: true,
+        mesaId: true,
+        totalCentavos: true,
+      },
+    }),
   ]);
 
   const mesasReservadasHoy = new Set(reservasHoy.map((r) => r.mesaId));
 
+  // Agrupar ventas abiertas por mesaId
+  const mapaVentasPorMesa = new Map<string, typeof ventasAbiertas>();
+  for (const v of ventasAbiertas) {
+    if (v.mesaId) {
+      const lista = mapaVentasPorMesa.get(v.mesaId) || [];
+      lista.push(v);
+      mapaVentasPorMesa.set(v.mesaId, lista);
+    }
+  }
+
   return mesas.map((m) => {
     let estadoDerivado: EstadoMesaDerivado = 'LIBRE';
+    const ventasDeEstaMesa = mapaVentasPorMesa.get(m.id) || [];
+    const cuentasAbiertas = ventasDeEstaMesa.length;
+    const primeraVenta = ventasDeEstaMesa[0] || null;
 
     if (!m.habilitada) {
       estadoDerivado = 'FUERA_DE_SERVICIO';
+    } else if (cuentasAbiertas > 0 && !m.permiteVariasCuentas) {
+      // Mesas normales y sofá con cuenta abierta -> OCUPADA
+      estadoDerivado = 'OCUPADA';
     } else if (mesasReservadasHoy.has(m.id)) {
+      // Si tiene reserva confirmada de hoy y no está ocupada
       estadoDerivado = 'RESERVADA';
+    } else {
+      // Libre (la barra con cuentas abiertas sigue disponible para más cuentas)
+      estadoDerivado = 'LIBRE';
     }
 
     return {
@@ -65,6 +104,9 @@ export async function listarMesas(): Promise<MesaConEstado[]> {
       habilitada: m.habilitada,
       orden: m.orden,
       estadoDerivado,
+      cuentasAbiertas,
+      ventaActivaId: primeraVenta ? primeraVenta.id : null,
+      totalVentaActivaCentavos: primeraVenta ? primeraVenta.totalCentavos : undefined,
     };
   });
 }

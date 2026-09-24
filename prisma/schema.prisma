@@ -265,9 +265,10 @@ model Venta {
   numero          Int         @unique @default(autoincrement()) // número de ticket legible
   estado          EstadoVenta @default(PENDIENTE_COBRO)
   origen          OrigenVenta @default(SALON)
-  mesaId          String?
-  mesa            Mesa?       @relation(fields: [mesaId], references: [id])
-  pedidoId        String?     @unique
+  mesaId                   String?
+  mesa                     Mesa?       @relation(fields: [mesaId], references: [id])
+  mesaCuentaUnicaAbiertaId String?     @unique
+  pedidoId                 String?     @unique
   pedido          Pedido?     @relation(fields: [pedidoId], references: [id])
   reservaId       String? // reserva que se cumplió con esta venta
   reserva         Reserva?    @relation(fields: [reservaId], references: [id])

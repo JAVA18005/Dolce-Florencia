@@ -222,3 +222,96 @@ export async function cancelarPedido(pedidoId: string): Promise<{ id: string }> 
     return { id: pedido.id };
   });
 }
+
+/**
+ * Marca un pedido como ENTREGADO y genera automáticamente su Venta con origen PEDIDO_WEB (§5.5).
+ * Nace en estado PENDIENTE_COBRO para que el personal cobre en caja.
+ * La unicidad de pedidoId en Venta y la transacción atómica garantizan que nunca se creen 2 ventas.
+ */
+export async function entregarPedido(pedidoId: string) {
+  const sesion = await exigirSesionServidor('pedidos.gestionar');
+
+  return prisma.$transaction(async (tx) => {
+    const pedido = await tx.pedido.findUnique({
+      where: { id: pedidoId },
+      include: {
+        items: true,
+        venta: { include: { items: true } },
+      },
+    });
+
+    if (!pedido) {
+      throw new Error('Pedido no encontrado.');
+    }
+
+    if (pedido.estado === 'ENTREGADO' && pedido.venta) {
+      // Idempotencia segura: si ya se entregó y tiene venta, se retorna sin duplicar
+      return { pedido, venta: pedido.venta, esDuplicado: true };
+    }
+
+    validarTransicionPedido(pedido.estado as EstadoPedido, 'ENTREGADO');
+
+    // 1. Actualizar estado del Pedido
+    const pedidoActualizado = await tx.pedido.update({
+      where: { id: pedidoId },
+      data: {
+        estado: 'ENTREGADO',
+        gestionadoPorId: sesion.usuario.id,
+        gestionadoEn: new Date(),
+      },
+    });
+
+    // 2. Crear Venta con origen PEDIDO_WEB
+    const itemsVentaData = pedido.items.map((it) => ({
+      productoId: it.productoId,
+      nombre: it.nombre,
+      cantidad: it.cantidad,
+      precioUnitarioCentavos: it.precioUnitarioCentavos ?? 0,
+    }));
+
+    const totalCalculado =
+      pedido.totalAcordadoCentavos ??
+      itemsVentaData.reduce((acc, i) => acc + i.cantidad * i.precioUnitarioCentavos, 0);
+
+    const venta = await tx.venta.create({
+      data: {
+        estado: 'PENDIENTE_COBRO',
+        origen: 'PEDIDO_WEB',
+        pedidoId: pedido.id,
+        totalCentavos: totalCalculado,
+        registradaPorId: sesion.usuario.id,
+        mesaCuentaUnicaAbiertaId: null,
+        items: {
+          create: itemsVentaData,
+        },
+      },
+      include: { items: true },
+    });
+
+    // 3. Auditoría atómica de entrega y venta
+    await registrarAuditoria(
+      {
+        usuarioId: sesion.usuario.id,
+        accion: 'pedido.entregar',
+        entidad: 'Pedido',
+        entidadId: pedido.id,
+        detalle: { codigo: pedido.codigo, ventaId: venta.id, totalCentavos: totalCalculado },
+      },
+      tx
+    );
+
+    await registrarAuditoria(
+      {
+        usuarioId: sesion.usuario.id,
+        accion: 'venta.crear_desde_pedido',
+        entidad: 'Venta',
+        entidadId: venta.id,
+        detalle: { pedidoId: pedido.id, codigoPedido: pedido.codigo, totalCentavos: totalCalculado },
+      },
+      tx
+    );
+
+    return { pedido: pedidoActualizado, venta, esDuplicado: false };
+  });
+}
+

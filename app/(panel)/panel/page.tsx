@@ -39,6 +39,21 @@ export default async function PanelDashboardPage() {
 
         {/* Módulos accesibles según rol */}
         <section className="panel-modulos-grid">
+          {puede(usuario.rol, 'ventas.registrar') && (
+            <Link href="/panel/ventas" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div className="panel-modulo-tarjeta">
+                <span className="modulo-tag">Servicio & Caja</span>
+                <h2 className="modulo-titulo">Ventas & Comandas</h2>
+                <p className="modulo-desc">
+                  Apertura de comandas por mesa, mostrador, adición de consumos y cobro en caja.
+                </p>
+                <span className="modulo-estado-fase" style={{ background: '#d3f9d8', color: '#2b8a3e' }}>
+                  Disponible ↗
+                </span>
+              </div>
+            </Link>
+          )}
+
           {puede(usuario.rol, 'pedidos.gestionar') && (
             <Link href="/panel/pedidos" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="panel-modulo-tarjeta">

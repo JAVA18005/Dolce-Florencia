@@ -5,6 +5,7 @@ import {
   confirmarPedidoAction,
   rechazarPedidoAction,
   cancelarPedidoAction,
+  entregarPedidoAction,
 } from '@/app/(panel)/panel/pedidos/acciones';
 import { generarEnlaceWhatsApp } from '@/lib/whatsapp';
 
@@ -73,6 +74,20 @@ export default function FilaPedido({ pedido }: Props) {
       if (res.error) setError(res.error);
     } catch (e: any) {
       setError(e.message || 'Error al cancelar');
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  const handleEntregar = async () => {
+    if (!confirm(`¿Marcar el pedido #${pedido.codigo} como ENTREGADO y generar su comanda para cobro en caja?`)) return;
+    setCargando(true);
+    setError(null);
+    try {
+      const res = await entregarPedidoAction(pedido.id);
+      if (res.error) setError(res.error);
+    } catch (e: any) {
+      setError(e.message || 'Error al entregar pedido');
     } finally {
       setCargando(false);
     }
@@ -177,14 +192,25 @@ export default function FilaPedido({ pedido }: Props) {
             )}
 
             {pedido.estado === 'CONFIRMADO' && (
-              <button
-                type="button"
-                onClick={handleCancelar}
-                disabled={cargando}
-                className="btn-accion-sm btn-peligro"
-              >
-                Cancelar
-              </button>
+              <>
+                <button
+                  type="button"
+                  onClick={handleEntregar}
+                  disabled={cargando}
+                  className="btn-accion-sm btn-exito"
+                  title="Registra la entrega y crea la comanda para cobro en caja"
+                >
+                  Entregar
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCancelar}
+                  disabled={cargando}
+                  className="btn-accion-sm btn-peligro"
+                >
+                  Cancelar
+                </button>
+              </>
             )}
           </div>
         </td>

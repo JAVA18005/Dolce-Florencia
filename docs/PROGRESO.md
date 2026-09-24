@@ -10,9 +10,8 @@
 | :--- | :--- | :--- | :--- |
 | **Fases 1 y 2 (Base & Front)** | **Cerradas** | Tests unitarios y build pasando | Commits consolidados |
 | **Hito 1 (Auth del Personal)** | **Cerrado** | Tests de bcrypt, tokens opacos y login | Commit `63b1b3a` |
-| **Hito 2 - Parte A (Cuentas & Auditoría)** | **Completado y probado** | 8 tests en `panel-usuarios.test.ts` | Migración `agregar_debe_cambiar_password` aplicada |
-| **Hito 2 - Parte B (Operaciones & Salón)** | **Completado y probado** | 10 tests en `panel-operaciones.test.ts` | Pedidos, Reservas, Eventos, Mesas, Calendario |
-| **Hito 3 (Ventas de Mostrador)** | **Pendiente** | — | Esperando aprobación y commit de Hito 2 |
+| **Hito 2 (Personal, Auditoría & Salón)** | **Cerrado** | 18 tests y build limpio | Commit `f8abf4c` |
+| **Hito 3 (Ventas de Salón, Caja & Pedidos)** | **Completado y probado** | 7 tests (124 total) y build limpio | Migración `agregar_mesa_cuenta_unica_abierta_id` aplicada |
 | **Hito 4 (Dashboard, Productos & Storage)** | **Pendiente** | — | Programado post-Hito 3 |
 
 ---
@@ -78,14 +77,21 @@ Se desacoplaron totalmente los módulos en archivos independientes:
 
 ---
 
-## 4. Qué Falta Antes de Empezar el Hito 3
+## 4. Alcance Planificado de Hitos 3 y 4 (docs/ARQUITECTURA.md §9)
 
-1. **Revisión y Aprobación del Usuario:**
-   - Inspeccionar la lista de archivos que entrarán al commit del Hito 2.
-   - Confirmar que `.env` está estrictamente fuera de git.
-2. **Commit Local del Hito 2:**
-   - Mensaje sugerido: `Hito 2: Gestión de personal, auditoría, pedidos, reservas, eventos, mesas y calendario` (sin push).
-3. **Plan de Inicio para el Hito 3 (Ventas de Mostrador):**
-   - Modelado de ventas rápidas (`Venta`, `VentaItem`, medio de pago, montos enteros en centavos).
-   - Servicio de registro de ventas con auditoría y actualización de stock cuando corresponda.
-   - Interfaz de punto de venta / caja en el panel (`/panel/ventas`).
+### Hito 3 — Fase 4: Ventas de Salón, Caja y Pedidos Web (Máx. 10 líneas)
+1. **Registro de Venta:** Mesero y admin registran ventas por mesa o mostrador; servidor calcula totales en centavos copiando nombre y precio de productos.
+2. **Ciclo de Estados:** `PENDIENTE_COBRO` → `REALIZADA` (mesero/admin con método de pago manual: efectivo, QR, transferencia); `ANULADA` (solo admin con auditoría).
+3. **Cuenta Única en BD:** Columna única anulable (`mesaCuentaUnicaAbiertaId`) que garantiza a nivel de base de datos una sola venta abierta en mesas normales y sofá.
+4. **Múltiples Cuentas en Barra:** La barra (`permiteVariasCuentas = true`) admite varias cuentas abiertas concurrentes y no se muestra bloqueada.
+5. **Estados Derivados de Mesa:** En tiempo real: `OCUPADA` (venta pendiente), `RESERVADA` (reserva confirmada hoy), `FUERA DE SERVICIO` (deshabilitada), `LIBRE`.
+6. **Venta + Reserva de Hoy:** Al abrir venta en mesa con reserva confirmada de hoy, pasa automáticamente a `CUMPLIDA`; al cobrar, la mesa queda libre.
+7. **Pedido a Venta:** Al marcar pedido `ENTREGADO`, se crea una `Venta` `PEDIDO_WEB` en la misma transacción con restricción única `pedidoId` en BD.
+
+### Hito 4 — Fase 5: Dashboard, Productos, Imágenes & Storage (Máx. 10 líneas)
+1. **Dashboard Administrativo:** Métricas de ingresos y tickets (hoy, semana, mes) en zona horaria `America/La_Paz`, contabilizando exclusivamente ventas `REALIZADA`.
+2. **CRUD de Catálogo:** Gestión de categorías y productos (solo admin); productos nunca se borran sino que se archivan (`activo = false`).
+3. **Auditoría de Precios:** Los cambios de precios y catálogo se auditan transaccionalmente sin afectar ítems de ventas históricas.
+4. **Abstracción de Storage:** Interfaz de almacenamiento desacoplada (disco local para desarrollo; servicio externo R2/Cloudinary para disco efímero de Railway).
+5. **Seguridad en Imágenes:** Validación de tamaño y magic bytes reales (rechazo estricto de SVG), nombres aleatorios por servidor, y endpoint bajo `/panel/...`.
+6. **Menú Público Dinámico:** El catálogo público (`/menu`) se sincroniza en vivo con los productos activos del panel administrativo.
