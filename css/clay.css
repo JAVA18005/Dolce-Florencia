@@ -1,0 +1,133 @@
+/* Materiales de fondant: luz superior, borde blando y sombra de contacto. */
+:root {
+  --clay-ease: cubic-bezier(.2,.8,.25,1.25);
+  --clay-light: inset 3px 4px 6px #ffffff95, inset -5px -7px 12px #77634225;
+}
+.button, .site-header .nav-order, .filters button, .nav-toggle, .cake-toggle {
+  border-radius: 22px;
+  box-shadow: inset 2px 3px 3px #ffffff65, inset -3px -5px 8px #352f242b,
+    0 5px 0 #a99160, 0 9px 14px #15221b30;
+  transition: transform .4s var(--clay-ease), box-shadow .3s, background .3s;
+  position: relative;
+}
+.button { font-size: 13px; padding: 18px 28px; }
+.button.gold { background: linear-gradient(145deg,#efdbad,#d9b879); border-color:#f5deb1; }
+.button.olive, .site-header .nav-order, .nav-toggle {
+  background: linear-gradient(145deg,#49634c,#2d4434);
+  border-color: #8fa27855;
+  box-shadow: inset 2px 3px 4px #c0d7a745,inset -4px -5px 8px #101d2455,
+    0 5px 0 #182d22,0 10px 16px #13251d35;
+}
+.button span, .nav-order span { display:inline-block; transition:transform .4s var(--clay-ease); }
+.button:active, .site-header .nav-order:active, .filters button:active, .nav-toggle:active {
+  transform:translateY(4px) scale(.98)!important;
+  box-shadow:inset 3px 4px 7px #15231c35,inset -2px -2px 4px #fff5,0 1px 0 #766b45;
+}
+.button:focus-visible, .filters button:focus-visible { outline-offset:9px; }
+.filters button { background:linear-gradient(145deg,#fff9ec,#e8dfca); border-color:#fff9ef; }
+.filters button[aria-pressed=true] {
+  background:linear-gradient(145deg,#51664d,#304433);
+  box-shadow:inset 3px 3px 6px #13271f65,inset -2px -2px 4px #b7c59d45,0 2px 0 #fffbef;
+}
+.product-card {
+  padding:17px 17px 23px;
+  border:1px solid #fff9ef;
+  border-radius:145px 145px 35px 35px;
+  background:linear-gradient(145deg,#fffaf0,#ebe2d0);
+  box-shadow:inset 3px 4px 8px #fff, inset -5px -7px 12px #b8a47a25,
+    9px 15px 28px #645c3620, -7px -7px 20px #ffffff95;
+  transform:perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg));
+  transition:transform .5s var(--clay-ease),box-shadow .5s;
+}
+.product-card .product-meta,.product-card h3,.product-card p,.product-card .text-link { margin-left:7px; margin-right:7px; }
+.product-card .text-link{width:calc(100% - 14px)}
+.photo-frame {
+  box-shadow:inset 7px 8px 13px #fff9,inset -9px -12px 17px #53613b30,0 7px 0 #c5c8b5,0 13px 15px #53613b20;
+  transition:box-shadow .6s,border-radius .8s var(--clay-ease);
+}
+.photo-frame:before { inset:10px; border-width:2px; border-color:#fff5; }
+.photo-frame img { transition:transform .9s var(--clay-ease); }
+.photo-frame .frame-star {
+  width:38px;height:38px;display:grid;place-items:center;right:16px;bottom:16px;
+  border-radius:14px;background:linear-gradient(135deg,#fffbeb,#d8c9a7);
+  box-shadow:var(--clay-light),3px 4px 8px #48533725;
+  transition:transform .7s var(--clay-ease);
+}
+.dessert-shape { filter:drop-shadow(8px 22px 8px #5f4a3830); }
+.request-form, dialog {
+  border-radius:35px;
+  box-shadow:inset 4px 5px 9px #fff,inset -6px -7px 13px #c1ad8825,12px 17px 32px #514c3520,-8px -8px 20px #fff8;
+}
+input,textarea,select { border-radius:16px; background:#eee9dc; box-shadow:inset 3px 4px 7px #7c71551b,inset -3px -3px 5px #fff; transition:box-shadow .3s,background .3s; }
+input:focus,textarea:focus,select:focus { background:#fffcf4; box-shadow:inset 1px 2px 3px #79795715,0 0 0 4px #9eaa8720; }
+.hero { background:radial-gradient(ellipse at 78% 38%,#536645 0,transparent 52%),linear-gradient(125deg,#243a2e,#324a37); }
+.hero-grid,.hero-bottom { position:relative;z-index:2; }
+.hero-halo {
+  background:radial-gradient(ellipse at 28% 20%,#819365,#526a47 48%,#344d34);
+  box-shadow:inset 15px 17px 24px #c6d4a835,inset -18px -24px 25px #122d2860,22px 28px 40px #0e231b50;
+  animation:fondant-breathe 12s ease-in-out infinite alternate;
+}
+.hero-halo:after { inset:16px; border:2px solid #d9dfb51a; box-shadow:inset 0 2px 4px #13271d25; }
+.hero-visual>.cake-art { z-index:2; translate:0 var(--cake-lift,0px); transition:translate .6s,transform .8s; }
+.hero-seal { border:1px solid #ced6ab50; background:linear-gradient(145deg,#6e8059,#354d38);box-shadow:inset 3px 4px 7px #d1deb340,inset -5px -5px 10px #1b322845,5px 10px 18px #10231a40;z-index:3; }
+.cake-toggle { z-index:4;bottom:-8px;padding:10px 18px;background:#eee1c4;color:#304533;font-size:11px;box-shadow:var(--clay-light),0 4px 0 #ab9770,0 9px 13px #102b2240; }
+.hero-bottom { margin-top:15px; }
+.cream-canvas { position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1; }
+.about-hero,.values { position:relative;isolation:isolate; }
+.about-hero> :not(canvas), .values>.wrap { position:relative;z-index:2; }
+.about-hero { width:100%;padding-inline:6%;overflow:hidden; }
+.about-hero .about-flower { position:absolute;right:6%; }
+.confections { position:absolute;inset:0;pointer-events:none;z-index:3; }
+.confection { position:absolute;display:block;animation:confection-float 7s ease-in-out infinite alternate; }
+.cream-rosette { width:82px;height:78px;left:-4%;bottom:9%;filter:drop-shadow(8px 15px 8px #142a2450); }
+.cream-rosette i { position:absolute;inset:0;background:linear-gradient(125deg,#fff9e2,#e7d2a9 65%,#c4a579);border-radius:60% 35% 60% 35%;box-shadow:inset 3px 5px 7px #fff8,inset -3px -5px 7px #9b784230; }
+.cream-rosette i:nth-child(2){transform:rotate(60deg)}
+.cream-rosette i:nth-child(3){transform:rotate(120deg)}
+.cream-rosette:after{content:'';position:absolute;inset:24%;border-radius:50%;background:linear-gradient(145deg,#fff5da,#d6b98c);box-shadow:inset 2px 3px 5px #fff9,3px 5px 6px #99754630}
+.clay-macaron{width:85px;height:68px;right:-3%;top:42%;border-radius:50%;background:linear-gradient(160deg,#e8b4a3,#a94f4b 60%,#783d39);box-shadow:inset 5px 7px 8px #ffe0c575,inset -5px -6px 8px #662b2b55,6px 14px 15px #17291f45;rotate:25deg;animation-delay:-3s}
+.clay-macaron:after{content:'';position:absolute;inset:48% 2% 27%;border-radius:50%;background:#f3ddba;box-shadow:0 4px 0 #913e3b,inset 0 2px 3px #fff9;transform:rotate(-6deg)}
+.sugar-pearl{width:24px;height:24px;left:12%;top:17%;border-radius:50%;background:radial-gradient(circle at 30% 25%,#fffce6,#e7c57e 50%,#b68749);box-shadow:5px 9px 12px #142a2450;animation-delay:-5s}
+.cream-transition { height:150px;position:relative;background:var(--cream);isolation:isolate;overflow:hidden; }
+.cream-lip { position:absolute;left:-2%;right:-2%;top:-30px;height:77px;background:linear-gradient(#324a37,#40593e);border-radius:0 0 48% 25%;box-shadow:inset 0 -8px 9px #263d2d30,0 8px 14px #34462c12;z-index:2; }
+.cream-transition i { position:absolute;top:8px;left:9%;width:7%;height:65px;border-radius:0 0 60px 60px;background:linear-gradient(90deg,#354d37,#506747 45%,#394f38);box-shadow:inset -5px -7px 8px #1d392440,4px 9px 9px #53613c20;transform-origin:top;transform:scaleY(var(--drip,1));transition:transform .15s linear; }
+.cream-transition i:nth-of-type(2){left:22%;height:92px;width:4%}
+.cream-transition i:nth-of-type(3){left:34%;height:48px;width:11%}
+.cream-transition i:nth-of-type(4){left:53%;height:72px;width:6%}
+.cream-transition i:nth-of-type(5){left:66%;height:42px;width:12%}
+.cream-transition i:nth-of-type(6){left:82%;height:88px;width:5%}
+.cream-transition i:nth-of-type(7){left:94%;height:48px;width:8%}
+.cream-transition span { position:absolute;bottom:0;left:0;right:0;text-align:center;font-family:var(--serif);font-style:italic;font-size:23px;color:#687454; }
+.ritual {padding-top:75px}
+.ritual-art {margin-top:55px}
+.step-number {width:65px;height:65px;display:grid;place-items:center;font-size:32px;background:linear-gradient(145deg,#fff8ea,#e1d3b7);border:1px solid #fffaec;border-radius:25px;box-shadow:var(--clay-light),5px 8px 14px #635c3b20;rotate:-7deg; }
+.morph-shape {box-shadow:inset 14px 16px 20px #fff9,inset -16px -18px 22px #7c8b5260,13px 20px 27px #5a62342b}
+.celebrate {border:1px solid #fff6e7;border-radius:65px 35px 65px 35px;background:linear-gradient(135deg,#f3ebda,#e5d7c0);box-shadow:inset 7px 8px 12px #fff9,inset -9px -12px 15px #b7a17b30,14px 22px 35px #554c3520}
+.celebrate-flower {text-shadow:3px 5px 4px #84906145,-3px -4px 4px #fff7;animation:flower-turn 24s linear infinite; }
+.value-grid article {padding:30px;border-radius:35px;background:linear-gradient(140deg,#425b42,#2c4032);border:1px solid #8d9b6c35;box-shadow:inset 3px 4px 6px #b3c39a25,inset -6px -6px 12px #11251d50,8px 15px 22px #12251d45;transition:transform .45s var(--clay-ease)}
+.brand img {transition:transform .8s var(--clay-ease)}
+.text-link {transition:letter-spacing .35s,color .25s}
+.clay-reveal {opacity:1;transform:translateY(0);transition:opacity .8s,transform .8s var(--clay-ease)}
+.clay-reveal.is-waiting {opacity:0;transform:translateY(30px)}
+@keyframes confection-float{from{translate:0 -9px;rotate:-9deg}to{translate:0 10px;rotate:8deg}}
+@keyframes fondant-breathe{from{border-radius:48% 48% 42% 42%;rotate:-3deg}to{border-radius:40% 58% 49% 38%;rotate:4deg}}
+@keyframes flower-turn{to{rotate:360deg}}
+@media(hover:hover) and (pointer:fine){
+  .button:hover,.site-header .nav-order:hover,.filters button:hover {transform:translateY(-5px) scale(1.045)}
+  .button:hover span,.nav-order:hover span{transform:translate(3px,-3px) rotate(7deg)}
+  .product-card:hover{transform:perspective(900px) translateY(-12px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)) scale(1.025);box-shadow:inset 3px 4px 8px #fff,inset -5px -7px 12px #b8a47a25,13px 29px 38px #645c3635,-7px -7px 20px #fff9}
+  .product-card:hover .photo-frame img{transform:scale(1.075)}
+  .product-card:hover .frame-star{transform:rotate(90deg) scale(1.1)}
+  .product-card:hover .dessert-shape{transform:translateY(-12px) rotate(-8deg) scale(1.09)}
+  .value-grid article:hover{transform:translateY(-9px) rotate(-1deg)}
+  .hero-visual:hover{--cake-lift:-9px}
+  .cake-toggle:hover{transform:translateX(-50%) translateY(-3px) scale(1.05)}
+  .brand:hover img{transform:rotate(65deg) scale(1.08)}
+  .text-link:hover{letter-spacing:.025em}
+}
+@media(max-width:800px){.hero-grid{padding-bottom:45px}.value-grid{gap:18px}.value-grid article{padding:23px}.cream-rosette{width:64px;height:60px;left:-3%}.clay-macaron{width:68px;height:52px}.cream-transition{height:130px}}
+@media(min-width:801px) and (max-height:800px){.ritual-sticky{top:110px}.ritual-sticky h2{font-size:48px;margin-bottom:16px}.ritual-sticky .eyebrow{margin-bottom:16px}.ritual-art{height:220px;margin-top:45px}.ritual-art .cake-art{width:230px}}
+@media(max-width:540px){.button{padding:17px 21px}.cream-rosette{width:52px;height:50px;bottom:12%}.clay-macaron{width:58px;height:46px;right:-2%}.sugar-pearl{width:16px;height:16px}.cream-transition span{font-size:20px}.product-card{padding:13px 13px 22px}.step-number{width:48px;height:48px;font-size:26px;border-radius:18px}.celebrate{border-radius:40px 25px 40px 25px}.hero-bottom{margin-top:0}.value-grid article{padding:28px}.ritual{padding-top:55px}}
+.motion-paused .cream-canvas{visibility:hidden}
+.motion-paused .clay-reveal.is-waiting{opacity:1;transform:none}
+.motion-paused .product-card{--tilt-x:0deg!important;--tilt-y:0deg!important}
+@media(prefers-reduced-motion:reduce){.cream-canvas{display:none}.clay-reveal.is-waiting{opacity:1;transform:none}.product-card{--tilt-x:0deg!important;--tilt-y:0deg!important}}
