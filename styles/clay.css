@@ -1,0 +1,350 @@
+/* styles/clay.css — Capa claymórfica adaptada a la paleta de BRAND.md */
+:root {
+  --clay-ease: cubic-bezier(.2, .8, .25, 1.25);
+  --clay-light: inset 3px 4px 6px rgba(255, 255, 255, 0.9), inset -5px -7px 12px rgba(61, 51, 48, 0.15);
+}
+
+.button, .site-header .nav-order, .filters button, .nav-toggle, .cake-toggle {
+  border-radius: 22px;
+  box-shadow: inset 2px 3px 3px rgba(255, 255, 255, 0.4), inset -3px -5px 8px rgba(0, 0, 0, 0.2),
+    0 5px 0 #852249, 0 9px 14px rgba(43, 35, 32, 0.2);
+  transition: transform .4s var(--clay-ease), box-shadow .3s, background .3s;
+  position: relative;
+}
+
+.button {
+  font-size: 13px;
+  padding: 16px 28px;
+  background: var(--fucsia-accion);
+}
+
+.button.olive {
+  background: linear-gradient(145deg, var(--olivo), var(--olivo-deep));
+  border-color: rgba(228, 208, 202, 0.3);
+  box-shadow: inset 2px 3px 4px rgba(255, 255, 255, 0.35), inset -4px -5px 8px rgba(0, 0, 0, 0.3),
+    0 5px 0 #3e4935, 0 10px 16px rgba(43, 35, 32, 0.25);
+}
+
+.button span, .nav-order span {
+  display: inline-block;
+  transition: transform .4s var(--clay-ease);
+}
+
+.button:active, .site-header .nav-order:active, .filters button:active, .nav-toggle:active {
+  transform: translateY(4px) scale(.98) !important;
+  box-shadow: inset 3px 4px 7px rgba(0, 0, 0, 0.3), inset -2px -2px 4px rgba(255, 255, 255, 0.3), 0 1px 0 #852249;
+}
+
+.button:focus-visible, .filters button:focus-visible {
+  outline-offset: 9px;
+}
+
+.filters button {
+  background: linear-gradient(145deg, var(--hueso), #f6ebe8);
+  border-color: var(--linea);
+}
+
+.filters button[aria-pressed=true] {
+  background: linear-gradient(145deg, var(--fucsia), var(--fucsia-accion));
+  box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.3), inset -2px -2px 4px rgba(255, 255, 255, 0.3), 0 2px 0 var(--hueso);
+}
+
+.product-card {
+  padding: 17px 17px 23px;
+  border: 1px solid var(--linea);
+  border-radius: 145px 145px 35px 35px;
+  background: linear-gradient(145deg, var(--hueso), #f7ebe8);
+  box-shadow: inset 3px 4px 8px #fff, inset -5px -7px 12px rgba(228, 208, 202, 0.35),
+    9px 15px 28px rgba(61, 51, 48, 0.08), -7px -7px 20px rgba(255, 255, 255, 0.9);
+  transition: transform .5s var(--clay-ease), box-shadow .5s;
+}
+
+.product-card .product-meta, .product-card h3, .product-card p, .product-card .text-link {
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
+.product-card .text-link {
+  width: calc(100% - 14px);
+}
+
+.photo-frame {
+  box-shadow: inset 7px 8px 13px rgba(255, 255, 255, 0.8), inset -9px -12px 17px rgba(61, 51, 48, 0.12),
+    0 7px 0 var(--linea), 0 13px 15px rgba(61, 51, 48, 0.1);
+  transition: box-shadow .6s, border-radius .8s var(--clay-ease);
+}
+
+.photo-frame:before {
+  inset: 10px;
+  border-width: 2px;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.photo-frame img {
+  transition: transform .9s var(--clay-ease);
+}
+
+.dessert-shape {
+  filter: drop-shadow(8px 22px 8px rgba(61, 51, 48, 0.18));
+}
+
+.contact-card, .proximamente-card {
+  border-radius: 35px;
+  box-shadow: inset 4px 5px 9px #fff, inset -6px -7px 13px rgba(228, 208, 202, 0.35),
+    12px 17px 32px rgba(61, 51, 48, 0.08), -8px -8px 20px rgba(255, 255, 255, 0.8);
+}
+
+/* ────────── Gotas de Glaseado Recoloreadas ────────── */
+.cream-transition {
+  height: 150px;
+  position: relative;
+  background: var(--rosa);
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.cream-lip {
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  top: -30px;
+  height: 77px;
+  background: linear-gradient(var(--cafe-deep), var(--cafe));
+  border-radius: 0 0 48% 25%;
+  box-shadow: inset 0 -8px 9px rgba(0, 0, 0, 0.3), 0 8px 14px rgba(61, 51, 48, 0.15);
+  z-index: 2;
+}
+
+.cream-transition i {
+  position: absolute;
+  top: 8px;
+  left: 9%;
+  width: 7%;
+  height: 65px;
+  border-radius: 0 0 60px 60px;
+  background: linear-gradient(90deg, var(--cafe-deep), var(--cafe) 45%, var(--cafe-deep));
+  box-shadow: inset -5px -7px 8px rgba(0, 0, 0, 0.4), 4px 9px 9px rgba(61, 51, 48, 0.2);
+  transform-origin: top;
+  transform: scaleY(var(--drip, 1));
+  transition: transform .15s linear;
+}
+
+.cream-transition i:nth-of-type(2) { left: 22%; height: 92px; width: 4%; }
+.cream-transition i:nth-of-type(3) { left: 34%; height: 48px; width: 11%; }
+.cream-transition i:nth-of-type(4) { left: 53%; height: 72px; width: 6%; }
+.cream-transition i:nth-of-type(5) { left: 66%; height: 42px; width: 12%; }
+.cream-transition i:nth-of-type(6) { left: 82%; height: 88px; width: 5%; }
+.cream-transition i:nth-of-type(7) { left: 94%; height: 48px; width: 8%; }
+
+.cream-transition span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 23px;
+  color: var(--fucsia);
+}
+
+.step-number {
+  width: 65px;
+  height: 65px;
+  display: grid;
+  place-items: center;
+  font-size: 32px;
+  background: linear-gradient(145deg, var(--hueso), #eedbd5);
+  border: 1px solid var(--hueso);
+  border-radius: 25px;
+  box-shadow: var(--clay-light), 5px 8px 14px rgba(61, 51, 48, 0.1);
+  rotate: -7deg;
+}
+
+.celebrate {
+  border: 1px solid var(--hueso);
+  border-radius: 65px 35px 65px 35px;
+  background: linear-gradient(135deg, var(--hueso), #f5e4e0);
+  box-shadow: inset 7px 8px 12px rgba(255, 255, 255, 0.9), inset -9px -12px 15px rgba(228, 208, 202, 0.4),
+    14px 22px 35px rgba(61, 51, 48, 0.08);
+}
+
+.value-grid article {
+  padding: 30px;
+  border-radius: 35px;
+  background: linear-gradient(140deg, var(--cafe), var(--cafe-deep));
+  border: 1px solid rgba(228, 208, 202, 0.15);
+  box-shadow: inset 3px 4px 6px rgba(255, 255, 255, 0.1), inset -6px -6px 12px rgba(0, 0, 0, 0.4),
+    8px 15px 22px rgba(0, 0, 0, 0.3);
+  transition: transform .45s var(--clay-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover, .site-header .nav-order:hover, .filters button:hover {
+    transform: translateY(-4px) scale(1.03);
+  }
+  .product-card:hover {
+    transform: perspective(900px) translateY(-8px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.02);
+    box-shadow: inset 3px 4px 8px #fff, inset -5px -7px 12px rgba(228, 208, 202, 0.4),
+      13px 25px 35px rgba(61, 51, 48, 0.15), -7px -7px 20px rgba(255, 255, 255, 0.9);
+  }
+  .product-card:hover .dessert-shape {
+    transform: translateY(-10px) rotate(-6deg) scale(1.05);
+  }
+  .value-grid article:hover {
+    transform: translateY(-6px);
+  }
+}
+
+/* ────────── Canvas de Crema ────────── */
+.cream-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero, .about-hero, .values {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero > :not(canvas), .about-hero > :not(canvas), .values > .wrap {
+  position: relative;
+  z-index: 2;
+}
+
+/* ────────── Dulces Decorativos (Hero) ────────── */
+.confections {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.confection {
+  position: absolute;
+  display: block;
+  animation: confection-float 7s ease-in-out infinite alternate;
+}
+
+.cream-rosette {
+  width: 82px;
+  height: 78px;
+  left: -4%;
+  bottom: 9%;
+  filter: drop-shadow(8px 15px 8px rgba(43, 35, 32, 0.3));
+}
+
+.cream-rosette i {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, #fff9e2, #F7EBE8 65%, #E4D0CA);
+  border-radius: 60% 35% 60% 35%;
+  box-shadow: inset 3px 5px 7px rgba(255, 255, 255, 0.6), inset -3px -5px 7px rgba(184, 56, 106, 0.15);
+}
+
+.cream-rosette i:nth-child(2) { transform: rotate(60deg); }
+.cream-rosette i:nth-child(3) { transform: rotate(120deg); }
+
+.cream-rosette:after {
+  content: '';
+  position: absolute;
+  inset: 24%;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #FFFAF7, #F7EBE8);
+  box-shadow: inset 2px 3px 5px rgba(255, 255, 255, 0.6), 3px 5px 6px rgba(43, 35, 32, 0.15);
+}
+
+.clay-macaron {
+  width: 85px;
+  height: 68px;
+  right: -3%;
+  top: 42%;
+  border-radius: 50%;
+  background: linear-gradient(160deg, #E66595, #D94F80 60%, #B8386A);
+  box-shadow: inset 5px 7px 8px rgba(255, 255, 255, 0.45), inset -5px -6px 8px rgba(184, 56, 106, 0.35),
+    6px 14px 15px rgba(43, 35, 32, 0.3);
+  rotate: 25deg;
+  animation-delay: -3s;
+}
+
+.clay-macaron:after {
+  content: '';
+  position: absolute;
+  inset: 48% 2% 27%;
+  border-radius: 50%;
+  background: #FFFAF7;
+  box-shadow: 0 4px 0 #B8386A, inset 0 2px 3px rgba(255, 255, 255, 0.6);
+  transform: rotate(-6deg);
+}
+
+.sugar-pearl {
+  width: 24px;
+  height: 24px;
+  left: 12%;
+  top: 17%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #FFFAF7, #F7EBE8 50%, #D94F80);
+  box-shadow: 5px 9px 12px rgba(43, 35, 32, 0.25);
+  animation-delay: -5s;
+}
+
+@keyframes confection-float {
+  from { translate: 0 -9px; rotate: -9deg; }
+  to { translate: 0 10px; rotate: 8deg; }
+}
+
+/* ────────── Aparición de Bloques (Clay Reveal) ────────── */
+.clay-reveal {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .8s, transform .8s var(--clay-ease);
+}
+
+.clay-reveal.is-waiting {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* ────────── Control de Pausa y Accesibilidad ────────── */
+.motion-paused .cream-canvas {
+  visibility: hidden;
+}
+
+.motion-paused .clay-reveal.is-waiting {
+  opacity: 1;
+  transform: none;
+}
+
+.motion-paused .product-card {
+  --tilt-x: 0deg !important;
+  --tilt-y: 0deg !important;
+}
+
+.motion-paused .confection {
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cream-canvas {
+    display: none;
+  }
+  .clay-reveal.is-waiting {
+    opacity: 1;
+    transform: none;
+  }
+  .product-card {
+    --tilt-x: 0deg !important;
+    --tilt-y: 0deg !important;
+  }
+  .confection {
+    animation: none !important;
+  }
+  .product-card, .value-grid article, .button {
+    transition: none !important;
+    transform: none !important;
+  }
+}

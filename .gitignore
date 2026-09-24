@@ -1,0 +1,29 @@
+# Dependencias
+node_modules/
+.pnp/
+.pnp.js
+
+# Entorno y secretos
+.env
+.env*.local
+
+# Next.js
+.next/
+out/
+
+# Prisma
+# Migraciones sí se versionan, pero no los clientes generados ni dev db
+*.db
+*.db-journal
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# IDE y SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,308 @@
+// prisma/schema.prisma — Dolce Florencia
+//
+// NOTAS
+// - Dinero: enteros en centavos de Bolivianos (Bs 25,50 = 2550). Nunca Float.
+// - Fechas de calendario (reservas, eventos, pedidos) usan @db.Date: son "días", no instantes.
+//   Zona horaria de negocio: America/La_Paz (UTC-4). Los timestamps se guardan en UTC.
+// - Estados de mesa (LIBRE / RESERVADA / OCUPADA) NO se guardan: se derivan (ver ARQUITECTURA.md §5).
+// - La librería de auth (Auth.js / Better Auth) agrega sus propias tablas (Session, Account...).
+//   Mantener `Usuario` como tabla base y seguir la documentación de la librería elegida.
+// - Si se instala Prisma 7 o superior, ajustar generator/datasource según la doc vigente (prisma.config.ts).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ───────────── Enums ─────────────
+
+enum Rol {
+  ADMIN
+  MESERO
+}
+
+enum EstadoPedido {
+  PENDIENTE
+  CONFIRMADO
+  RECHAZADO
+  ENTREGADO
+  CANCELADO
+}
+
+enum TipoEntrega {
+  RETIRO
+  DOMICILIO
+}
+
+enum TipoReserva {
+  MESA
+  EVENTO
+}
+
+enum ModalidadEvento {
+  EN_LOCAL
+  ENTREGA
+}
+
+enum EstadoReserva {
+  PENDIENTE
+  CONFIRMADA
+  CUMPLIDA
+  NO_LLEGO
+  RECHAZADA
+  CANCELADA
+}
+
+enum EstadoVenta {
+  PENDIENTE_COBRO
+  REALIZADA
+  ANULADA
+}
+
+enum OrigenVenta {
+  SALON
+  MOSTRADOR
+  PEDIDO_WEB
+}
+
+enum MetodoPago {
+  EFECTIVO
+  QR
+  TRANSFERENCIA
+}
+
+enum ZonaMesa {
+  INTERIOR
+  EXTERIOR
+  SOFA
+  BARRA
+}
+
+// ───────────── Personal ─────────────
+
+model Usuario {
+  id           String   @id @default(cuid())
+  nombre       String
+  email        String   @unique
+  passwordHash String
+  rol          Rol
+  activo       Boolean  @default(true)
+  creadoEn     DateTime @default(now())
+
+  ventasRegistradas   Venta[]        @relation("VentaRegistradaPor")
+  ventasCobradas      Venta[]        @relation("VentaCobradaPor")
+  pedidosGestionados  Pedido[]       @relation("PedidoGestionadoPor")
+  reservasGestionadas Reserva[]      @relation("ReservaGestionadaPor")
+  diasBloqueados      DiaBloqueado[]
+  auditoria           Auditoria[]
+}
+
+// ───────────── Catálogo ─────────────
+
+model Categoria {
+  id        String     @id @default(cuid())
+  nombre    String     @unique
+  orden     Int        @default(0)
+  productos Producto[]
+}
+
+model Producto {
+  id             String    @id @default(cuid())
+  nombre         String
+  descripcion    String?
+  categoriaId    String
+  categoria      Categoria @relation(fields: [categoriaId], references: [id])
+  precioCentavos Int? // null = "consultar precio" (tortas personalizadas)
+  imagenUrl      String?
+  modeloArUrl    String? // .glb a escala real (metros)
+  modeloArIosUrl String? // .usdz opcional
+  aptoMascotas   Boolean   @default(false)
+  activo         Boolean   @default(true) // "archivar" en vez de borrar: hay historial de ventas
+  orden          Int       @default(0)
+  creadoEn       DateTime  @default(now())
+  actualizadoEn  DateTime  @updatedAt
+
+  pedidoItems PedidoItem[]
+  ventaItems  VentaItem[]
+
+  @@index([categoriaId, activo])
+}
+
+// ───────────── Local ─────────────
+
+model Mesa {
+  id                   String   @id @default(cuid())
+  nombre               String   @unique // "Mesa 1", "Terraza 1", "Sofá", "Barra"
+  zona                 ZonaMesa
+  capacidad            Int
+  reservable           Boolean  @default(true) // la barra es false: solo se usa para ventas
+  permiteVariasCuentas Boolean  @default(false) // la barra es true: varias personas, cuentas separadas
+  aceptaMascotas       Boolean  @default(true) // confirmado: todas las mesas aceptan mascotas
+  habilitada           Boolean  @default(true) // false = fuera de servicio
+  orden                Int      @default(0)
+
+  reservas       Reserva[]
+  reservasEvento ReservaMesa[]
+  ventas         Venta[]
+}
+
+// Días en que el local no recibe reservas: eventos EN_LOCAL confirmados o cierres manuales.
+// La clave primaria es la fecha: la base de datos impide bloquear dos veces el mismo día.
+model DiaBloqueado {
+  fecha       DateTime @db.Date
+  motivo      String
+  reservaId   String?  @unique
+  reserva     Reserva? @relation(fields: [reservaId], references: [id])
+  creadoPorId String
+  creadoPor   Usuario  @relation(fields: [creadoPorId], references: [id])
+  creadoEn    DateTime @default(now())
+
+  @@id([fecha])
+}
+
+// ───────────── Solicitudes públicas (sin login) ─────────────
+
+model Pedido {
+  id                    String       @id @default(cuid())
+  codigo                String       @unique // corto y aleatorio, ej. "DF-K7M2QX"
+  estado                EstadoPedido @default(PENDIENTE)
+  clienteNombre         String
+  clienteTelefono       String // normalizado: 591XXXXXXXX
+  entrega               TipoEntrega  @default(RETIRO)
+  direccionEntrega      String?
+  fechaDeseada          DateTime     @db.Date
+  horaDeseada           String? // "HH:mm"
+  detalles              String?
+  totalAcordadoCentavos Int? // el admin lo fija al confirmar (precio final acordado por WhatsApp)
+  motivoRechazo         String?
+  creadoEn              DateTime     @default(now())
+  gestionadoEn          DateTime?
+  gestionadoPorId       String?
+  gestionadoPor         Usuario?     @relation("PedidoGestionadoPor", fields: [gestionadoPorId], references: [id])
+
+  items PedidoItem[]
+  venta Venta? // se crea al marcar ENTREGADO
+
+  @@index([estado, creadoEn])
+  @@index([fechaDeseada])
+}
+
+model PedidoItem {
+  id                     String    @id @default(cuid())
+  pedidoId               String
+  pedido                 Pedido    @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  productoId             String?
+  producto               Producto? @relation(fields: [productoId], references: [id])
+  nombre                 String // copia del nombre (o texto libre: "Torta personalizada")
+  cantidad               Int       @default(1)
+  precioUnitarioCentavos Int? // se completa al confirmar
+  nota                   String?
+}
+
+model Reserva {
+  id              String           @id @default(cuid())
+  codigo          String           @unique
+  tipo            TipoReserva
+  modalidad       ModalidadEvento? // solo si tipo = EVENTO
+  estado          EstadoReserva    @default(PENDIENTE)
+  clienteNombre   String
+  clienteTelefono String
+  fecha           DateTime         @db.Date
+  hora            String? // hora de llegada "HH:mm" (no hay hora de salida)
+  personas        Int?
+  ocasion         String?
+  conMascota      Boolean          @default(false) // la cafetería es pet friendly
+  detalles        String?
+  mesaId          String? // opcional; el personal puede asignarla al confirmar
+  mesa            Mesa?            @relation(fields: [mesaId], references: [id])
+  motivoRechazo   String?
+  creadoEn        DateTime         @default(now())
+  gestionadoEn    DateTime?
+  gestionadoPorId String?
+  gestionadoPor   Usuario?         @relation("ReservaGestionadaPor", fields: [gestionadoPorId], references: [id])
+
+  diaBloqueado   DiaBloqueado?
+  ventas         Venta[]
+  mesasAsignadas ReservaMesa[] // eventos en el local que no cierran el día: mesas que ocupan
+
+  @@index([fecha, estado])
+  @@index([mesaId, fecha])
+}
+
+// Mesas asignadas a un evento EN_LOCAL (varias mesas por reserva).
+model ReservaMesa {
+  reservaId String
+  reserva   Reserva @relation(fields: [reservaId], references: [id], onDelete: Cascade)
+  mesaId    String
+  mesa      Mesa    @relation(fields: [mesaId], references: [id])
+
+  @@id([reservaId, mesaId])
+}
+
+// ───────────── Ventas ─────────────
+
+model Venta {
+  id              String      @id @default(cuid())
+  numero          Int         @unique @default(autoincrement()) // número de ticket legible
+  estado          EstadoVenta @default(PENDIENTE_COBRO)
+  origen          OrigenVenta @default(SALON)
+  mesaId          String?
+  mesa            Mesa?       @relation(fields: [mesaId], references: [id])
+  pedidoId        String?     @unique
+  pedido          Pedido?     @relation(fields: [pedidoId], references: [id])
+  reservaId       String? // reserva que se cumplió con esta venta
+  reserva         Reserva?    @relation(fields: [reservaId], references: [id])
+  totalCentavos   Int         @default(0) // lo recalcula el servidor desde los ítems
+  metodoPago      MetodoPago?
+  referenciaPago  String? // opcional: nº de transferencia o comprobante QR (registro manual, sin verificación automática)
+  registradaPorId String
+  registradaPor   Usuario     @relation("VentaRegistradaPor", fields: [registradaPorId], references: [id])
+  cobradaPorId    String?
+  cobradaPor      Usuario?    @relation("VentaCobradaPor", fields: [cobradaPorId], references: [id])
+  creadaEn        DateTime    @default(now())
+  cobradaEn       DateTime?
+  anuladaMotivo   String?
+
+  items VentaItem[]
+
+  @@index([estado, creadaEn])
+  @@index([mesaId, estado])
+  @@index([cobradaEn])
+}
+
+model VentaItem {
+  id                     String    @id @default(cuid())
+  ventaId                String
+  venta                  Venta     @relation(fields: [ventaId], references: [id], onDelete: Cascade)
+  productoId             String?
+  producto               Producto? @relation(fields: [productoId], references: [id])
+  nombre                 String // copia del nombre al momento de la venta
+  cantidad               Int
+  precioUnitarioCentavos Int // copia del precio al momento de la venta
+}
+
+// ───────────── Sistema ─────────────
+
+model Auditoria {
+  id        String   @id @default(cuid())
+  usuarioId String?
+  usuario   Usuario? @relation(fields: [usuarioId], references: [id])
+  accion    String // ej. "reserva.confirmar", "venta.cobrar", "venta.anular"
+  entidad   String
+  entidadId String
+  detalle   Json?
+  creadoEn  DateTime @default(now())
+
+  @@index([entidad, entidadId])
+  @@index([creadoEn])
+}
+
+// Ajustes editables desde el panel (ej. "tolerancia_llegada_min" = "30", "whatsapp" = "591...")
+model Ajuste {
+  clave String @id
+  valor String
+}
