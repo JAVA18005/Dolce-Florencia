@@ -23,7 +23,7 @@ Los clientes **no tienen cuenta**. Toda solicitud pública se guarda en la base 
 | Base de datos | PostgreSQL | Escrituras concurrentes y transacciones (confirmaciones, cobros) |
 | ORM | Prisma | Esquema tipado y migraciones |
 | Validación | Zod | Todo input se valida en el servidor |
-| Auth (solo personal) | Auth.js o Better Auth, cookies `httpOnly` | Sin JWT en localStorage |
+| Auth (solo personal) | Autenticación propia: bcryptjs + tabla Sesion con token opaco, cookies `httpOnly` | Sin JWT en localStorage, revocación inmediata en BD |
 | Anti-spam | Cloudflare Turnstile + honeypot + rate limit | Formularios públicos sin login |
 | AR | `<model-viewer>` (Google) con `.glb` y `.usdz` opcional | Funciona en el navegador móvil |
 | Imágenes de productos | Cloudinary o Cloudflare R2 | El disco del contenedor no es persistente |
@@ -134,7 +134,7 @@ Solo se conoce la hora de llegada, así que no se puede garantizar exclusividad 
 ## 6. Seguridad (lista de verificación previa a publicar)
 
 - [ ] Contraseñas con hash (Argon2 o bcrypt); nada de secretos en el repo. Usar variables de entorno.
-- [ ] Sesiones con cookies `httpOnly`, `secure`, `sameSite`. Rate limit en login.
+- [ ] Sesiones con cookies `httpOnly`, `secure`, `sameSite`, `path=/panel`. **Regla para Route Handlers autenticados**: cualquier endpoint que necesite sesión (subida de imágenes, exportaciones) debe vivir bajo `/panel/...` (p. ej. `/panel/api/...`), **nunca** bajo `/api/...`, ya que el navegador solo enviará la cookie en rutas bajo `/panel`. Rate limit en login.
 - [ ] Permisos verificados en servidor en **cada** acción y endpoint, no solo en el middleware de rutas.
 - [ ] Zod en todos los endpoints públicos y privados; longitudes máximas en textos.
 - [ ] Formularios públicos: Turnstile + honeypot + rate limit por IP y por teléfono.
@@ -151,7 +151,8 @@ Solo se conoce la hora de llegada, así que no se puede garantizar exclusividad 
 app/
   (publico)/           inicio, menu, pedidos, eventos, reservas, seguimiento, contacto, nosotros
   (panel)/panel/       login, dashboard, ventas, pedidos, reservas, calendario, mesas, productos, ajustes
-  api/                 solo lo necesario (webhooks, health); preferir Server Actions
+                       (y cualquier route handler que requiera sesión de personal, por Path=/panel)
+  api/                 solo lo necesario y público/sin sesión de panel (webhooks, health); preferir Server Actions
 components/
   ui/  publico/  panel/  ar/ (visor model-viewer)  pastel/ (ilustración y animaciones)
 lib/

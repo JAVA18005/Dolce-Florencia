@@ -2084,6 +2084,258 @@ select.field-select,
   }
 }
 
+/* ────────── Panel de Personal (Fase 3-5) ────────── */
+.panel-root-contenedor {
+  min-height: 100vh;
+  background: var(--rosa);
+  color: var(--cafe);
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-login-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.panel-login-card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--hueso);
+  border: 1.5px solid var(--linea);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 20px 45px rgba(43, 35, 32, 0.08);
+}
+
+.panel-login-cabecera {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.panel-login-titulo {
+  font-family: var(--font-cormorant), serif;
+  font-size: 32px;
+  color: var(--cafe-deep);
+  margin: 6px 0 10px;
+  line-height: 1.2;
+}
+
+.panel-login-desc {
+  font-size: 14px;
+  color: var(--cafe-suave);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.panel-layout-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-topbar {
+  background: var(--cafe-deep);
+  color: var(--hueso);
+  border-bottom: 1px solid rgba(228, 208, 202, 0.2);
+  padding: 14px 0;
+}
+
+.panel-topbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.panel-marca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.panel-marca-icono {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--fucsia-accion);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  font-family: monospace;
+}
+
+.panel-marca-nombre {
+  display: block;
+  font-family: var(--font-cormorant), serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.1;
+}
+
+.panel-marca-sub {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--linea);
+}
+
+.panel-usuario-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.panel-usuario-texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.panel-usuario-nombre {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.badge-rol {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.badge-admin {
+  background: var(--fucsia-accion);
+  color: #fff;
+}
+
+.badge-mesero {
+  background: var(--olivo);
+  color: #fff;
+}
+
+.btn-cerrar-sesion {
+  background: transparent;
+  border: 1px solid rgba(228, 208, 202, 0.4);
+  color: var(--linea);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cerrar-sesion:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: #fff;
+}
+
+.panel-principal {
+  flex: 1;
+  padding-top: 40px;
+  padding-bottom: 80px;
+}
+
+.panel-bienvenida {
+  margin-bottom: 36px;
+}
+
+.panel-titulo {
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(32px, 5vw, 44px);
+  color: var(--cafe-deep);
+  margin: 6px 0 10px;
+}
+
+.panel-subtitulo {
+  font-size: 15px;
+  color: var(--cafe-suave);
+  margin: 0;
+  max-width: 600px;
+}
+
+.panel-modulos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+.panel-modulo-tarjeta {
+  background: var(--hueso);
+  border: 1.5px solid var(--linea);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(43, 35, 32, 0.04);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.panel-modulo-tarjeta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(43, 35, 32, 0.08);
+}
+
+.panel-modulo-tarjeta.tarjeta-admin {
+  border-left: 4px solid var(--fucsia-accion);
+}
+
+.modulo-tag {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cafe-suave);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.modulo-titulo {
+  font-family: var(--font-cormorant), serif;
+  font-size: 22px;
+  color: var(--cafe-deep);
+  margin: 0 0 8px;
+}
+
+.modulo-desc {
+  font-size: 13px;
+  color: var(--cafe-suave);
+  line-height: 1.5;
+  margin: 0 0 16px;
+  flex: 1;
+}
+
+.modulo-estado-fase {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: var(--rosa);
+  color: var(--cafe);
+  width: fit-content;
+}
+
+.panel-tarjeta-prueba {
+  background: var(--hueso);
+  border: 1.5px dashed var(--linea);
+  border-radius: 18px;
+  padding: 24px;
+  max-width: 680px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
