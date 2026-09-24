@@ -15,6 +15,8 @@ vi.mock('next/headers', () => ({
 }));
 
 describe('lib/auth/login — Seguridad en inicio de sesión del personal', () => {
+  process.env.PROXY_CONFIABLE = 'cloudflare';
+
   const emailValido = 'admin-login-test@dolceflorencia.com';
   const passwordValida = 'PasswordValida123!';
   const emailInactivo = 'inactivo-login-test@dolceflorencia.com';
@@ -30,7 +32,14 @@ describe('lib/auth/login — Seguridad en inicio de sesión del personal', () =>
     await prisma.peticionRateLimit.deleteMany({
       where: {
         clave: {
-          contains: 'login:',
+          in: [
+            `login:usuario:${emailValido}`,
+            `login:usuario:${emailInactivo}`,
+            'login:usuario:bruteforce-test@dolceflorencia.com',
+            'login:usuario:long-pass-test@dolceflorencia.com',
+            'login:ip:192.168.1.50',
+            'login:ip:127.0.0.1',
+          ],
         },
       },
     });
@@ -70,7 +79,14 @@ describe('lib/auth/login — Seguridad en inicio de sesión del personal', () =>
     await prisma.peticionRateLimit.deleteMany({
       where: {
         clave: {
-          contains: 'login:',
+          in: [
+            `login:usuario:${emailValido}`,
+            `login:usuario:${emailInactivo}`,
+            'login:usuario:bruteforce-test@dolceflorencia.com',
+            'login:usuario:long-pass-test@dolceflorencia.com',
+            'login:ip:192.168.1.50',
+            'login:ip:127.0.0.1',
+          ],
         },
       },
     });

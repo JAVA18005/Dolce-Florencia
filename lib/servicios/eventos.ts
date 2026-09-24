@@ -102,7 +102,7 @@ export async function crearEventoAction(datos: unknown): Promise<RespuestaAccion
 
   // 7. Guardar en Base de Datos
   // ARQUITECTURA.md §3.2 y §5.4: Un evento EN_LOCAL en estado PENDIENTE NO bloquea el día en DiaBloqueado.
-  // Solo se crea la fila en DiaBloqueado al confirmarse por el admin en la Fase 3.
+  // Solo se crea la fila en DiaBloqueado al confirmarse por el admin en el panel.
   const evento = await prisma.reserva.create({
     data: {
       codigo,

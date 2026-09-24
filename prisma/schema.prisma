@@ -89,9 +89,10 @@ model Usuario {
   nombre       String
   email        String   @unique
   passwordHash String
-  rol          Rol
-  activo       Boolean  @default(true)
-  creadoEn     DateTime @default(now())
+  rol                 Rol
+  activo              Boolean  @default(true)
+  debeCambiarPassword Boolean  @default(false)
+  creadoEn            DateTime @default(now())
 
   ventasRegistradas   Venta[]        @relation("VentaRegistradaPor")
   ventasCobradas      Venta[]        @relation("VentaCobradaPor")

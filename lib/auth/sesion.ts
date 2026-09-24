@@ -177,12 +177,23 @@ export async function obtenerSesionServidor(): Promise<InfoSesion | null> {
 /**
  * Valida sesión en el servidor y opcionalmente comprueba autorización de permiso.
  * Lanza un error estándar en caso de fallo, útil para Server Actions.
+ *
+ * REGLA DE SEGURIDAD:
+ * Si el usuario tiene `debeCambiarPassword === true`, se deniega el acceso a cualquier acción
+ * salvo que se active explícitamente `permitirSiDebeCambiarPassword` (para la acción de cambio de contraseña obligatoria).
  */
-export async function exigirSesionServidor(accionRequerida?: AccionPermiso): Promise<InfoSesion> {
+export async function exigirSesionServidor(
+  accionRequerida?: AccionPermiso,
+  permitirSiDebeCambiarPassword = false
+): Promise<InfoSesion> {
   const sesion = await obtenerSesionServidor();
 
   if (!sesion) {
     throw new Error('No autenticado: Se requiere inicio de sesión en el panel.');
+  }
+
+  if (sesion.usuario.debeCambiarPassword && !permitirSiDebeCambiarPassword) {
+    throw new Error('Debes actualizar tu contraseña antes de continuar navegando en el panel.');
   }
 
   if (accionRequerida && !puede(sesion.usuario.rol, accionRequerida)) {
@@ -194,6 +205,7 @@ export async function exigirSesionServidor(accionRequerida?: AccionPermiso): Pro
 
 /**
  * Cierra la sesión activa actual borrando el registro de BD y la cookie.
+ * Registra auditoría de cierre de sesión.
  */
 export async function cerrarSesion(): Promise<void> {
   try {
@@ -202,6 +214,22 @@ export async function cerrarSesion(): Promise<void> {
 
     if (token) {
       const tokenHash = calcularHashToken(token);
+      const sesionEnBd = await prisma.sesion.findUnique({
+        where: { tokenHash },
+        select: { usuarioId: true },
+      });
+
+      if (sesionEnBd) {
+        // Importación dinámica diferida o directa de registrarAuditoria
+        const { registrarAuditoria } = await import('../auditoria');
+        await registrarAuditoria({
+          usuarioId: sesionEnBd.usuarioId,
+          accion: 'usuario.logout',
+          entidad: 'Usuario',
+          entidadId: sesionEnBd.usuarioId,
+        }).catch(() => {});
+      }
+
       await prisma.sesion.deleteMany({ where: { tokenHash } }).catch(() => {});
     }
   } finally {

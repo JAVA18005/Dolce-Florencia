@@ -51,6 +51,23 @@ export async function procesarLogin(emailRaw: string, passwordRaw: string): Prom
 
   if (!resLimitUsuario.permitido) {
     const minutos = Math.max(1, Math.ceil((resLimitUsuario.segundosParaReintentar || 60) / 60));
+
+    // Auditoría de bloqueo: solo si el usuario existe en BD, registrando únicamente su ID
+    // (nunca texto escrito en el formulario ni passwords).
+    const usuarioExistente = await prisma.usuario.findUnique({
+      where: { email },
+      select: { id: true },
+    });
+    if (usuarioExistente) {
+      const { registrarAuditoria } = await import('../auditoria');
+      await registrarAuditoria({
+        usuarioId: usuarioExistente.id,
+        accion: 'login.bloqueado_intentos',
+        entidad: 'Usuario',
+        entidadId: usuarioExistente.id,
+      }).catch(() => {});
+    }
+
     return {
       exito: false,
       mensaje: `Demasiados intentos fallidos. Tu cuenta ha sido bloqueada temporalmente. Intenta de nuevo en ${minutos} minuto(s).`,
@@ -120,6 +137,14 @@ export async function procesarLogin(emailRaw: string, passwordRaw: string): Prom
   // 7. Regenerar sesión: crear nuevo registro de Sesion y emitir cookie httpOnly
   const { token, expiraEn } = await crearSesionEnBd(usuario.id);
   await establecerCookieSesion(token, expiraEn);
+
+  const { registrarAuditoria } = await import('../auditoria');
+  await registrarAuditoria({
+    usuarioId: usuario.id,
+    accion: 'login.exitoso',
+    entidad: 'Usuario',
+    entidadId: usuario.id,
+  }).catch(() => {});
 
   return {
     exito: true,
