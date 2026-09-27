@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useModoCamara } from './ModoCamaraContext';
 
 declare module 'react' {
   namespace JSX {
@@ -25,7 +26,6 @@ declare module 'react' {
 }
 
 interface ModelViewerElement extends HTMLElement {
-  canActivateAR?: boolean;
   activateAR?: () => Promise<boolean>;
 }
 
@@ -37,14 +37,15 @@ interface VisorModeloArProps {
   imagenUrl?: string | null;
 }
 
-type EstadoAr = 'not-presenting' | 'session-starting' | 'object-placed' | 'failed';
-
 /**
  * Visor AR del menú público (§3.4). No valida peso del .glb en servidor:
  * la carga, el poster y el fallback se resuelven íntegramente en el frontend.
- * El botón nativo de AR de <model-viewer> queda oculto; el acceso al modo
- * cámara es un control discreto que solo aparece si el dispositivo confirma
- * soporte real (canActivateAR). Cualquier falla es silenciosa.
+ * El botón nativo de AR de <model-viewer> queda oculto. El acceso al modo
+ * cámara es global (ModoCamaraContext): una sola decisión del usuario en el
+ * footer público que muestra u oculta el botón "Ver en tu mesa" (activateAR)
+ * en todos los visores a la vez. Sin detección automática de soporte; si el
+ * dispositivo no soporta AR, activateAR() no hace nada visible y todo fallo
+ * es silencioso.
  */
 export default function VisorModeloAr({
   nombre,
@@ -53,9 +54,9 @@ export default function VisorModeloAr({
   poster,
   imagenUrl,
 }: VisorModeloArProps) {
+  const { modoCamara } = useModoCamara();
   const [definido, setDefinido] = useState(false);
   const [fallo, setFallo] = useState(false);
-  const [arDisponible, setArDisponible] = useState(false);
   const [activando, setActivando] = useState(false);
   const visorRef = useRef<ModelViewerElement | null>(null);
 
@@ -76,36 +77,16 @@ export default function VisorModeloAr({
   useEffect(() => {
     const visor = visorRef.current;
     if (!definido || !visor) return;
-
     const onError = () => setFallo(true);
-    const onLoad = () => {
-      if (typeof visor.canActivateAR === 'boolean') {
-        setArDisponible(visor.canActivateAR);
-      }
-    };
-    const onArStatus = (evento: Event) => {
-      const detalle = (evento as CustomEvent<{ status: EstadoAr }>).detail;
-      if (detalle?.status === 'failed') {
-        // Dispositivo que anunció soporte pero falló al arrancar: ocultar en silencio.
-        setActivando(false);
-        setArDisponible(false);
-      }
-    };
-
     visor.addEventListener('error', onError);
-    visor.addEventListener('load', onLoad);
-    visor.addEventListener('ar-status', onArStatus);
     return () => {
       visor.removeEventListener('error', onError);
-      visor.removeEventListener('load', onLoad);
-      visor.removeEventListener('ar-status', onArStatus);
     };
   }, [definido]);
 
   const activarCamara = async () => {
     const visor = visorRef.current;
-    if (!visor || activando) return;
-    if (!visor.canActivateAR || !visor.activateAR) return;
+    if (!visor || activando || !visor.activateAR) return;
     setActivando(true);
     try {
       await visor.activateAR();
@@ -151,16 +132,19 @@ export default function VisorModeloAr({
         />
       ) : null}
 
-      {arDisponible ? (
-        <button
-          className="visor-ar-cta"
-          type="button"
-          aria-label={`Activar modo cámara para ver ${nombre} en tu espacio`}
-          onClick={activarCamara}
-          disabled={activando}
-        >
-          Modo cámara
-        </button>
+      {definido ? (
+        <div className="visor-ar-controls">
+          {modoCamara ? (
+            <button
+              className="visor-ar-boton-camara"
+              type="button"
+              onClick={activarCamara}
+              disabled={activando}
+            >
+              Ver en tu mesa
+            </button>
+          ) : null}
+        </div>
       ) : null}
     </div>
   );

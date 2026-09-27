@@ -3,9 +3,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useMovimiento } from '@/components/movimiento/MovimientoContext';
+import { useModoCamara } from '@/components/ar/ModoCamaraContext';
 
 export default function Footer() {
   const { pausado, sistemaReducido, efectivoPausado, alternarPausa } = useMovimiento();
+  const { modoCamara, alternarModoCamara } = useModoCamara();
 
   const textoBoton = sistemaReducido
     ? 'Movimiento reducido del sistema'
@@ -63,6 +65,23 @@ export default function Footer() {
         >
           Acceso personal
         </Link>
+        <button
+          type="button"
+          aria-pressed={modoCamara}
+          onClick={alternarModoCamara}
+          style={{
+            fontSize: '12px',
+            color: 'inherit',
+            fontFamily: 'inherit',
+            background: 'none',
+            border: 'none',
+            padding: 0,
+            cursor: 'pointer',
+            opacity: 0.65,
+          }}
+        >
+          {modoCamara ? 'Desactivar modo cámara' : 'Activar modo cámara'}
+        </button>
         <button
           className="motion-toggle"
           type="button"

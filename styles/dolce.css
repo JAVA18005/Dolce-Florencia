@@ -784,20 +784,27 @@ p {
 }
 
 /* Ocultar el botón nativo de AR de <model-viewer>: el acceso al modo cámara
-   es el control discreto .visor-ar-cta, que aparece solo en dispositivos
-   que confirmen soporte real (canActivateAR). */
+   es global (ModoCamaraContext): toggle en el footer público que muestra u
+   oculta el botón "Ver en tu mesa" en todos los visores a la vez. */
 .visor-ar-model::part(default-ar-button) {
   display: none;
 }
 
-/* Control discreto de AR: mismo criterio que "Acceso personal" del footer
+/* Botón "Ver en tu mesa": mismo criterio que "Acceso personal" del footer
    (texto pequeño, bajo contraste, sin destacar). */
-.visor-ar-cta {
+.visor-ar-controls {
   position: absolute;
   left: 50%;
-  bottom: 14px;
+  bottom: 10px;
   transform: translateX(-50%);
   z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.visor-ar-boton-camara {
   padding: 2px 6px;
   border: none;
   background: transparent;
@@ -808,11 +815,11 @@ p {
   letter-spacing: .02em;
 }
 
-.visor-ar-cta:hover {
+.visor-ar-boton-camara:hover {
   opacity: 1;
 }
 
-.visor-ar-cta:disabled {
+.visor-ar-boton-camara:disabled {
   cursor: default;
   opacity: .4;
 }
