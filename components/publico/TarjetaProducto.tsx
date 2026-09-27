@@ -4,6 +4,7 @@ import { useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { formatearCentavosABs } from '@/lib/dinero';
 import { useMovimiento } from '@/components/movimiento/MovimientoContext';
+import VisorModeloAr from '@/components/ar/VisorModeloAr';
 
 export interface ProductoDTO {
   id: string;
@@ -17,6 +18,9 @@ export interface ProductoDTO {
   };
   orden: number;
   aptoMascotas: boolean;
+  imagenUrl?: string | null;
+  modeloArUrl?: string | null;
+  modeloArIosUrl?: string | null;
 }
 
 export default function TarjetaProducto({ producto }: { producto: ProductoDTO }) {
@@ -80,14 +84,26 @@ export default function TarjetaProducto({ producto }: { producto: ProductoDTO })
       <div
         className="photo-frame"
         role="img"
-        aria-label={`Ilustración de ${producto.nombre}`}
+        aria-label={`${producto.modeloArUrl ? 'Modelo 3D de ' : 'Ilustración de '}${producto.nombre}`}
       >
         <span className="frame-corner">DF / ATELIER</span>
-        <div className="dessert-shape" aria-hidden="true">
-          <i />
-          <b />
-          <em />
-        </div>
+        {producto.modeloArUrl ? (
+          <VisorModeloAr
+            nombre={producto.nombre}
+            modeloArUrl={producto.modeloArUrl}
+            modeloArIosUrl={producto.modeloArIosUrl}
+            poster={producto.imagenUrl}
+            imagenUrl={producto.imagenUrl}
+          />
+        ) : producto.imagenUrl ? (
+          <img src={producto.imagenUrl} alt={producto.nombre} loading="lazy" />
+        ) : (
+          <div className="dessert-shape" aria-hidden="true">
+            <i />
+            <b />
+            <em />
+          </div>
+        )}
         <span className="frame-caption">{producto.nombre}</span>
         <span className="frame-star" aria-hidden="true">
           ✳
