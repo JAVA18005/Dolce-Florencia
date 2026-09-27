@@ -26,8 +26,8 @@ Los clientes **no tienen cuenta**. Toda solicitud pública se guarda en la base 
 | Auth (solo personal) | Autenticación propia: bcryptjs + tabla Sesion con token opaco, cookies `httpOnly` | Sin JWT en localStorage, revocación inmediata en BD |
 | Anti-spam | Cloudflare Turnstile + honeypot + rate limit | Formularios públicos sin login |
 | AR | `<model-viewer>` (Google) con `.glb` y `.usdz` opcional | Funciona en el navegador móvil |
-| Imágenes de productos | Cloudinary o Cloudflare R2 | El disco del contenedor no es persistente |
-| Hosting | Railway: servicio `web` + servicio `postgres` | Ver §8 |
+| Imágenes de productos | URLs manuales por ahora; pendiente Supabase Storage | Hito 4 usa URLs manuales, Storage no integrado aún |
+| Hosting | Vercel (app) + Supabase (PostgreSQL) | Ver §8 |
 
 Los nombres de modelos, campos y rutas van **en español**, igual que el negocio.
 
@@ -168,15 +168,32 @@ styles/                dolce.css, clay.css (migrados del sitio actual)
 
 Principio: **la lógica de negocio vive en `lib/servicios/`**, no en componentes ni en rutas. Las acciones del panel y los formularios públicos llaman a los mismos servicios, así hay una sola implementación de cada regla.
 
-## 8. Despliegue en Railway
+## 8. Despliegue en Vercel + Supabase
 
-- Un proyecto con dos servicios: `web` (Next.js, desde GitHub) y `postgres` (base de datos administrada de Railway).
-- Variables: `DATABASE_URL`, `AUTH_SECRET`, `TURNSTILE_SECRET`, `NEXT_PUBLIC_TURNSTILE_SITEKEY`, credenciales de Cloudinary/R2, `NEXT_PUBLIC_SITE_URL`.
-- Comando de arranque: `prisma migrate deploy` antes de iniciar la app.
-- Endpoint `GET /api/health` para el chequeo de salud.
-- Dominio: al inicio, el subdominio gratuito de Railway para pruebas; **antes de lanzar, un dominio propio** (aporta confianza al cliente y estabilidad en enlaces y SEO).
-- Backups: programar un `pg_dump` periódico a almacenamiento externo y probar restaurarlo. No confiar solo en la base como única copia.
-- Vigilar el panel de consumo de Railway durante las primeras semanas para calibrar el costo real.
+- **Hosting**: Vercel (app Next.js) + Supabase (PostgreSQL + Storage para imágenes), ambos en plan gratuito.
+- **Vercel**: despliegue automático desde GitHub (rama main), dominio actual `dolce-florencia.vercel.app`; dominio propio se conecta gratis en el plan Hobby cuando esté listo (Fase 7).
+- **Supabase** (proyecto en región sa-east-1, São Paulo): Postgres administrado. Conexión mediante **dos variables de entorno distintas** (obligatorio, no opcional):
+  - `DATABASE_URL`: connection string del Transaction Pooler (puerto 6543), con el parámetro obligatorio `?pgbouncer=true` al final. Sin este parámetro, Prisma falla en producción con error "prepared statement already exists" porque el pooler recicla conexiones entre requests.
+  - `DIRECT_URL`: connection string de conexión directa (puerto 5432). Solo se usa para migraciones (`prisma migrate deploy`), nunca en runtime de la app. Prisma Client no puede conectar por esta vía desde Vercel porque las funciones serverless no soportan IPv6, que es lo único que soporta la conexión directa de Supabase.
+  - En `prisma/schema.prisma`, el datasource db debe tener ambos:
+    ```prisma
+    url       = env("DATABASE_URL")
+    directUrl = env("DIRECT_URL")
+    ```
+- **Storage de imágenes**: por ahora NO integrado (Hito 4 usa URLs manuales). Pendiente para cuando se decida activar Supabase Storage.
+- **Build de Vercel**: el script `build` en `package.json` debe ser `prisma generate && next build`, no solo `next build` — si no, Vercel usa un Prisma Client desactualizado por su caché de dependencias entre builds.
+
+### Variables de entorno en Vercel
+
+`DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`, `TURNSTILE_SECRET`, `NEXT_PUBLIC_TURNSTILE_SITEKEY`, `NEXT_PUBLIC_SITE_URL`, `WHATSAPP_NUMERO`. (Nota: `TURNSTILE_SECRET` y `NEXT_PUBLIC_TURNSTILE_SITEKEY` siguen con las claves de prueba de Cloudflare por ahora, pendiente reemplazar por las reales cuando se configure la cuenta.)
+
+### Backups
+
+El plan gratis de Supabase NO incluye backups automáticos. Pendiente decidir antes de Fase 7: pagar el plan Pro de Supabase, o armar un script propio de `pg_dump` periódico.
+
+### Nota de operación
+
+El plan gratis de Supabase pausa el proyecto tras 7 días sin actividad; con tráfico diario normal del negocio no debería ocurrir.
 
 ## 9. Plan por fases
 
