@@ -1357,6 +1357,56 @@ p {
   }
 }
 
+/* ────────── Ritual en móvil (< 768px): torta arriba, pasos debajo, sin pin ────────── */
+@media (max-width: 767px) {
+  .ritual {
+    overflow-x: hidden;
+  }
+  .ritual-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .ritual-sticky {
+    position: static;
+    padding-top: 6px;
+  }
+  .ritual-sticky h2 {
+    margin-bottom: 12px;
+  }
+  .ritual-sticky > p {
+    margin-bottom: 0;
+  }
+  .ritual-art {
+    height: clamp(180px, 38vh, 300px);
+    height: clamp(180px, 38dvh, 300px);
+    margin: 8px auto 4px;
+    max-width: 100%;
+  }
+  .ritual-art .cake-art {
+    width: min(300px, 82%);
+    margin: 0 auto;
+    transform: rotate(calc(-6deg + var(--progress, 1) * 8deg));
+  }
+  .ritual-art .layer-middle {
+    transform: translateY(calc((1 - var(--progress, 1)) * -30px));
+  }
+  .ritual-art .layer-top {
+    transform: translateY(calc((1 - var(--progress, 1)) * -55px));
+  }
+  .ritual-art .layer-decoration {
+    transform: translateY(calc((1 - var(--progress, 1)) * -80px));
+  }
+  .morph-shape {
+    inset: 24px 12px 0;
+    transform: rotate(calc(var(--progress, 1) * 45deg));
+    opacity: calc(0.92 - var(--progress, 1) * 0.06);
+  }
+  .ritual-steps article {
+    min-height: auto;
+    padding: 26px 0;
+  }
+}
+
 
 /* ────────── Formularios Públicos (Fase 2) ────────── */
 .pagina-formulario-wrap {
