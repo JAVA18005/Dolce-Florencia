@@ -2009,6 +2009,193 @@ select.field-select,
   color: var(--cafe-deep);
 }
 
+/* ────────── Modal de solicitud recibida (compartido pedido / reserva / evento) ────────── */
+.modal-solicitud-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background-color: rgba(43, 35, 32, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: calc(20px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right))
+    calc(20px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-left));
+}
+
+.modal-solicitud-tarjeta {
+  margin: auto;
+  position: relative;
+  background: var(--hueso);
+  border-radius: 28px;
+  border: 1px solid var(--linea);
+  max-width: 540px;
+  width: 100%;
+  max-height: 100vh;
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(20px, 5vw, 36px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+}
+
+.modal-solicitud-cerrar {
+  position: absolute;
+  top: clamp(16px, 3vw, 20px);
+  right: clamp(16px, 4vw, 24px);
+  background: none;
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--cafe);
+}
+
+.modal-solicitud-eyebrow {
+  margin-bottom: 12px;
+  padding-right: 28px;
+}
+
+.modal-solicitud-titulo {
+  font-size: clamp(24px, 6vw, 36px);
+  line-height: 1.15;
+  margin: 0 0 14px;
+  padding-right: 28px;
+}
+
+.modal-solicitud-parrafo {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--cafe-suave);
+  margin: 0;
+}
+
+.modal-codigo-modulo {
+  background: var(--rosa);
+  border: 1px dashed var(--fucsia);
+  border-radius: 16px;
+  padding: 16px clamp(16px, 4vw, 24px);
+  margin: 24px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.modal-codigo-info {
+  min-width: 0;
+}
+
+.modal-codigo-etiqueta-modal {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--cafe-suave);
+  white-space: nowrap;
+}
+
+.modal-codigo-valor-modal {
+  display: block;
+  font-family: monospace;
+  font-size: clamp(20px, 6vw, 26px);
+  letter-spacing: 0.05em;
+  color: var(--fucsia-accion);
+  white-space: nowrap;
+}
+
+.modal-codigo-copiar {
+  flex-shrink: 0;
+  background: var(--hueso);
+  border: 1px solid var(--linea);
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.modal-solicitud-aviso {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--cafe-suave);
+  background: rgba(107, 122, 94, 0.08);
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin: 0 0 24px;
+}
+
+.modal-solicitud-pie {
+  position: sticky;
+  bottom: 0;
+  background: var(--hueso);
+  padding-top: 8px;
+}
+
+.modal-solicitud-pie .button {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.modal-solicitud-cerrar-texto {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 12px;
+  font-size: 13px;
+  color: var(--cafe-suave);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.modal-solicitud-cerrar-texto:hover,
+.modal-solicitud-cerrar:hover {
+  color: var(--cafe-deep);
+}
+
+/* Pantalla angosta: código y botón Copiar apilados, Copiar a ancho completo */
+@media (max-width: 480px) {
+  .modal-codigo-modulo {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  .modal-codigo-copiar {
+    width: 100%;
+  }
+}
+
+/* Altura baja: compactar paddings e interlineado para que nunca haya que "buscar" el botón */
+@media (max-height: 700px) {
+  .modal-solicitud-tarjeta {
+    padding: 20px;
+  }
+  .modal-solicitud-eyebrow {
+    margin-bottom: 8px;
+  }
+  .modal-solicitud-titulo {
+    font-size: clamp(22px, 5vw, 30px);
+    margin-bottom: 10px;
+  }
+  .modal-solicitud-parrafo {
+    line-height: 1.5;
+  }
+  .modal-codigo-modulo {
+    margin: 16px 0;
+    padding: 12px 16px;
+  }
+  .modal-codigo-valor-modal {
+    font-size: clamp(18px, 5vw, 24px);
+  }
+  .modal-solicitud-aviso {
+    margin-bottom: 16px;
+    padding: 10px 14px;
+  }
+  .modal-solicitud-pie {
+    padding-top: 4px;
+  }
+}
+
 /* ────────── Seguimiento de Solicitudes ────────── */
 .seguimiento-contenedor {
   max-width: 820px;
