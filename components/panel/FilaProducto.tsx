@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { archivarProductoAction, desarchivarProductoAction, editarProductoAction } from '@/app/(panel)/panel/productos/acciones';
 import { formatearCentavosABs } from '@/lib/dinero';
+import CampoSubidaArchivo from './CampoSubidaArchivo';
 
 interface Categoria {
   id: string;
@@ -233,30 +234,22 @@ export default function FilaProducto({ producto, categorias }: Props) {
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '12px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
-                    Ruta / URL de Imagen (opcional):
-                  </label>
-                  <input
-                    type="text"
-                    value={imagenUrl}
-                    onChange={(e) => setImagenUrl(e.target.value)}
-                    placeholder="Ej. /productos/red-velvet.jpg o URL externa"
-                    className="field-input"
-                    style={{ width: '100%', fontSize: '13px', padding: '6px 10px' }}
+                  <CampoSubidaArchivo
+                    tipo="imagen"
+                    etiqueta="Imagen del producto (subir jpg/png/webp, máx 5 MB):"
+                    valorActual={imagenUrl || null}
+                    onChange={setImagenUrl}
+                    acepta=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
                   />
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
-                    Modelo 3D AR (.glb) (opcional):
-                  </label>
-                  <input
-                    type="text"
-                    value={modeloArUrl}
-                    onChange={(e) => setModeloArUrl(e.target.value)}
-                    placeholder="Ej. /models/red-velvet.glb"
-                    className="field-input"
-                    style={{ width: '100%', fontSize: '13px', padding: '6px 10px' }}
+                  <CampoSubidaArchivo
+                    tipo="modelo"
+                    etiqueta="Modelo AR 3D (.glb, subir archivo, máx 10 MB):"
+                    valorActual={modeloArUrl || null}
+                    onChange={setModeloArUrl}
+                    acepta=".glb,model/gltf-binary"
                   />
                 </div>
 

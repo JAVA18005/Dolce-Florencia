@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { crearProductoAction } from '@/app/(panel)/panel/productos/acciones';
+import CampoSubidaArchivo from './CampoSubidaArchivo';
 
 interface Categoria {
   id: string;
@@ -160,30 +161,22 @@ export default function FormularioProducto({ categorias }: Props) {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px', marginBottom: '14px' }}>
           <div>
-            <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
-              Ruta / URL de Imagen (opcional)
-            </label>
-            <input
-              type="text"
-              value={imagenUrl}
-              onChange={(e) => setImagenUrl(e.target.value)}
-              placeholder="Ej. /productos/frutilla.jpg"
-              className="field-input"
-              style={{ width: '100%', fontSize: '13px' }}
+            <CampoSubidaArchivo
+              tipo="imagen"
+              etiqueta="Imagen del producto (subir jpg/png/webp, máx 5 MB)"
+              valorActual={imagenUrl || null}
+              onChange={(url) => setImagenUrl(url ?? '')}
+              acepta=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
             />
           </div>
 
           <div>
-            <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
-              Modelo AR 3D (.glb) (opcional)
-            </label>
-            <input
-              type="text"
-              value={modeloArUrl}
-              onChange={(e) => setModeloArUrl(e.target.value)}
-              placeholder="Ej. /models/tarta.glb"
-              className="field-input"
-              style={{ width: '100%', fontSize: '13px' }}
+            <CampoSubidaArchivo
+              tipo="modelo"
+              etiqueta="Modelo AR 3D (.glb, subir archivo, máx 10 MB)"
+              valorActual={modeloArUrl || null}
+              onChange={(url) => setModeloArUrl(url ?? '')}
+              acepta=".glb,model/gltf-binary"
             />
           </div>
 
