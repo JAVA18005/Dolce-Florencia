@@ -17,6 +17,8 @@ export const FormularioSeguimientoSchema = z.object({
     .refine((val) => /^\d{4}$/.test(val), {
       message: 'Ingresa exactamente los últimos 4 dígitos del teléfono con el que solicitaste',
     }),
+  campoTrampa: z.string().max(100).optional(), // Honeypot anti-spam
+  turnstileToken: z.string().max(2048).optional(),
 });
 
 export type FormularioSeguimientoEntrada = z.input<typeof FormularioSeguimientoSchema>;

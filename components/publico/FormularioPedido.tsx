@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { crearPedidoAction } from '@/lib/servicios/pedidos';
 import SelectorFecha from './SelectorFecha';
-import Turnstile from './Turnstile';
+import Turnstile, { type TurnstileRef } from './Turnstile';
 import ModalSolicitudExitosa from './ModalSolicitudExitosa';
 import { formatearCentavosABs } from '@/lib/dinero';
 
@@ -36,6 +36,7 @@ export default function FormularioPedido({
   const [detalles, setDetalles] = useState('');
   const [campoTrampa, setCampoTrampa] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
+  const turnstileRef = useRef<TurnstileRef>(null);
 
   // Ítems seleccionados
   const prodDefault = productoInicial
@@ -124,17 +125,18 @@ export default function FormularioPedido({
         if (respuesta.errores) {
           setErroresCampos(respuesta.errores);
         }
-        setEnviando(false);
         return;
       }
 
       setCodigoExitoso(respuesta.codigo || '');
       setEnlaceWhatsApp(respuesta.enlaceWhatsApp || '');
       setModalAbierto(true);
-      setEnviando(false);
     } catch {
       setErrorGlobal('Error de conexión al enviar el formulario. Por favor intenta de nuevo.');
+    } finally {
       setEnviando(false);
+      setTurnstileToken('');
+      turnstileRef.current?.reiniciar();
     }
   };
 
@@ -387,7 +389,12 @@ export default function FormularioPedido({
 
         {/* Turnstile */}
         <div className="form-turnstile-container">
-          <Turnstile onVerify={(token) => setTurnstileToken(token)} />
+          <Turnstile
+            ref={turnstileRef}
+            onVerify={(token) => setTurnstileToken(token)}
+            onError={() => setTurnstileToken('')}
+            onExpire={() => setTurnstileToken('')}
+          />
         </div>
 
         {/* Acciones de envío */}

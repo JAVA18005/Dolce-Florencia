@@ -1,15 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   consultarSeguimientoAction,
   DetalleSeguimientoPublico,
 } from '@/lib/servicios/seguimiento';
 import { generarEnlaceWhatsApp } from '@/lib/whatsapp';
+import Turnstile, { type TurnstileRef } from './Turnstile';
 
 export default function FormularioSeguimiento() {
   const [codigo, setCodigo] = useState('');
   const [ultimos4Digitos, setUltimos4Digitos] = useState('');
+  const [campoTrampa, setCampoTrampa] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const turnstileRef = useRef<TurnstileRef>(null);
   const [consultando, setConsultando] = useState(false);
   const [errorGlobal, setErrorGlobal] = useState<string | null>(null);
   const [erroresCampos, setErroresCampos] = useState<Record<string, string[]>>({});
@@ -26,6 +30,8 @@ export default function FormularioSeguimiento() {
       const resp = await consultarSeguimientoAction({
         codigo: codigo.trim().toUpperCase(),
         ultimos4Digitos: ultimos4Digitos.trim(),
+        campoTrampa: campoTrampa || undefined,
+        turnstileToken: turnstileToken || undefined,
       });
 
       if (!resp.exito) {
@@ -40,6 +46,8 @@ export default function FormularioSeguimiento() {
       setErrorGlobal('Hubo un error de conexión con el servidor. Por favor intenta más tarde.');
     } finally {
       setConsultando(false);
+      setTurnstileToken('');
+      turnstileRef.current?.reiniciar();
     }
   };
 
@@ -119,6 +127,27 @@ export default function FormularioSeguimiento() {
             </div>
           </div>
         </fieldset>
+
+        <div style={{ display: 'none' }} aria-hidden="true">
+          <label htmlFor="campo-trampa-seguimiento">No completar este campo:</label>
+          <input
+            id="campo-trampa-seguimiento"
+            type="text"
+            tabIndex={-1}
+            value={campoTrampa}
+            onChange={(e) => setCampoTrampa(e.target.value)}
+            autoComplete="off"
+          />
+        </div>
+
+        <div className="form-turnstile-container">
+          <Turnstile
+            ref={turnstileRef}
+            onVerify={(token) => setTurnstileToken(token)}
+            onError={() => setTurnstileToken('')}
+            onExpire={() => setTurnstileToken('')}
+          />
+        </div>
 
         <div className="form-acciones">
           <button

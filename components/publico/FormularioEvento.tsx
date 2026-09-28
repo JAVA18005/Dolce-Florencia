@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { crearEventoAction } from '@/lib/servicios/eventos';
 import SelectorFecha from './SelectorFecha';
-import Turnstile from './Turnstile';
+import Turnstile, { type TurnstileRef } from './Turnstile';
 import ModalSolicitudExitosa from './ModalSolicitudExitosa';
 
 interface FormularioEventoProps {
@@ -20,6 +20,7 @@ export default function FormularioEvento({ fechasBloqueadas }: FormularioEventoP
   const [detalles, setDetalles] = useState('');
   const [campoTrampa, setCampoTrampa] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
+  const turnstileRef = useRef<TurnstileRef>(null);
 
   const [enviando, setEnviando] = useState(false);
   const [errorGlobal, setErrorGlobal] = useState<string | null>(null);
@@ -64,6 +65,8 @@ export default function FormularioEvento({ fechasBloqueadas }: FormularioEventoP
       setErrorGlobal('Hubo un problema de conexión con el servidor. Intenta de nuevo.');
     } finally {
       setEnviando(false);
+      setTurnstileToken('');
+      turnstileRef.current?.reiniciar();
     }
   };
 
@@ -254,7 +257,12 @@ export default function FormularioEvento({ fechasBloqueadas }: FormularioEventoP
 
         {/* Cloudflare Turnstile */}
         <div className="form-turnstile-container">
-          <Turnstile onVerify={(token) => setTurnstileToken(token)} />
+          <Turnstile
+            ref={turnstileRef}
+            onVerify={(token) => setTurnstileToken(token)}
+            onError={() => setTurnstileToken('')}
+            onExpire={() => setTurnstileToken('')}
+          />
         </div>
 
         {/* Botón de envío */}

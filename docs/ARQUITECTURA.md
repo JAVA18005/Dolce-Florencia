@@ -185,7 +185,7 @@ Principio: **la lógica de negocio vive en `lib/servicios/`**, no en componentes
 
 ### Variables de entorno en Vercel
 
-`DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`, `TURNSTILE_SECRET`, `NEXT_PUBLIC_TURNSTILE_SITEKEY`, `NEXT_PUBLIC_SITE_URL`, `WHATSAPP_NUMERO`. (Nota: `TURNSTILE_SECRET` y `NEXT_PUBLIC_TURNSTILE_SITEKEY` siguen con las claves de prueba de Cloudflare por ahora, pendiente reemplazar por las reales cuando se configure la cuenta.)
+`DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`, `TURNSTILE_SECRET_KEY`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `NEXT_PUBLIC_SITE_URL`, `WHATSAPP_NUMERO`. (Nota: `TURNSTILE_SECRET_KEY` y `NEXT_PUBLIC_TURNSTILE_SITE_KEY` siguen con las claves de prueba de Cloudflare por ahora, pendiente reemplazar por las reales cuando se configure la cuenta.)
 
 ### Backups
 

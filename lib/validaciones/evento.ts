@@ -48,7 +48,7 @@ export const FormularioEventoSchema = z.object({
     .min(5, 'Por favor cuéntanos algunos detalles de lo que imaginas para tu evento')
     .max(1500, 'Máximo 1500 caracteres'),
   campoTrampa: z.string().max(100).optional(), // Honeypot anti-spam
-  turnstileToken: z.string().optional(),
+  turnstileToken: z.string().max(2048).optional(),
 });
 
 export type FormularioEventoEntrada = z.input<typeof FormularioEventoSchema>;

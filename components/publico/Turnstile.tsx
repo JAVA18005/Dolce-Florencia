@@ -1,6 +1,10 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+
+export interface TurnstileRef {
+  reiniciar: () => void;
+}
 
 interface TurnstileProps {
   onVerify: (token: string) => void;
@@ -28,31 +32,81 @@ declare global {
   }
 }
 
-export default function Turnstile({ onVerify, onError, onExpire }: TurnstileProps) {
+const siteKey =
+  process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'; // Clave de prueba oficial Cloudflare
+
+const Turnstile = forwardRef<TurnstileRef, TurnstileProps>(function Turnstile(
+  { onVerify, onError, onExpire },
+  ref
+) {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
+  const callbacksRef = useRef({ onVerify, onError, onExpire });
+  callbacksRef.current = { onVerify, onError, onExpire };
 
-  const siteKey =
-    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'; // Clave de prueba oficial Cloudflare
+  const [estado, setEstado] = useState<'cargando' | 'listo' | 'error'>('cargando');
+
+  const renderWidget = () => {
+    if (!window.turnstile || !containerRef.current || widgetIdRef.current) return;
+    try {
+      widgetIdRef.current = window.turnstile.render(containerRef.current, {
+        sitekey: siteKey,
+        callback: (token: string) => {
+          callbacksRef.current.onVerify(token);
+          setEstado('listo');
+        },
+        'error-callback': () => {
+          setEstado('error');
+          callbacksRef.current.onVerify('');
+          callbacksRef.current.onError?.();
+        },
+        'expired-callback': () => {
+          setEstado('error');
+          callbacksRef.current.onVerify('');
+          callbacksRef.current.onExpire?.();
+        },
+        theme: 'light',
+      });
+    } catch {
+      setEstado('error');
+    }
+  };
+
+  const recargar = () => {
+    if (window.turnstile && widgetIdRef.current) {
+      try {
+        window.turnstile.remove(widgetIdRef.current);
+      } catch {
+        // Ignorar
+      }
+      widgetIdRef.current = null;
+    }
+    setEstado('cargando');
+    window.setTimeout(renderWidget, 50);
+  };
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      reiniciar: () => {
+        if (window.turnstile && widgetIdRef.current) {
+          try {
+            window.turnstile.reset(widgetIdRef.current);
+          } catch {
+            // Ignorar
+          }
+        }
+        setEstado('cargando');
+        window.setTimeout(renderWidget, 50);
+      },
+      recargar,
+    }),
+    []
+  );
 
   useEffect(() => {
     let scriptEl: HTMLScriptElement | null = null;
-
-    const renderWidget = () => {
-      if (window.turnstile && containerRef.current && !widgetIdRef.current) {
-        try {
-          widgetIdRef.current = window.turnstile.render(containerRef.current, {
-            sitekey: siteKey,
-            callback: (token: string) => onVerify(token),
-            'error-callback': () => onError?.(),
-            'expired-callback': () => onExpire?.(),
-            theme: 'light',
-          });
-        } catch {
-          // Ignorar error si ya estaba renderizado
-        }
-      }
-    };
+    let intervalo: number | undefined;
 
     if (window.turnstile) {
       renderWidget();
@@ -68,17 +122,19 @@ export default function Turnstile({ onVerify, onError, onExpire }: TurnstileProp
         };
         document.head.appendChild(scriptEl);
       } else {
-        const interval = setInterval(() => {
+        intervalo = window.setInterval(() => {
           if (window.turnstile) {
-            clearInterval(interval);
+            window.clearInterval(intervalo);
             renderWidget();
           }
         }, 100);
-        return () => clearInterval(interval);
       }
     }
 
     return () => {
+      if (intervalo) {
+        window.clearInterval(intervalo);
+      }
       if (widgetIdRef.current && window.turnstile) {
         try {
           window.turnstile.remove(widgetIdRef.current);
@@ -87,12 +143,29 @@ export default function Turnstile({ onVerify, onError, onExpire }: TurnstileProp
         }
         widgetIdRef.current = null;
       }
+      scriptEl?.remove();
     };
-  }, [siteKey, onVerify, onError, onExpire]);
+  }, []);
 
   return (
-    <div style={{ marginBlock: '14px', minHeight: '65px' }}>
+    <div
+      className="turnstile-wrap"
+      style={{ marginBlock: '14px', minHeight: '65px', maxWidth: '100%', overflow: 'hidden' }}
+    >
       <div ref={containerRef} />
+
+      <p className="turnstile-mensaje" role="status">
+        {estado === 'cargando' && 'Cargando verificación de seguridad…'}
+        {estado === 'error' && 'No pudimos cargar la verificación de seguridad o expiró.'}
+      </p>
+
+      {estado === 'error' && (
+        <button type="button" className="turnstile-reintentar" onClick={() => recargar()}>
+          Reintentar verificación
+        </button>
+      )}
     </div>
   );
-}
+});
+
+export default Turnstile;

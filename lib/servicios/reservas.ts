@@ -8,7 +8,7 @@ import prisma from '../db';
 import { FormularioReservaSchema } from '../validaciones/reserva';
 import { parseYMDToDate } from '../fechas';
 import { generarCodigoSeguimiento } from '../codigo';
-import { verificarTurnstile } from '../turnstile';
+import { verificarTurnstile } from './turnstile';
 import { verificarYRegistrarRateLimit } from '../rate-limit';
 import { obtenerIpCliente } from '../ip';
 import { generarEnlaceWhatsApp } from '../whatsapp';
@@ -26,7 +26,19 @@ export async function crearReservaAction(datos: unknown): Promise<RespuestaAccio
   const headersList = await headers();
   const ipCliente = obtenerIpCliente(headersList);
 
-  // 1. Rate limiting por IP: máximo 10 reservas por hora
+  // 1. Honeypot: si el campo trampa viene lleno, simular éxito silencioso sin persistir
+  const campoTrampaCrudo =
+    typeof datos === 'object' && datos !== null ? (datos as { campoTrampa?: unknown }).campoTrampa : undefined;
+  if (typeof campoTrampaCrudo === 'string' && campoTrampaCrudo.trim().length > 0) {
+    const codigoFicticio = generarCodigoSeguimiento();
+    return {
+      exito: true,
+      codigo: codigoFicticio,
+      enlaceWhatsApp: generarEnlaceWhatsApp('¡Hola! Me gustaría consultar sobre una reserva de mesa.'),
+    };
+  }
+
+  // 2. Rate limiting por IP: máximo 10 reservas por hora
   const controlRate = await verificarYRegistrarRateLimit(`ip:${ipCliente}:reserva`, 10, 3600);
   if (!controlRate.permitido) {
     return {
@@ -37,7 +49,7 @@ export async function crearReservaAction(datos: unknown): Promise<RespuestaAccio
     };
   }
 
-  // 2. Validación de entrada con Zod
+  // 3. Validación de entrada con Zod
   const parseo = FormularioReservaSchema.safeParse(datos);
   if (!parseo.success) {
     return {
@@ -56,26 +68,26 @@ export async function crearReservaAction(datos: unknown): Promise<RespuestaAccio
     zonaPreferencia,
     conMascota,
     detalles,
-    campoTrampa,
     turnstileToken,
   } = parseo.data;
 
-  // 3. Honeypot: si el campo trampa viene lleno, simular éxito silencioso sin persistir
-  if (campoTrampa && campoTrampa.trim().length > 0) {
-    const codigoFicticio = generarCodigoSeguimiento();
-    return {
-      exito: true,
-      codigo: codigoFicticio,
-      enlaceWhatsApp: generarEnlaceWhatsApp('¡Hola! Me gustaría consultar sobre una reserva de mesa.'),
-    };
-  }
-
-  // 4. Verificación de Turnstile en servidor
+  // 4. Verificación de Turnstile en servidor (siempre falla cerrado)
   const turnstile = await verificarTurnstile(turnstileToken, ipCliente);
   if (!turnstile.valido) {
     return {
       exito: false,
-      mensaje: 'No fue posible verificar la seguridad contra spam. Por favor recarga e intenta de nuevo.',
+      mensaje: 'No pudimos verificar que eres una persona. Intenta de nuevo.',
+    };
+  }
+
+  // 5. Rate limiting por teléfono: máximo 5 solicitudes por hora
+  const controlTelefono = await verificarYRegistrarRateLimit(`tel:${telefono}:reserva`, 5, 3600);
+  if (!controlTelefono.permitido) {
+    return {
+      exito: false,
+      mensaje: `Has alcanzado el límite de solicitudes para este número. Por favor reintenta en ${Math.ceil(
+        (controlTelefono.segundosParaReintentar || 60) / 60
+      )} minutos.`,
     };
   }
 

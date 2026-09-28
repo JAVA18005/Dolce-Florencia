@@ -53,7 +53,7 @@ export const FormularioPedidoSchema = z
       .min(1, 'Debes incluir al menos un producto o pedido en la solicitud'),
     detalles: z.string().trim().max(1500).optional(),
     campoTrampa: z.string().max(100).optional(), // Honeypot anti-spam
-    turnstileToken: z.string().optional(),
+    turnstileToken: z.string().max(2048).optional(),
   })
   .refine(
     (data) => {

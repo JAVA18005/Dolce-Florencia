@@ -51,7 +51,7 @@ export const FormularioReservaSchema = z.object({
   conMascota: z.boolean().default(false),
   detalles: z.string().trim().max(1500).optional(),
   campoTrampa: z.string().max(100).optional(), // Honeypot anti-spam
-  turnstileToken: z.string().optional(),
+  turnstileToken: z.string().max(2048).optional(),
 });
 
 export type FormularioReservaEntrada = z.input<typeof FormularioReservaSchema>;

@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { crearReservaAction } from '@/lib/servicios/reservas';
 import SelectorFecha from './SelectorFecha';
 import SelectorHora from './SelectorHora';
-import Turnstile from './Turnstile';
+import Turnstile, { type TurnstileRef } from './Turnstile';
 import ModalSolicitudExitosa from './ModalSolicitudExitosa';
 
 interface FormularioReservaProps {
@@ -22,6 +22,7 @@ export default function FormularioReserva({ fechasBloqueadas }: FormularioReserv
   const [detalles, setDetalles] = useState('');
   const [campoTrampa, setCampoTrampa] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
+  const turnstileRef = useRef<TurnstileRef>(null);
 
   const [enviando, setEnviando] = useState(false);
   const [errorGlobal, setErrorGlobal] = useState<string | null>(null);
@@ -67,6 +68,8 @@ export default function FormularioReserva({ fechasBloqueadas }: FormularioReserv
       setErrorGlobal('Hubo un problema de conexión con el servidor. Intenta de nuevo.');
     } finally {
       setEnviando(false);
+      setTurnstileToken('');
+      turnstileRef.current?.reiniciar();
     }
   };
 
@@ -252,7 +255,12 @@ export default function FormularioReserva({ fechasBloqueadas }: FormularioReserv
 
         {/* Cloudflare Turnstile */}
         <div className="form-turnstile-container">
-          <Turnstile onVerify={(token) => setTurnstileToken(token)} />
+          <Turnstile
+            ref={turnstileRef}
+            onVerify={(token) => setTurnstileToken(token)}
+            onError={() => setTurnstileToken('')}
+            onExpire={() => setTurnstileToken('')}
+          />
         </div>
 
         {/* Botón de envío */}

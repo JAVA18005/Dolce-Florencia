@@ -7,6 +7,7 @@ import prisma from '../db';
 import { FormularioSeguimientoSchema } from '../validaciones/seguimiento';
 import { obtenerIpCliente } from '../ip';
 import { verificarYRegistrarRateLimit } from '../rate-limit';
+import { verificarTurnstile } from './turnstile';
 import { obtenerUltimos4Digitos } from '../telefono';
 import { fechaAYMD } from '../fechas';
 
@@ -35,7 +36,17 @@ export async function consultarSeguimientoAction(datos: unknown): Promise<Respue
   const headersList = await headers();
   const ipCliente = obtenerIpCliente(headersList);
 
-  // 1. Rate limiting por IP: máximo 15 consultas cada 10 minutos
+  // 1. Honeypot: si el campo trampa viene lleno, responder igual que "no encontrado" sin consultar nada
+  const campoTrampaCrudo =
+    typeof datos === 'object' && datos !== null ? (datos as { campoTrampa?: unknown }).campoTrampa : undefined;
+  if (typeof campoTrampaCrudo === 'string' && campoTrampaCrudo.trim().length > 0) {
+    return {
+      exito: false,
+      mensaje: MENSAJE_ERROR_GENERICO,
+    };
+  }
+
+  // 2. Rate limiting por IP: máximo 15 consultas cada 10 minutos
   const rateIp = await verificarYRegistrarRateLimit(`ip:${ipCliente}:seguimiento`, 15, 600);
   if (!rateIp.permitido) {
     return {
@@ -46,7 +57,7 @@ export async function consultarSeguimientoAction(datos: unknown): Promise<Respue
     };
   }
 
-  // 2. Validación Zod de código y dígitos
+  // 3. Validación Zod de código y dígitos
   const parseo = FormularioSeguimientoSchema.safeParse(datos);
   if (!parseo.success) {
     return {
@@ -56,9 +67,18 @@ export async function consultarSeguimientoAction(datos: unknown): Promise<Respue
     };
   }
 
-  const { codigo, ultimos4Digitos } = parseo.data;
+  const { codigo, ultimos4Digitos, turnstileToken } = parseo.data;
 
-  // 3. Rate limiting específico por CÓDIGO (máximo 5 intentos por hora por código)
+  // 4. Verificación de Turnstile en servidor (siempre falla cerrado)
+  const turnstile = await verificarTurnstile(turnstileToken, ipCliente);
+  if (!turnstile.valido) {
+    return {
+      exito: false,
+      mensaje: 'No pudimos verificar que eres una persona. Intenta de nuevo.',
+    };
+  }
+
+  // 5. Rate limiting específico por CÓDIGO (máximo 5 intentos por hora por código)
   // Independiente de los dígitos probados para evitar ataques de fuerza bruta
   const rateCodigo = await verificarYRegistrarRateLimit(`codigo:${codigo}:seguimiento`, 5, 3600);
   if (!rateCodigo.permitido) {
@@ -68,7 +88,7 @@ export async function consultarSeguimientoAction(datos: unknown): Promise<Respue
     };
   }
 
-  // 4. Buscar en Pedidos
+  // 6. Buscar en Pedidos
   const pedido = await prisma.pedido.findUnique({
     where: { codigo },
     include: { items: true },
@@ -98,7 +118,7 @@ export async function consultarSeguimientoAction(datos: unknown): Promise<Respue
     };
   }
 
-  // 5. Buscar en Reservas / Eventos
+  // 7. Buscar en Reservas / Eventos
   const reserva = await prisma.reserva.findUnique({
     where: { codigo },
   });
