@@ -55,7 +55,7 @@ export default async function InicioPage() {
           </div>
 
           <div className="hero-visual-wrapper">
-            <PastelInteractivo mostrarBotonDesarmar={true} />
+            <PastelInteractivo />
           </div>
         </div>
 
