@@ -69,20 +69,20 @@ export default function FilaEvento({ evento, capacidadTotalLocal }: Props) {
         <span style={{ fontWeight: 700, color: 'var(--cafe-deep)', display: 'block' }}>
           {evento.codigo}
         </span>
-        <span style={{ fontSize: '13px', color: 'var(--cafe)' }}>{evento.clienteNombre}</span>
-        <span style={{ fontSize: '12px', color: 'var(--cafe-suave)', display: 'block' }}>
+        <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe)' }}>{evento.clienteNombre}</span>
+        <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)', display: 'block' }}>
           📞 {evento.clienteTelefono}
         </span>
-        {error && <span style={{ color: '#c92a2a', fontSize: '11px', display: 'block' }}>⚠️ {error}</span>}
-        {mensajeExito && <span style={{ color: '#2b8a3e', fontSize: '11px', display: 'block' }}>✅ {mensajeExito}</span>}
+        {error && <span style={{ color: 'var(--color-error)', fontSize: 'var(--fs-small)', display: 'block' }}>⚠️ {error}</span>}
+        {mensajeExito && <span style={{ color: 'var(--color-exito)', fontSize: 'var(--fs-small)', display: 'block' }}>✅ {mensajeExito}</span>}
       </td>
 
       <td>
         <span style={{ fontWeight: 600, display: 'block' }}>{fechaStr}</span>
-        <span style={{ fontSize: '12px', color: 'var(--cafe-suave)' }}>
+        <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
           Hora: {evento.hora || 'Flexible'}
         </span>
-        <span style={{ display: 'block', fontSize: '12px', color: 'var(--cafe-deep)' }}>
+        <span style={{ display: 'block', fontSize: 'var(--fs-small)', color: 'var(--cafe-deep)' }}>
           {personas} personas {evento.ocasion ? `· ${evento.ocasion}` : ''}
         </span>
       </td>
@@ -91,12 +91,12 @@ export default function FilaEvento({ evento, capacidadTotalLocal }: Props) {
         <span
           style={{
             display: 'inline-block',
-            fontSize: '11px',
+            fontSize: 'var(--fs-small)',
             fontWeight: 700,
             padding: '2px 8px',
             borderRadius: '10px',
-            background: esEnLocal ? '#f8f0fc' : '#e7f5ff',
-            color: esEnLocal ? '#ae3ec9' : '#1971c2',
+            background: esEnLocal ? 'var(--fucsia-pastel)' : 'var(--color-info-bg)',
+            color: esEnLocal ? 'var(--fucsia-accion)' : 'var(--color-info)',
             marginBottom: '4px',
           }}
         >
@@ -107,16 +107,16 @@ export default function FilaEvento({ evento, capacidadTotalLocal }: Props) {
           <span
             style={{
               display: 'block',
-              fontSize: '11px',
+              fontSize: 'var(--fs-small)',
               fontWeight: 700,
-              color: '#d9480f',
+              color: 'var(--color-advertencia)',
             }}
           >
             🔒 Cierra local (≥ {capacidadTotalLocal} personas)
           </span>
         )}
         {evento.diaBloqueado && (
-          <span style={{ display: 'block', fontSize: '10px', color: '#2b8a3e', fontWeight: 600 }}>
+          <span style={{ display: 'block', fontSize: 'var(--fs-caption)', color: 'var(--color-exito)', fontWeight: 600 }}>
             ✓ Día bloqueado en calendario
           </span>
         )}

@@ -65,7 +65,7 @@ export default async function GestionVentasPage() {
         {/* Sección: Comandas Abiertas / Pendientes de Cobro */}
         <div style={{ marginBottom: '32px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
-            <h2 style={{ fontSize: '18px', fontWeight: 700, margin: 0, color: 'var(--cafe-deep)' }}>
+            <h2 style={{ fontSize: 'var(--fs-lead)', fontWeight: 700, margin: 0, color: 'var(--cafe-deep)' }}>
               Comandas Abiertas ({ventasAbiertas.length})
             </h2>
             <span className="badge-estado pendiente">Pendiente de cobro</span>
@@ -106,7 +106,7 @@ export default async function GestionVentasPage() {
 
         {/* Sección: Historial Reciente de Ventas Realizadas / Anuladas */}
         <div>
-          <h2 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '14px', color: 'var(--cafe-deep)' }}>
+          <h2 style={{ fontSize: 'var(--fs-lead)', fontWeight: 700, marginBottom: '14px', color: 'var(--cafe-deep)' }}>
             Últimas Ventas Cobradas
           </h2>
 

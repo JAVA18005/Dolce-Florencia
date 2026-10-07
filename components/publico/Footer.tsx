@@ -61,7 +61,7 @@ export default function Footer() {
         <span>Hecho para celebrar. Hecho para recordar.</span>
         <Link
           href="/panel/login"
-          style={{ fontSize: '12px', color: 'inherit', opacity: 0.65, textDecoration: 'none' }}
+          style={{ fontSize: 'var(--fs-small)', color: 'inherit', opacity: 0.65, textDecoration: 'none' }}
         >
           Acceso personal
         </Link>
@@ -70,7 +70,7 @@ export default function Footer() {
           aria-pressed={modoCamara}
           onClick={alternarModoCamara}
           style={{
-            fontSize: '12px',
+            fontSize: 'var(--fs-small)',
             color: 'inherit',
             fontFamily: 'inherit',
             background: 'none',

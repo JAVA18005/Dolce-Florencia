@@ -84,7 +84,7 @@ export default function SelectorFecha({
         <p
           role="alert"
           style={{
-            fontSize: '12px',
+            fontSize: 'var(--fs-small)',
             color: 'var(--fucsia-accion)',
             marginTop: '6px',
             fontWeight: 500,

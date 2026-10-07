@@ -44,7 +44,7 @@ export default function FormularioCategoria() {
 
   return (
     <div className="panel-card-form" style={{ marginBottom: '20px', maxWidth: '480px' }}>
-      <h3 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 12px 0', color: 'var(--cafe-deep)' }}>
+      <h3 style={{ fontSize: 'var(--fs-lead)', fontWeight: 700, margin: '0 0 12px 0', color: 'var(--cafe-deep)' }}>
         Añadir Nueva Categoría
       </h3>
 
@@ -58,7 +58,7 @@ export default function FormularioCategoria() {
           onChange={(e) => setNombre(e.target.value)}
           placeholder="Ej. Postres Sin Azúcar"
           className="field-input"
-          style={{ flex: 1, fontSize: '13px', padding: '6px 10px' }}
+          style={{ flex: 1, fontSize: 'var(--fs-small)', padding: '6px 10px' }}
         />
         <button type="submit" disabled={cargando} className="btn-accion-sm btn-exito">
           {cargando ? 'Creando...' : 'Crear'}

@@ -96,13 +96,13 @@ export default function FilaReserva({ reserva, mesasDisponibles }: Props) {
 
   return (
     <>
-      <tr style={{ background: reserva.esPosibleNoShow ? '#fff9db' : undefined }}>
+      <tr style={{ background: reserva.esPosibleNoShow ? 'var(--color-advertencia-bg)' : undefined }}>
         <td>
           <span style={{ fontWeight: 700, color: 'var(--cafe-deep)', display: 'block' }}>
             {reserva.codigo}
           </span>
-          <span style={{ fontSize: '13px', color: 'var(--cafe)' }}>{reserva.clienteNombre}</span>
-          <span style={{ fontSize: '12px', color: 'var(--cafe-suave)', display: 'block' }}>
+          <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe)' }}>{reserva.clienteNombre}</span>
+          <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)', display: 'block' }}>
             📞 {reserva.clienteTelefono}
           </span>
           {reserva.conMascota && (
@@ -110,11 +110,11 @@ export default function FilaReserva({ reserva, mesasDisponibles }: Props) {
               style={{
                 display: 'inline-block',
                 marginTop: '4px',
-                fontSize: '11px',
+                fontSize: 'var(--fs-small)',
                 padding: '2px 6px',
                 borderRadius: '8px',
-                background: '#ebfbee',
-                color: '#2b8a3e',
+                background: 'var(--color-exito-bg)',
+                color: 'var(--color-exito)',
                 fontWeight: 600,
               }}
             >
@@ -126,20 +126,20 @@ export default function FilaReserva({ reserva, mesasDisponibles }: Props) {
               style={{
                 display: 'block',
                 marginTop: '4px',
-                fontSize: '11px',
+                fontSize: 'var(--fs-small)',
                 padding: '2px 6px',
                 borderRadius: '6px',
-                background: '#ffc9c9',
-                color: '#c92a2a',
+                background: 'var(--color-error-bg)',
+                color: 'var(--color-error)',
                 fontWeight: 700,
               }}
             >
               ⚠️ Posible No-Show (&gt; 30m)
             </span>
           )}
-          {error && <span style={{ color: '#c92a2a', fontSize: '11px', display: 'block' }}>⚠️ {error}</span>}
+          {error && <span style={{ color: 'var(--color-error)', fontSize: 'var(--fs-small)', display: 'block' }}>⚠️ {error}</span>}
           {advertencias.map((adv, idx) => (
-            <span key={idx} style={{ color: '#d9480f', fontSize: '11px', display: 'block' }}>
+            <span key={idx} style={{ color: 'var(--color-advertencia)', fontSize: 'var(--fs-small)', display: 'block' }}>
               ℹ️ {adv}
             </span>
           ))}
@@ -147,10 +147,10 @@ export default function FilaReserva({ reserva, mesasDisponibles }: Props) {
 
         <td>
           <span style={{ fontWeight: 600, display: 'block' }}>{fechaStr}</span>
-          <span style={{ fontSize: '13px', color: 'var(--cafe-deep)' }}>
+          <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-deep)' }}>
             Hora: <strong>{reserva.hora || 'Sin hora'}</strong>
           </span>
-          <span style={{ display: 'block', fontSize: '12px', color: 'var(--cafe-suave)' }}>
+          <span style={{ display: 'block', fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
             {reserva.personas || 2} personas
           </span>
         </td>
@@ -159,12 +159,12 @@ export default function FilaReserva({ reserva, mesasDisponibles }: Props) {
           {reserva.mesa ? (
             <div>
               <strong style={{ color: 'var(--cafe-deep)', display: 'block' }}>{reserva.mesa.nombre}</strong>
-              <span style={{ fontSize: '11px', color: 'var(--cafe-suave)' }}>
+              <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
                 Zona {reserva.mesa.zona} · Cap: {reserva.mesa.capacidad}
               </span>
             </div>
           ) : (
-            <span style={{ color: 'var(--cafe-suave)', fontSize: '12px', fontStyle: 'italic' }}>
+            <span style={{ color: 'var(--cafe-suave)', fontSize: 'var(--fs-small)', fontStyle: 'italic' }}>
               Sin mesa asignada
             </span>
           )}
@@ -252,16 +252,16 @@ export default function FilaReserva({ reserva, mesasDisponibles }: Props) {
       {/* Modal / formulario desplegable para asignar mesa y confirmar */}
       {mostrandoConfirmar && (
         <tr>
-          <td colSpan={5} style={{ background: '#f4fbf5', padding: '14px 18px', borderLeft: '4px solid #2b8a3e' }}>
+          <td colSpan={5} style={{ background: 'var(--color-exito-bg)', padding: '14px 18px', borderLeft: '4px solid var(--color-exito)' }}>
             <form onSubmit={handleConfirmar} style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: '13px', fontWeight: 600, color: '#2b8a3e' }}>
+              <span style={{ fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--color-exito)' }}>
                 Asignar Mesa (opcional pero recomendado):
               </span>
               <select
                 value={mesaSeleccionada}
                 onChange={(e) => setMesaSeleccionada(e.target.value)}
                 className="field-input"
-                style={{ maxWidth: '280px', padding: '6px 10px', fontSize: '13px' }}
+                style={{ maxWidth: '280px', padding: '6px 10px', fontSize: 'var(--fs-small)' }}
               >
                 <option value="">-- Sin mesa específica (confirmar igual) --</option>
                 {mesasDisponibles.map((m) => (
@@ -284,9 +284,9 @@ export default function FilaReserva({ reserva, mesasDisponibles }: Props) {
       {/* Formulario para rechazar */}
       {mostrandoRechazar && (
         <tr>
-          <td colSpan={5} style={{ background: '#fff5f5', padding: '14px 18px', borderLeft: '4px solid #c92a2a' }}>
+          <td colSpan={5} style={{ background: 'var(--color-error-bg)', padding: '14px 18px', borderLeft: '4px solid var(--color-error)' }}>
             <form onSubmit={handleRechazar} style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: '13px', fontWeight: 600, color: '#c92a2a' }}>
+              <span style={{ fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--color-error)' }}>
                 Motivo del rechazo (opcional):
               </span>
               <input
@@ -295,7 +295,7 @@ export default function FilaReserva({ reserva, mesasDisponibles }: Props) {
                 onChange={(e) => setMotivoRechazo(e.target.value)}
                 placeholder="Ej. Salón completo para la hora solicitada"
                 className="field-input"
-                style={{ flex: 1, minWidth: '220px', padding: '6px 10px', fontSize: '13px' }}
+                style={{ flex: 1, minWidth: '220px', padding: '6px 10px', fontSize: 'var(--fs-small)' }}
               />
               <button type="submit" disabled={cargando} className="btn-accion-sm btn-peligro">
                 Rechazar

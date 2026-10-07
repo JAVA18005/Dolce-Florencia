@@ -28,7 +28,7 @@ export default function FormularioCrearUsuario() {
   return (
     <div className="panel-card-form" style={{ maxWidth: '100%', marginBottom: '24px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-        <h3 style={{ margin: 0, fontSize: '18px', color: 'var(--cafe-deep)' }}>
+        <h3 style={{ margin: 0, fontSize: 'var(--fs-lead)', color: 'var(--cafe-deep)' }}>
           Crear Nuevo Usuario de Personal
         </h3>
         <button

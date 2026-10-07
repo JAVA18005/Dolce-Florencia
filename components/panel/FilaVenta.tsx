@@ -71,11 +71,11 @@ export default function FilaVenta({ venta, rolUsuario }: Props) {
           <div style={{ fontWeight: 600, color: 'var(--cafe-deep)' }}>
             Ticket #{venta.numero}
           </div>
-          <div style={{ fontSize: '11px', color: 'var(--cafe-suave)' }}>
+          <div style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
             {new Date(venta.creadaEn).toLocaleTimeString('es-BO', { hour: '2-digit', minute: '2-digit' })}
           </div>
           {error && (
-            <div style={{ color: '#c92a2a', fontSize: '11px', marginTop: '4px' }}>
+            <div style={{ color: 'var(--color-error)', fontSize: 'var(--fs-small)', marginTop: '4px' }}>
               {error}
             </div>
           )}
@@ -86,19 +86,19 @@ export default function FilaVenta({ venta, rolUsuario }: Props) {
             {venta.mesa ? venta.mesa.nombre : venta.origen === 'PEDIDO_WEB' ? 'Pedido Web' : 'Mostrador'}
           </div>
           {venta.pedido && (
-            <div style={{ fontSize: '11px', color: 'var(--cafe-suave)' }}>
+            <div style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
               Web #{venta.pedido.codigo} ({venta.pedido.clienteNombre})
             </div>
           )}
           {venta.reserva && (
-            <div style={{ fontSize: '11px', color: 'var(--cafe-suave)' }}>
+            <div style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
               Reserva #{venta.reserva.codigo}
             </div>
           )}
         </td>
 
         <td>
-          <div style={{ fontSize: '13px' }}>
+          <div style={{ fontSize: 'var(--fs-small)' }}>
             {venta.items.map((it: any) => (
               <div key={it.id}>
                 {it.cantidad}x {it.nombre} <span style={{ color: 'var(--cafe-suave)' }}>({formatearCentavosABs(it.precioUnitarioCentavos)})</span>
@@ -108,11 +108,11 @@ export default function FilaVenta({ venta, rolUsuario }: Props) {
         </td>
 
         <td>
-          <div style={{ fontWeight: 700, fontSize: '15px', color: 'var(--fucsia-accion)' }}>
+          <div style={{ fontWeight: 700, fontSize: 'var(--fs-lead)', color: 'var(--fucsia-accion)' }}>
             {formatearCentavosABs(venta.totalCentavos)}
           </div>
           {venta.metodoPago && (
-            <div style={{ fontSize: '11px', color: 'var(--cafe-suave)' }}>
+            <div style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
               {venta.metodoPago} {venta.referenciaPago ? `(${venta.referenciaPago})` : ''}
             </div>
           )}
@@ -123,7 +123,7 @@ export default function FilaVenta({ venta, rolUsuario }: Props) {
             {venta.estado.replace('_', ' ')}
           </span>
           {venta.anuladaMotivo && (
-            <div style={{ fontSize: '11px', color: '#c92a2a', marginTop: '4px' }}>
+            <div style={{ fontSize: 'var(--fs-small)', color: 'var(--color-error)', marginTop: '4px' }}>
               Motivo: {venta.anuladaMotivo}
             </div>
           )}
@@ -159,16 +159,16 @@ export default function FilaVenta({ venta, rolUsuario }: Props) {
       {/* Formulario desplegable para cobrar */}
       {mostrandoCobro && (
         <tr>
-          <td colSpan={6} style={{ background: '#f4fbf5', padding: '14px 18px', borderLeft: '4px solid #2b8a3e' }}>
+          <td colSpan={6} style={{ background: 'var(--color-exito-bg)', padding: '14px 18px', borderLeft: '4px solid var(--color-exito)' }}>
             <form onSubmit={handleCobrar} style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: '13px', fontWeight: 600, color: '#2b8a3e' }}>
+              <span style={{ fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--color-exito)' }}>
                 Cobrar {formatearCentavosABs(venta.totalCentavos)}:
               </span>
               <select
                 value={metodoPago}
                 onChange={(e) => setMetodoPago(e.target.value as MetodoPago)}
                 className="field-input"
-                style={{ width: '150px', padding: '6px 10px', fontSize: '13px' }}
+                style={{ width: '150px', padding: '6px 10px', fontSize: 'var(--fs-small)' }}
               >
                 <option value="EFECTIVO">Efectivo</option>
                 <option value="QR">Pago QR</option>
@@ -180,7 +180,7 @@ export default function FilaVenta({ venta, rolUsuario }: Props) {
                 onChange={(e) => setReferenciaPago(e.target.value)}
                 placeholder="Nº comprobante / ref. (opcional)"
                 className="field-input"
-                style={{ flex: 1, minWidth: '180px', padding: '6px 10px', fontSize: '13px' }}
+                style={{ flex: 1, minWidth: '180px', padding: '6px 10px', fontSize: 'var(--fs-small)' }}
               />
               <button type="submit" disabled={cargando} className="btn-accion-sm btn-exito">
                 {cargando ? 'Procesando...' : 'Confirmar Cobro'}
@@ -196,9 +196,9 @@ export default function FilaVenta({ venta, rolUsuario }: Props) {
       {/* Formulario desplegable para anular */}
       {mostrandoAnular && (
         <tr>
-          <td colSpan={6} style={{ background: '#fff5f5', padding: '14px 18px', borderLeft: '4px solid #c92a2a' }}>
+          <td colSpan={6} style={{ background: 'var(--color-error-bg)', padding: '14px 18px', borderLeft: '4px solid var(--color-error)' }}>
             <form onSubmit={handleAnular} style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: '13px', fontWeight: 600, color: '#c92a2a' }}>
+              <span style={{ fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--color-error)' }}>
                 Motivo de anulación (obligatorio):
               </span>
               <input
@@ -208,7 +208,7 @@ export default function FilaVenta({ venta, rolUsuario }: Props) {
                 placeholder="Ej. Error en digitación de pedido o devolución"
                 required
                 className="field-input"
-                style={{ flex: 1, minWidth: '220px', padding: '6px 10px', fontSize: '13px' }}
+                style={{ flex: 1, minWidth: '220px', padding: '6px 10px', fontSize: 'var(--fs-small)' }}
               />
               <button type="submit" disabled={cargando} className="btn-accion-sm btn-peligro">
                 {cargando ? 'Anulando...' : 'Confirmar Anulación'}

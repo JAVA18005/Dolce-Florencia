@@ -55,21 +55,21 @@ export default async function DashboardPage({ searchParams }: Props) {
             <Link
               href="/panel/dashboard?periodo=hoy"
               className={`panel-nav-link ${periodoValido === 'hoy' ? 'activo' : ''}`}
-              style={{ background: periodoValido === 'hoy' ? 'var(--fucsia-accion)' : 'var(--hueso)', color: periodoValido === 'hoy' ? '#fff' : 'var(--cafe)', border: '1px solid var(--linea)' }}
+              style={{ background: periodoValido === 'hoy' ? 'var(--fucsia-accion)' : 'var(--hueso)', color: periodoValido === 'hoy' ? 'var(--blanco)' : 'var(--cafe)', border: '1px solid var(--linea)' }}
             >
               Hoy
             </Link>
             <Link
               href="/panel/dashboard?periodo=semana"
               className={`panel-nav-link ${periodoValido === 'semana' ? 'activo' : ''}`}
-              style={{ background: periodoValido === 'semana' ? 'var(--fucsia-accion)' : 'var(--hueso)', color: periodoValido === 'semana' ? '#fff' : 'var(--cafe)', border: '1px solid var(--linea)' }}
+              style={{ background: periodoValido === 'semana' ? 'var(--fucsia-accion)' : 'var(--hueso)', color: periodoValido === 'semana' ? 'var(--blanco)' : 'var(--cafe)', border: '1px solid var(--linea)' }}
             >
               Esta Semana
             </Link>
             <Link
               href="/panel/dashboard?periodo=mes"
               className={`panel-nav-link ${periodoValido === 'mes' ? 'activo' : ''}`}
-              style={{ background: periodoValido === 'mes' ? 'var(--fucsia-accion)' : 'var(--hueso)', color: periodoValido === 'mes' ? '#fff' : 'var(--cafe)', border: '1px solid var(--linea)' }}
+              style={{ background: periodoValido === 'mes' ? 'var(--fucsia-accion)' : 'var(--hueso)', color: periodoValido === 'mes' ? 'var(--blanco)' : 'var(--cafe)', border: '1px solid var(--linea)' }}
             >
               Este Mes
             </Link>
@@ -78,32 +78,32 @@ export default async function DashboardPage({ searchParams }: Props) {
 
         {/* Tarjetas Principales de KPI */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '32px' }}>
-          <div className="panel-modulo-tarjeta" style={{ borderLeft: '4px solid #2b8a3e' }}>
+          <div className="panel-modulo-tarjeta" style={{ borderLeft: '4px solid var(--color-exito)' }}>
             <span className="modulo-tag">Ingresos Efectivos</span>
-            <h3 style={{ fontSize: '26px', fontWeight: 800, margin: '8px 0', color: 'var(--cafe-deep)' }}>
+            <h3 style={{ fontSize: 'var(--fs-title-sm)', fontWeight: 800, margin: '8px 0', color: 'var(--cafe-deep)' }}>
               {formatearCentavosABs(metricas.totalVentasCentavos)}
             </h3>
-            <p style={{ margin: 0, fontSize: '13px', color: 'var(--cafe-suave)' }}>
+            <p style={{ margin: 0, fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
               Total recaudado en ventas cobradas
             </p>
           </div>
 
           <div className="panel-modulo-tarjeta" style={{ borderLeft: '4px solid var(--fucsia-accion)' }}>
             <span className="modulo-tag">Transacciones</span>
-            <h3 style={{ fontSize: '26px', fontWeight: 800, margin: '8px 0', color: 'var(--cafe-deep)' }}>
+            <h3 style={{ fontSize: 'var(--fs-title-sm)', fontWeight: 800, margin: '8px 0', color: 'var(--cafe-deep)' }}>
               {metricas.ventasRealizadasCount}
             </h3>
-            <p style={{ margin: 0, fontSize: '13px', color: 'var(--cafe-suave)' }}>
+            <p style={{ margin: 0, fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
               Tickets cerrados exitosamente
             </p>
           </div>
 
-          <div className="panel-modulo-tarjeta" style={{ borderLeft: '4px solid #1971c2' }}>
+          <div className="panel-modulo-tarjeta" style={{ borderLeft: '4px solid var(--color-info)' }}>
             <span className="modulo-tag">Consumo Promedio</span>
-            <h3 style={{ fontSize: '26px', fontWeight: 800, margin: '8px 0', color: 'var(--cafe-deep)' }}>
+            <h3 style={{ fontSize: 'var(--fs-title-sm)', fontWeight: 800, margin: '8px 0', color: 'var(--cafe-deep)' }}>
               {formatearCentavosABs(metricas.ticketPromedioCentavos)}
             </h3>
-            <p style={{ margin: 0, fontSize: '13px', color: 'var(--cafe-suave)' }}>
+            <p style={{ margin: 0, fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
               Promedio por ticket cobrado
             </p>
           </div>
@@ -112,10 +112,10 @@ export default async function DashboardPage({ searchParams }: Props) {
         {/* Gráfico de Horas Pico (Ventas por Franja Horaria) */}
         <div className="panel-card-form" style={{ maxWidth: '100%', marginBottom: '32px' }}>
           <div style={{ marginBottom: '16px' }}>
-            <h2 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 4px 0', color: 'var(--cafe-deep)' }}>
+            <h2 style={{ fontSize: 'var(--fs-lead)', fontWeight: 700, margin: '0 0 4px 0', color: 'var(--cafe-deep)' }}>
               Horas Pico de Atención
             </h2>
-            <p style={{ fontSize: '13px', margin: 0, color: 'var(--cafe-suave)' }}>
+            <p style={{ fontSize: 'var(--fs-small)', margin: 0, color: 'var(--cafe-suave)' }}>
               Distribución de volumen de ventas según la hora de cobro en caja (08:00 a 22:00 hora Bolivia).
             </p>
           </div>
@@ -132,7 +132,7 @@ export default async function DashboardPage({ searchParams }: Props) {
                   const alturaPct = hp.cantidad > 0 ? Math.max(12, Math.round((hp.cantidad / maxVentasHora) * 100)) : 4;
                   return (
                     <div key={hp.hora} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1, minWidth: '36px' }}>
-                      <div style={{ fontSize: '11px', fontWeight: 700, color: hp.cantidad > 0 ? 'var(--fucsia-accion)' : 'transparent', marginBottom: '4px' }}>
+                      <div style={{ fontSize: 'var(--fs-small)', fontWeight: 700, color: hp.cantidad > 0 ? 'var(--fucsia-accion)' : 'transparent', marginBottom: '4px' }}>
                         {hp.cantidad > 0 ? hp.cantidad : ''}
                       </div>
                       <div
@@ -146,7 +146,7 @@ export default async function DashboardPage({ searchParams }: Props) {
                         }}
                         title={`${hp.etiqueta}: ${hp.cantidad} ventas (${formatearCentavosABs(hp.totalCentavos)})`}
                       />
-                      <span style={{ fontSize: '11px', color: 'var(--cafe-suave)', marginTop: '8px' }}>
+                      <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)', marginTop: '8px' }}>
                         {hp.hora}h
                       </span>
                     </div>
@@ -159,10 +159,10 @@ export default async function DashboardPage({ searchParams }: Props) {
         {/* Ranking de Productos Más Vendidos */}
         <div>
           <div style={{ marginBottom: '14px' }}>
-            <h2 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 4px 0', color: 'var(--cafe-deep)' }}>
+            <h2 style={{ fontSize: 'var(--fs-lead)', fontWeight: 700, margin: '0 0 4px 0', color: 'var(--cafe-deep)' }}>
               Ranking de Productos Más Vendidos
             </h2>
-            <p style={{ fontSize: '13px', margin: 0, color: 'var(--cafe-suave)' }}>
+            <p style={{ fontSize: 'var(--fs-small)', margin: 0, color: 'var(--cafe-suave)' }}>
               Top 10 productos con mayor cantidad de unidades vendidas en transacciones realizadas.
             </p>
           </div>

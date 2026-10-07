@@ -63,7 +63,7 @@ export default function CampoSubidaArchivo({
 
   return (
     <div>
-      <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
+      <label style={{ display: 'block', fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
         {etiqueta}
       </label>
 
@@ -74,16 +74,16 @@ export default function CampoSubidaArchivo({
         onChange={manejarArchivo}
         disabled={subiendo}
         className="field-input"
-        style={{ width: '100%', fontSize: '12px', padding: '6px 10px' }}
+        style={{ width: '100%', fontSize: 'var(--fs-small)', padding: '6px 10px' }}
       />
 
       {subiendo && (
-        <div style={{ marginTop: '4px', fontSize: '11px', color: 'var(--cafe-suave)' }}>
+        <div style={{ marginTop: '4px', fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
           Subiendo… {progreso}%
           <div
             style={{
               height: '4px',
-              background: '#f0e6df',
+              background: 'var(--fucsia-pastel)',
               borderRadius: '4px',
               marginTop: '2px',
               overflow: 'hidden',
@@ -102,14 +102,14 @@ export default function CampoSubidaArchivo({
       )}
 
       {error && (
-        <div style={{ marginTop: '4px', fontSize: '11px', color: '#c92a2a' }}>{error}</div>
+        <div style={{ marginTop: '4px', fontSize: 'var(--fs-small)', color: 'var(--color-error)' }}>{error}</div>
       )}
 
       {valorActual ? (
         <div style={{ marginTop: '4px', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
           <span
             style={{
-              fontSize: '11px',
+              fontSize: 'var(--fs-small)',
               color: 'var(--cafe-suave)',
               maxWidth: '280px',
               whiteSpace: 'nowrap',
@@ -125,10 +125,10 @@ export default function CampoSubidaArchivo({
             onClick={quitarArchivo}
             disabled={subiendo}
             style={{
-              fontSize: '11px',
+              fontSize: 'var(--fs-small)',
               background: 'none',
               border: 'none',
-              color: '#c92a2a',
+              color: 'var(--color-error)',
               cursor: 'pointer',
               padding: 0,
               textDecoration: 'underline',

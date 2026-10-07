@@ -33,7 +33,7 @@ export default function ContactoPage() {
           <div className="contact-item">
             <strong>Horario de atención</strong>
             <p>Lunes a domingo, de 15:00 a 22:00</p>
-            <p style={{ fontSize: '13px', color: 'var(--cafe-suave)', marginTop: '4px' }}>
+            <p style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)', marginTop: '4px' }}>
               (Última llegada para reservas: 21:30)
             </p>
           </div>

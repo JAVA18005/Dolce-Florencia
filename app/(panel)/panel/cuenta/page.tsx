@@ -40,24 +40,24 @@ export default async function MiCuentaPage() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '30px', alignItems: 'start' }}>
           {/* Tarjeta de datos de usuario */}
           <div className="panel-card-form">
-            <h2 style={{ fontSize: '20px', fontFamily: 'var(--font-cormorant), serif', color: 'var(--cafe-deep)', margin: '0 0 16px' }}>
+            <h2 style={{ fontSize: 'var(--fs-title-sm)', fontFamily: 'var(--font-cormorant), serif', color: 'var(--cafe-deep)', margin: '0 0 16px' }}>
               Información de Perfil
             </h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', fontSize: '14px', color: 'var(--cafe)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', fontSize: 'var(--fs-body)', color: 'var(--cafe)' }}>
               <div>
-                <strong style={{ display: 'block', fontSize: '12px', textTransform: 'uppercase', color: 'var(--cafe-suave)' }}>
+                <strong style={{ display: 'block', fontSize: 'var(--fs-small)', textTransform: 'uppercase', color: 'var(--cafe-suave)' }}>
                   Nombre Completo
                 </strong>
                 <span>{usuario.nombre}</span>
               </div>
               <div>
-                <strong style={{ display: 'block', fontSize: '12px', textTransform: 'uppercase', color: 'var(--cafe-suave)' }}>
+                <strong style={{ display: 'block', fontSize: 'var(--fs-small)', textTransform: 'uppercase', color: 'var(--cafe-suave)' }}>
                   Correo Electrónico
                 </strong>
                 <span>{usuario.email}</span>
               </div>
               <div>
-                <strong style={{ display: 'block', fontSize: '12px', textTransform: 'uppercase', color: 'var(--cafe-suave)' }}>
+                <strong style={{ display: 'block', fontSize: 'var(--fs-small)', textTransform: 'uppercase', color: 'var(--cafe-suave)' }}>
                   Rol de Sistema
                 </strong>
                 <span className={`badge-rol ${usuario.rol === 'ADMIN' ? 'badge-admin' : 'badge-mesero'}`} style={{ display: 'inline-block', marginTop: '4px' }}>
@@ -68,10 +68,10 @@ export default async function MiCuentaPage() {
 
             <hr style={{ border: 'none', borderTop: '1px solid var(--linea)', margin: '24px 0' }} />
 
-            <h3 style={{ fontSize: '16px', color: 'var(--cafe-deep)', margin: '0 0 8px' }}>
+            <h3 style={{ fontSize: 'var(--fs-lead)', color: 'var(--cafe-deep)', margin: '0 0 8px' }}>
               Sesiones Activas
             </h3>
-            <p style={{ fontSize: '13px', color: 'var(--cafe-suave)', margin: '0 0 16px', lineHeight: 1.5 }}>
+            <p style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)', margin: '0 0 16px', lineHeight: 1.5 }}>
               Si sospechas que dejaste abierta tu cuenta en otro equipo o dispositivo móvil, puedes revocar de inmediato todos los accesos excepto este.
             </p>
 
@@ -88,10 +88,10 @@ export default async function MiCuentaPage() {
 
           {/* Formulario de cambio de contraseña */}
           <div className="panel-card-form">
-            <h2 style={{ fontSize: '20px', fontFamily: 'var(--font-cormorant), serif', color: 'var(--cafe-deep)', margin: '0 0 8px' }}>
+            <h2 style={{ fontSize: 'var(--fs-title-sm)', fontFamily: 'var(--font-cormorant), serif', color: 'var(--cafe-deep)', margin: '0 0 8px' }}>
               Cambiar Contraseña
             </h2>
-            <p style={{ fontSize: '13px', color: 'var(--cafe-suave)', margin: '0 0 20px', lineHeight: 1.5 }}>
+            <p style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)', margin: '0 0 20px', lineHeight: 1.5 }}>
               Ingresa tu contraseña actual seguida de la nueva contraseña. Al cambiarla, las demás sesiones se revocarán automáticamente.
             </p>
 

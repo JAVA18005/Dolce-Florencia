@@ -26,7 +26,7 @@ export default function FormularioBloqueoManual() {
   return (
     <div className="panel-card-form" style={{ maxWidth: '100%', marginBottom: '24px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-        <h3 style={{ margin: 0, fontSize: '18px', color: 'var(--cafe-deep)' }}>
+        <h3 style={{ margin: 0, fontSize: 'var(--fs-lead)', color: 'var(--cafe-deep)' }}>
           Bloquear Fecha en el Calendario (Feriado, Mantenimiento o Cierre)
         </h3>
         <button

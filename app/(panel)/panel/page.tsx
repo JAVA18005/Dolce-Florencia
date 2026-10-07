@@ -47,7 +47,7 @@ export default async function PanelDashboardPage() {
                 <p className="modulo-desc">
                   Apertura de comandas por mesa, mostrador, adición de consumos y cobro en caja.
                 </p>
-                <span className="modulo-estado-fase" style={{ background: '#d3f9d8', color: '#2b8a3e' }}>
+                <span className="modulo-estado-fase" style={{ background: 'var(--color-exito-bg)', color: 'var(--color-exito)' }}>
                   Disponible ↗
                 </span>
               </div>
@@ -62,7 +62,7 @@ export default async function PanelDashboardPage() {
                 <p className="modulo-desc">
                   Bandeja de pedidos para confirmar, cotizar y acordar retiro o entrega.
                 </p>
-                <span className="modulo-estado-fase" style={{ background: '#d3f9d8', color: '#2b8a3e' }}>
+                <span className="modulo-estado-fase" style={{ background: 'var(--color-exito-bg)', color: 'var(--color-exito)' }}>
                   Disponible ↗
                 </span>
               </div>
@@ -77,7 +77,7 @@ export default async function PanelDashboardPage() {
                 <p className="modulo-desc">
                   Asignación de mesas, confirmación de visitas, atención pet-friendly y no-shows.
                 </p>
-                <span className="modulo-estado-fase" style={{ background: '#d3f9d8', color: '#2b8a3e' }}>
+                <span className="modulo-estado-fase" style={{ background: 'var(--color-exito-bg)', color: 'var(--color-exito)' }}>
                   Disponible ↗
                 </span>
               </div>
@@ -92,7 +92,7 @@ export default async function PanelDashboardPage() {
                 <p className="modulo-desc">
                   Aprobación de celebraciones en local o entrega y control de cierres totales.
                 </p>
-                <span className="modulo-estado-fase" style={{ background: '#d3f9d8', color: '#2b8a3e' }}>
+                <span className="modulo-estado-fase" style={{ background: 'var(--color-exito-bg)', color: 'var(--color-exito)' }}>
                   Disponible ↗
                 </span>
               </div>
@@ -107,7 +107,7 @@ export default async function PanelDashboardPage() {
                 <p className="modulo-desc">
                   Estado en vivo de mesas y cuentas abiertas en la Barra.
                 </p>
-                <span className="modulo-estado-fase" style={{ background: '#d3f9d8', color: '#2b8a3e' }}>
+                <span className="modulo-estado-fase" style={{ background: 'var(--color-exito-bg)', color: 'var(--color-exito)' }}>
                   Disponible ↗
                 </span>
               </div>
@@ -122,7 +122,7 @@ export default async function PanelDashboardPage() {
                 <p className="modulo-desc">
                   Bloqueo manual de días y visualización de cierres por eventos.
                 </p>
-                <span className="modulo-estado-fase" style={{ background: '#d3f9d8', color: '#2b8a3e' }}>
+                <span className="modulo-estado-fase" style={{ background: 'var(--color-exito-bg)', color: 'var(--color-exito)' }}>
                   Disponible ↗
                 </span>
               </div>
@@ -137,7 +137,7 @@ export default async function PanelDashboardPage() {
                 <p className="modulo-desc">
                   Gestión de usuarios, asignación de roles y control de credenciales.
                 </p>
-                <span className="modulo-estado-fase" style={{ background: '#d3f9d8', color: '#2b8a3e' }}>
+                <span className="modulo-estado-fase" style={{ background: 'var(--color-exito-bg)', color: 'var(--color-exito)' }}>
                   Disponible ↗
                 </span>
               </div>
@@ -152,7 +152,7 @@ export default async function PanelDashboardPage() {
                 <p className="modulo-desc">
                   Ventas realizadas, ticket promedio, horas pico y ranking de productos.
                 </p>
-                <span className="modulo-estado-fase" style={{ background: '#d3f9d8', color: '#2b8a3e' }}>
+                <span className="modulo-estado-fase" style={{ background: 'var(--color-exito-bg)', color: 'var(--color-exito)' }}>
                   Disponible ↗
                 </span>
               </div>
@@ -167,7 +167,7 @@ export default async function PanelDashboardPage() {
                 <p className="modulo-desc">
                   Gestión de menú, precios en centavos, fotos y modelos 3D AR.
                 </p>
-                <span className="modulo-estado-fase" style={{ background: '#d3f9d8', color: '#2b8a3e' }}>
+                <span className="modulo-estado-fase" style={{ background: 'var(--color-exito-bg)', color: 'var(--color-exito)' }}>
                   Disponible ↗
                 </span>
               </div>

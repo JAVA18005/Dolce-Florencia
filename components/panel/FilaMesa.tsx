@@ -46,31 +46,31 @@ export default function FilaMesa({ mesa, puedeEditar }: Props) {
   return (
     <tr>
       <td>
-        <strong style={{ color: 'var(--cafe-deep)', fontSize: '15px', display: 'block' }}>
+        <strong style={{ color: 'var(--cafe-deep)', fontSize: 'var(--fs-lead)', display: 'block' }}>
           {mesa.nombre}
         </strong>
-        <span style={{ fontSize: '12px', color: 'var(--cafe-suave)' }}>
+        <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
           Zona: {mesa.zona} · Capacidad: {mesa.capacidad} personas
         </span>
-        {error && <span style={{ color: '#c92a2a', fontSize: '11px', display: 'block' }}>⚠️ {error}</span>}
+        {error && <span style={{ color: 'var(--color-error)', fontSize: 'var(--fs-small)', display: 'block' }}>⚠️ {error}</span>}
       </td>
 
       <td>
         <span
           style={{
             display: 'inline-block',
-            fontSize: '11px',
+            fontSize: 'var(--fs-small)',
             padding: '2px 8px',
             borderRadius: '6px',
-            background: mesa.reservable ? '#e7f5ff' : '#fff3bf',
-            color: mesa.reservable ? '#1971c2' : '#d9480f',
+            background: mesa.reservable ? 'var(--color-info-bg)' : 'var(--color-advertencia-bg)',
+            color: mesa.reservable ? 'var(--color-info)' : 'var(--color-advertencia)',
             fontWeight: 600,
           }}
         >
           {mesa.reservable ? '✓ Reservable' : '⛔ No reservable (Solo ventas/Barra)'}
         </span>
         {mesa.permiteVariasCuentas && (
-          <span style={{ display: 'block', fontSize: '11px', color: 'var(--cafe-suave)', marginTop: '2px' }}>
+          <span style={{ display: 'block', fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)', marginTop: '2px' }}>
             Multi-cuenta permitida
           </span>
         )}
@@ -93,7 +93,7 @@ export default function FilaMesa({ mesa, puedeEditar }: Props) {
             {cargando ? '...' : mesa.habilitada ? 'Deshabilitar' : 'Habilitar'}
           </button>
         ) : (
-          <span style={{ fontSize: '12px', color: 'var(--cafe-suave)' }}>Solo lectura</span>
+          <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>Solo lectura</span>
         )}
       </td>
     </tr>

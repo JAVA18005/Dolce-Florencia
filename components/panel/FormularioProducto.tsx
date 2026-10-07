@@ -95,7 +95,7 @@ export default function FormularioProducto({ categorias }: Props) {
   return (
     <div className="panel-card-form" style={{ marginBottom: '28px', maxWidth: '820px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-        <h2 style={{ fontSize: '18px', fontWeight: 700, margin: 0, color: 'var(--cafe-deep)' }}>
+        <h2 style={{ fontSize: 'var(--fs-lead)', fontWeight: 700, margin: 0, color: 'var(--cafe-deep)' }}>
           Crear Nuevo Producto en Catálogo
         </h2>
         <button type="button" onClick={() => setAbierto(false)} className="btn-accion-sm">
@@ -109,7 +109,7 @@ export default function FormularioProducto({ categorias }: Props) {
       <form onSubmit={handleSubmit}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px', marginBottom: '14px' }}>
           <div>
-            <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
+            <label style={{ display: 'block', fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
               Nombre del Producto *
             </label>
             <input
@@ -119,12 +119,12 @@ export default function FormularioProducto({ categorias }: Props) {
               onChange={(e) => setNombre(e.target.value)}
               placeholder="Ej. Tarta de Frutilla con Crema"
               className="field-input"
-              style={{ width: '100%', fontSize: '13px' }}
+              style={{ width: '100%', fontSize: 'var(--fs-small)' }}
             />
           </div>
 
           <div>
-            <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
+            <label style={{ display: 'block', fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
               Categoría *
             </label>
             <select
@@ -132,7 +132,7 @@ export default function FormularioProducto({ categorias }: Props) {
               onChange={(e) => setCategoriaId(e.target.value)}
               required
               className="field-input"
-              style={{ width: '100%', fontSize: '13px' }}
+              style={{ width: '100%', fontSize: 'var(--fs-small)' }}
             >
               {categorias.map((c) => (
                 <option key={c.id} value={c.id}>
@@ -143,7 +143,7 @@ export default function FormularioProducto({ categorias }: Props) {
           </div>
 
           <div>
-            <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
+            <label style={{ display: 'block', fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
               Precio en Bs (opcional, vacío = a consultar)
             </label>
             <input
@@ -154,7 +154,7 @@ export default function FormularioProducto({ categorias }: Props) {
               onChange={(e) => setPrecioBs(e.target.value)}
               placeholder="Ej. 28.00"
               className="field-input"
-              style={{ width: '100%', fontSize: '13px' }}
+              style={{ width: '100%', fontSize: 'var(--fs-small)' }}
             />
           </div>
         </div>
@@ -181,7 +181,7 @@ export default function FormularioProducto({ categorias }: Props) {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', paddingTop: '18px' }}>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', cursor: 'pointer' }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: 'var(--fs-small)', cursor: 'pointer' }}>
               <input
                 type="checkbox"
                 checked={aptoMascotas}
@@ -193,7 +193,7 @@ export default function FormularioProducto({ categorias }: Props) {
         </div>
 
         <div style={{ marginBottom: '18px' }}>
-          <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
+          <label style={{ display: 'block', fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
             Descripción del Producto
           </label>
           <textarea
@@ -202,7 +202,7 @@ export default function FormularioProducto({ categorias }: Props) {
             rows={2}
             placeholder="Detalles sobre porciones, ingredientes especiales o alérgenos..."
             className="field-input"
-            style={{ width: '100%', fontSize: '13px' }}
+            style={{ width: '100%', fontSize: 'var(--fs-small)' }}
           />
         </div>
 

@@ -28,10 +28,10 @@ export default function BotonPruebaAutorizacion() {
 
   return (
     <div className="panel-tarjeta-prueba">
-      <h3 style={{ fontSize: '16px', margin: '0 0 8px', color: 'var(--cafe-deep)' }}>
+      <h3 style={{ fontSize: 'var(--fs-lead)', margin: '0 0 8px', color: 'var(--cafe-deep)' }}>
         Prueba de Verificación en Servidor (Solo Administrador)
       </h3>
-      <p style={{ fontSize: '13px', color: 'var(--cafe-suave)', margin: '0 0 14px' }}>
+      <p style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)', margin: '0 0 14px' }}>
         Presiona para invocar un Server Action protegido por <code>puede(rol, 'configuracion.gestionar')</code>.
         Si la sesión es de rol Mesero, el servidor rechazará la petición con un error 403.
       </p>
@@ -52,11 +52,11 @@ export default function BotonPruebaAutorizacion() {
             marginTop: '12px',
             padding: '10px 14px',
             borderRadius: '10px',
-            fontSize: '13px',
+            fontSize: 'var(--fs-small)',
             fontWeight: 600,
-            background: resultado.exito ? '#d3f9d8' : '#ffe3e3',
-            color: resultado.exito ? '#2b8a3e' : '#c92a2a',
-            border: `1px solid ${resultado.exito ? '#b2f2bb' : '#ffa8a8'}`,
+            background: resultado.exito ? 'var(--color-exito-bg)' : 'var(--color-error-bg)',
+            color: resultado.exito ? 'var(--color-exito)' : 'var(--color-error)',
+            border: `1px solid ${resultado.exito ? 'var(--color-exito-border)' : 'var(--color-error-border)'}`,
           }}
         >
           {resultado.exito ? '✅ ' : '⛔ '} {resultado.mensaje}

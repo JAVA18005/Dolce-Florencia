@@ -109,19 +109,19 @@ export default function FilaProducto({ producto, categorias }: Props) {
             {producto.nombre}
           </div>
           {producto.descripcion && (
-            <div style={{ fontSize: '12px', color: 'var(--cafe-suave)', maxWidth: '300px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <div style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)', maxWidth: '300px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {producto.descripcion}
             </div>
           )}
-          {error && <div style={{ color: '#c92a2a', fontSize: '11px', marginTop: '4px' }}>{error}</div>}
+          {error && <div style={{ color: 'var(--color-error)', fontSize: 'var(--fs-small)', marginTop: '4px' }}>{error}</div>}
         </td>
 
         <td>
-          <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--cafe)' }}>
+          <span style={{ fontSize: 'var(--fs-small)', fontWeight: 500, color: 'var(--cafe)' }}>
             {producto.categoria.nombre}
           </span>
           {producto.aptoMascotas && (
-            <span style={{ display: 'inline-block', marginLeft: '6px', fontSize: '11px', background: '#e7f5ff', color: '#1971c2', padding: '1px 6px', borderRadius: '4px' }}>
+            <span style={{ display: 'inline-block', marginLeft: '6px', fontSize: 'var(--fs-small)', background: 'var(--color-info-bg)', color: 'var(--color-info)', padding: '1px 6px', borderRadius: '4px' }}>
               🐾 Pet
             </span>
           )}
@@ -137,7 +137,7 @@ export default function FilaProducto({ producto, categorias }: Props) {
           <span className={`badge-estado ${producto.activo ? 'confirmada' : 'cancelada'}`}>
             {producto.activo ? 'Activo' : 'Archivado'}
           </span>
-          <div style={{ fontSize: '11px', color: 'var(--cafe-suave)', marginTop: '4px' }}>
+          <div style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)', marginTop: '4px' }}>
             {producto._count.ventaItems} ventas registradas
           </div>
         </td>
@@ -180,11 +180,11 @@ export default function FilaProducto({ producto, categorias }: Props) {
       {/* Formulario Desplegable de Edición */}
       {editando && (
         <tr>
-          <td colSpan={5} style={{ background: '#fdf8f6', padding: '16px 20px', borderLeft: '4px solid var(--fucsia-accion)' }}>
+          <td colSpan={5} style={{ background: 'var(--rosa-suave)', padding: '16px 20px', borderLeft: '4px solid var(--fucsia-accion)' }}>
             <form onSubmit={handleGuardarEdicion}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '12px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
+                  <label style={{ display: 'block', fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
                     Nombre del Producto:
                   </label>
                   <input
@@ -193,19 +193,19 @@ export default function FilaProducto({ producto, categorias }: Props) {
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
                     className="field-input"
-                    style={{ width: '100%', fontSize: '13px', padding: '6px 10px' }}
+                    style={{ width: '100%', fontSize: 'var(--fs-small)', padding: '6px 10px' }}
                   />
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
+                  <label style={{ display: 'block', fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
                     Categoría:
                   </label>
                   <select
                     value={categoriaId}
                     onChange={(e) => setCategoriaId(e.target.value)}
                     className="field-input"
-                    style={{ width: '100%', fontSize: '13px', padding: '6px 10px' }}
+                    style={{ width: '100%', fontSize: 'var(--fs-small)', padding: '6px 10px' }}
                   >
                     {categorias.map((c) => (
                       <option key={c.id} value={c.id}>
@@ -216,7 +216,7 @@ export default function FilaProducto({ producto, categorias }: Props) {
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
+                  <label style={{ display: 'block', fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
                     Precio en Bs (dejar vacío = consultar):
                   </label>
                   <input
@@ -227,7 +227,7 @@ export default function FilaProducto({ producto, categorias }: Props) {
                     onChange={(e) => setPrecioBs(e.target.value)}
                     placeholder="Ej. 35.00"
                     className="field-input"
-                    style={{ width: '100%', fontSize: '13px', padding: '6px 10px' }}
+                    style={{ width: '100%', fontSize: 'var(--fs-small)', padding: '6px 10px' }}
                   />
                 </div>
               </div>
@@ -254,7 +254,7 @@ export default function FilaProducto({ producto, categorias }: Props) {
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', paddingTop: '20px' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', cursor: 'pointer' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: 'var(--fs-small)', cursor: 'pointer' }}>
                     <input
                       type="checkbox"
                       checked={aptoMascotas}
@@ -266,7 +266,7 @@ export default function FilaProducto({ producto, categorias }: Props) {
               </div>
 
               <div style={{ marginBottom: '14px' }}>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
+                <label style={{ display: 'block', fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--cafe)', marginBottom: '4px' }}>
                   Descripción:
                 </label>
                 <textarea
@@ -274,7 +274,7 @@ export default function FilaProducto({ producto, categorias }: Props) {
                   onChange={(e) => setDescripcion(e.target.value)}
                   rows={2}
                   className="field-input"
-                  style={{ width: '100%', fontSize: '13px', padding: '6px 10px' }}
+                  style={{ width: '100%', fontSize: 'var(--fs-small)', padding: '6px 10px' }}
                 />
               </div>
 

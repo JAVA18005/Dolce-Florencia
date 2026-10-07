@@ -35,8 +35,8 @@ export default function FilaDiaBloqueado({ bloqueo, puedeDesbloquear }: Props) {
   return (
     <tr>
       <td>
-        <strong style={{ color: 'var(--cafe-deep)', fontSize: '15px' }}>{fechaStr}</strong>
-        {error && <span style={{ color: '#c92a2a', fontSize: '11px', display: 'block' }}>⚠️ {error}</span>}
+        <strong style={{ color: 'var(--cafe-deep)', fontSize: 'var(--fs-lead)' }}>{fechaStr}</strong>
+        {error && <span style={{ color: 'var(--color-error)', fontSize: 'var(--fs-small)', display: 'block' }}>⚠️ {error}</span>}
       </td>
 
       <td>
@@ -47,12 +47,12 @@ export default function FilaDiaBloqueado({ bloqueo, puedeDesbloquear }: Props) {
         <span
           style={{
             display: 'inline-block',
-            fontSize: '11px',
+            fontSize: 'var(--fs-small)',
             padding: '2px 8px',
             borderRadius: '6px',
             fontWeight: 600,
-            background: esPorEvento ? '#f8f0fc' : '#fff3bf',
-            color: esPorEvento ? '#ae3ec9' : '#d9480f',
+            background: esPorEvento ? 'var(--fucsia-pastel)' : 'var(--color-advertencia-bg)',
+            color: esPorEvento ? 'var(--fucsia-accion)' : 'var(--color-advertencia)',
           }}
         >
           {esPorEvento ? `Evento #${bloqueo.reserva?.codigo || ''}` : 'Bloqueo Manual Admin'}
@@ -60,14 +60,14 @@ export default function FilaDiaBloqueado({ bloqueo, puedeDesbloquear }: Props) {
       </td>
 
       <td>
-        <span style={{ fontSize: '12px', color: 'var(--cafe-suave)' }}>
+        <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
           {bloqueo.creadoPor?.nombre || 'Sistema'}
         </span>
       </td>
 
       <td>
         {esPorEvento ? (
-          <span style={{ fontSize: '11px', color: 'var(--cafe-suave)' }}>
+          <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
             Vía Módulo Eventos
           </span>
         ) : puedeDesbloquear ? (
@@ -80,7 +80,7 @@ export default function FilaDiaBloqueado({ bloqueo, puedeDesbloquear }: Props) {
             {cargando ? '...' : 'Desbloquear'}
           </button>
         ) : (
-          <span style={{ fontSize: '12px', color: 'var(--cafe-suave)' }}>Solo lectura</span>
+          <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>Solo lectura</span>
         )}
       </td>
     </tr>

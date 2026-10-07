@@ -127,7 +127,7 @@ export default function FormularioNuevaVenta({ mesas, productos }: Props) {
   return (
     <div className="panel-card-form" style={{ marginBottom: '28px', maxWidth: '820px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <h2 style={{ fontSize: '18px', fontWeight: 700, margin: 0, color: 'var(--cafe-deep)' }}>
+        <h2 style={{ fontSize: 'var(--fs-lead)', fontWeight: 700, margin: 0, color: 'var(--cafe-deep)' }}>
           Registrar Nueva Venta / Comanda
         </h2>
         <button
@@ -145,7 +145,7 @@ export default function FormularioNuevaVenta({ mesas, productos }: Props) {
       <form onSubmit={handleSubmit}>
         {/* Selector de Mesa */}
         <div style={{ marginBottom: '18px' }}>
-          <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: 'var(--cafe)', marginBottom: '6px' }}>
+          <label style={{ display: 'block', fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--cafe)', marginBottom: '6px' }}>
             Ubicación / Mesa:
           </label>
           <select
@@ -163,7 +163,7 @@ export default function FormularioNuevaVenta({ mesas, productos }: Props) {
           </select>
 
           {mesaSeleccionada && !mesaSeleccionada.permiteVariasCuentas && mesaSeleccionada.cuentasAbiertas > 0 && (
-            <p style={{ fontSize: '12px', color: '#d9480f', marginTop: '6px', fontWeight: 500 }}>
+            <p style={{ fontSize: 'var(--fs-small)', color: 'var(--color-advertencia)', marginTop: '6px', fontWeight: 500 }}>
               * Esta mesa ya tiene una comanda abierta. Los productos que agregues se sumarán a su cuenta actual.
             </p>
           )}
@@ -171,7 +171,7 @@ export default function FormularioNuevaVenta({ mesas, productos }: Props) {
 
         {/* Catálogo de Productos para Selección Rápida */}
         <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: 'var(--cafe)', marginBottom: '8px' }}>
+          <label style={{ display: 'block', fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--cafe)', marginBottom: '8px' }}>
             Seleccionar Productos:
           </label>
           <div
@@ -184,7 +184,7 @@ export default function FormularioNuevaVenta({ mesas, productos }: Props) {
               border: '1px solid var(--linea)',
               borderRadius: '10px',
               padding: '12px',
-              background: '#fff',
+              background: 'var(--blanco)',
             }}
           >
             {productos.map((prod) => {
@@ -199,14 +199,14 @@ export default function FormularioNuevaVenta({ mesas, productos }: Props) {
                     padding: '8px 10px',
                     borderRadius: '8px',
                     border: cant > 0 ? '1.5px solid var(--fucsia-accion)' : '1px solid var(--linea)',
-                    background: cant > 0 ? '#fdf4f7' : '#fafafa',
+                    background: cant > 0 ? 'var(--rosa-suave)' : 'var(--rosa-suave)',
                   }}
                 >
-                  <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--cafe)' }}>
+                  <div style={{ fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--cafe)' }}>
                     {prod.nombre}
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '6px' }}>
-                    <span style={{ fontSize: '12px', color: 'var(--cafe-suave)' }}>
+                    <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
                       {prod.precioCentavos ? formatearCentavosABs(prod.precioCentavos) : 'Consultar'}
                     </span>
                     <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
@@ -221,7 +221,7 @@ export default function FormularioNuevaVenta({ mesas, productos }: Props) {
                         </button>
                       )}
                       {cant > 0 && (
-                        <span style={{ fontSize: '12px', fontWeight: 700, minWidth: '16px', textAlign: 'center' }}>
+                        <span style={{ fontSize: 'var(--fs-small)', fontWeight: 700, minWidth: '16px', textAlign: 'center' }}>
                           {cant}
                         </span>
                       )}
@@ -242,14 +242,14 @@ export default function FormularioNuevaVenta({ mesas, productos }: Props) {
         </div>
 
         {/* Resumen de la Comanda */}
-        <div style={{ background: '#f7ede8', padding: '14px 18px', borderRadius: '12px', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ background: 'var(--rosa)', padding: '14px 18px', borderRadius: '12px', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <span style={{ fontSize: '13px', color: 'var(--cafe-suave)' }}>Ítems a comandar: </span>
+            <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>Ítems a comandar: </span>
             <strong style={{ color: 'var(--cafe-deep)' }}>{totalItemsCount} unidades</strong>
           </div>
           <div>
-            <span style={{ fontSize: '13px', color: 'var(--cafe-suave)' }}>Total a sumar: </span>
-            <strong style={{ fontSize: '18px', color: 'var(--fucsia-accion)', fontWeight: 700 }}>
+            <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>Total a sumar: </span>
+            <strong style={{ fontSize: 'var(--fs-lead)', color: 'var(--fucsia-accion)', fontWeight: 700 }}>
               {formatearCentavosABs(totalCalculadoCentavos)}
             </strong>
           </div>

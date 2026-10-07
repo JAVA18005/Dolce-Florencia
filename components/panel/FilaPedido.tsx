@@ -100,26 +100,26 @@ export default function FilaPedido({ pedido }: Props) {
           <span style={{ fontWeight: 700, color: 'var(--cafe-deep)', display: 'block' }}>
             {pedido.codigo}
           </span>
-          <span style={{ fontSize: '13px', color: 'var(--cafe)' }}>{pedido.clienteNombre}</span>
-          <span style={{ fontSize: '12px', color: 'var(--cafe-suave)', display: 'block' }}>
+          <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe)' }}>{pedido.clienteNombre}</span>
+          <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)', display: 'block' }}>
             📞 {pedido.clienteTelefono}
           </span>
-          {error && <span style={{ color: '#c92a2a', fontSize: '11px', display: 'block' }}>⚠️ {error}</span>}
-          {advertencia && <span style={{ color: '#d9480f', fontSize: '11px', display: 'block' }}>ℹ️ {advertencia}</span>}
+          {error && <span style={{ color: 'var(--color-error)', fontSize: 'var(--fs-small)', display: 'block' }}>⚠️ {error}</span>}
+          {advertencia && <span style={{ color: 'var(--color-advertencia)', fontSize: 'var(--fs-small)', display: 'block' }}>ℹ️ {advertencia}</span>}
         </td>
 
         <td>
           <span style={{ fontWeight: 600, display: 'block' }}>{fechaStr}</span>
-          <span style={{ fontSize: '12px', color: 'var(--cafe-suave)' }}>
+          <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
             {pedido.horaDeseada ? `Hora: ${pedido.horaDeseada}` : 'Horario flexible'}
           </span>
           <span
             style={{
               display: 'inline-block',
-              fontSize: '11px',
+              fontSize: 'var(--fs-small)',
               padding: '2px 6px',
               borderRadius: '6px',
-              background: '#eee',
+              background: 'var(--linea)',
               marginTop: '4px',
             }}
           >
@@ -128,7 +128,7 @@ export default function FilaPedido({ pedido }: Props) {
         </td>
 
         <td>
-          <div style={{ fontSize: '13px', maxHeight: '80px', overflowY: 'auto' }}>
+          <div style={{ fontSize: 'var(--fs-small)', maxHeight: '80px', overflowY: 'auto' }}>
             {pedido.items && pedido.items.length > 0 ? (
               pedido.items.map((it: any) => (
                 <div key={it.id}>
@@ -219,9 +219,9 @@ export default function FilaPedido({ pedido }: Props) {
       {/* Formulario desplegable para fijar monto acordado y confirmar */}
       {mostrandoConfirmar && (
         <tr>
-          <td colSpan={5} style={{ background: '#f4fbf5', padding: '14px 18px', borderLeft: '4px solid #2b8a3e' }}>
+          <td colSpan={5} style={{ background: 'var(--color-exito-bg)', padding: '14px 18px', borderLeft: '4px solid var(--color-exito)' }}>
             <form onSubmit={handleConfirmar} style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: '13px', fontWeight: 600, color: '#2b8a3e' }}>
+              <span style={{ fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--color-exito)' }}>
                 Total acordado con el cliente (Bs):
               </span>
               <input
@@ -233,7 +233,7 @@ export default function FilaPedido({ pedido }: Props) {
                 onChange={(e) => setPrecioBs(e.target.value)}
                 placeholder="Ej. 180.00"
                 className="field-input"
-                style={{ width: '130px', padding: '6px 10px', fontSize: '13px' }}
+                style={{ width: '130px', padding: '6px 10px', fontSize: 'var(--fs-small)' }}
               />
               <button type="submit" disabled={cargando} className="btn-accion-sm btn-exito">
                 {cargando ? 'Guardando...' : 'Guardar y Confirmar'}
@@ -249,9 +249,9 @@ export default function FilaPedido({ pedido }: Props) {
       {/* Formulario desplegable para rechazar */}
       {mostrandoRechazar && (
         <tr>
-          <td colSpan={5} style={{ background: '#fff5f5', padding: '14px 18px', borderLeft: '4px solid #c92a2a' }}>
+          <td colSpan={5} style={{ background: 'var(--color-error-bg)', padding: '14px 18px', borderLeft: '4px solid var(--color-error)' }}>
             <form onSubmit={handleRechazar} style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: '13px', fontWeight: 600, color: '#c92a2a' }}>
+              <span style={{ fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--color-error)' }}>
                 Motivo del rechazo (opcional):
               </span>
               <input
@@ -260,7 +260,7 @@ export default function FilaPedido({ pedido }: Props) {
                 onChange={(e) => setMotivoRechazo(e.target.value)}
                 placeholder="Ej. Sin disponibilidad de insumos para la fecha"
                 className="field-input"
-                style={{ flex: 1, minWidth: '220px', padding: '6px 10px', fontSize: '13px' }}
+                style={{ flex: 1, minWidth: '220px', padding: '6px 10px', fontSize: 'var(--fs-small)' }}
               />
               <button type="submit" disabled={cargando} className="btn-accion-sm btn-peligro">
                 {cargando ? 'Rechazando...' : 'Rechazar Solicitud'}

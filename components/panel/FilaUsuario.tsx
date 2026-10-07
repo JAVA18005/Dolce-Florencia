@@ -102,14 +102,14 @@ export default function FilaUsuario({ usuario, esUsuarioActual }: FilaUsuarioPro
       <tr>
         <td>
           <strong style={{ color: 'var(--cafe-deep)', display: 'block' }}>{usuario.nombre}</strong>
-          <span style={{ fontSize: '12px', color: 'var(--cafe-suave)' }}>{usuario.email}</span>
+          <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>{usuario.email}</span>
           {esUsuarioActual && (
-            <span style={{ fontSize: '11px', color: 'var(--fucsia-accion)', fontWeight: 600, display: 'block' }}>
+            <span style={{ fontSize: 'var(--fs-small)', color: 'var(--fucsia-accion)', fontWeight: 600, display: 'block' }}>
               (Tu sesión actual)
             </span>
           )}
           {error && (
-            <span style={{ fontSize: '11px', color: '#c92a2a', display: 'block', marginTop: '4px' }}>
+            <span style={{ fontSize: 'var(--fs-small)', color: 'var(--color-error)', display: 'block', marginTop: '4px' }}>
               ⚠️ {error}
             </span>
           )}
@@ -125,7 +125,7 @@ export default function FilaUsuario({ usuario, esUsuarioActual }: FilaUsuarioPro
               onClick={alternarRol}
               disabled={cargando}
               className="btn-accion-sm"
-              style={{ display: 'block', marginTop: '6px', fontSize: '11px' }}
+              style={{ display: 'block', marginTop: '6px', fontSize: 'var(--fs-small)' }}
               title="Cambiar rol"
             >
               Cambiar a {usuario.rol === Rol.ADMIN ? 'Mesero' : 'Admin'}
@@ -142,8 +142,8 @@ export default function FilaUsuario({ usuario, esUsuarioActual }: FilaUsuarioPro
               style={{
                 display: 'block',
                 marginTop: '4px',
-                fontSize: '11px',
-                color: '#d9480f',
+                fontSize: 'var(--fs-small)',
+                color: 'var(--color-advertencia)',
                 fontWeight: 600,
               }}
             >
@@ -179,9 +179,9 @@ export default function FilaUsuario({ usuario, esUsuarioActual }: FilaUsuarioPro
       {/* Modal / Diálogo para restablecer contraseña temporal */}
       {mostrandoModalClave && (
         <tr>
-          <td colSpan={4} style={{ background: '#fdf7f4', padding: '16px 20px', borderLeft: '4px solid var(--fucsia-accion)' }}>
+          <td colSpan={4} style={{ background: 'var(--rosa-suave)', padding: '16px 20px', borderLeft: '4px solid var(--fucsia-accion)' }}>
             <form onSubmit={ejecutarRestablecimiento} style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--cafe-deep)' }}>
+              <span style={{ fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--cafe-deep)' }}>
                 Nueva contraseña temporal para {usuario.nombre}:
               </span>
               <input
@@ -192,13 +192,13 @@ export default function FilaUsuario({ usuario, esUsuarioActual }: FilaUsuarioPro
                 onChange={(e) => setClaveTemporal(e.target.value)}
                 placeholder="Mínimo 12 caracteres..."
                 className="field-input"
-                style={{ maxWidth: '280px', padding: '6px 12px', fontSize: '13px' }}
+                style={{ maxWidth: '280px', padding: '6px 12px', fontSize: 'var(--fs-small)' }}
               />
               <button
                 type="submit"
                 disabled={cargando}
                 className="btn btn-primario"
-                style={{ padding: '8px 16px', fontSize: '12px' }}
+                style={{ padding: '8px 16px', fontSize: 'var(--fs-small)' }}
               >
                 {cargando ? 'Guardando...' : 'Asignar Clave'}
               </button>
@@ -206,7 +206,7 @@ export default function FilaUsuario({ usuario, esUsuarioActual }: FilaUsuarioPro
                 type="button"
                 onClick={() => setMostrandoModalClave(false)}
                 className="btn btn-secundario"
-                style={{ padding: '8px 16px', fontSize: '12px' }}
+                style={{ padding: '8px 16px', fontSize: 'var(--fs-small)' }}
               >
                 Cancelar
               </button>

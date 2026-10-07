@@ -48,7 +48,7 @@ export default async function GestionProductosPage() {
           </div>
 
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-            <span style={{ fontSize: '13px', color: 'var(--cafe-suave)' }}>
+            <span style={{ fontSize: 'var(--fs-small)', color: 'var(--cafe-suave)' }}>
               <strong>{productosActivosCount}</strong> activos · <strong>{productosArchivadosCount}</strong> archivados
             </span>
           </div>
