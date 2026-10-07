@@ -11,12 +11,17 @@ export const dynamic = 'force-dynamic';
 
 export default async function InicioPage() {
   // Leemos 3 productos destacados de la base de datos para el resumen de colección
-  const productosDestacados = await prisma.producto.findMany({
-    where: { activo: true },
-    include: { categoria: true },
-    orderBy: { orden: 'asc' },
-    take: 3,
+  const NOMBRES_DESTACADOS = ['Frutos rojos y crema', 'Macchiato', 'Torta crepe de frutos rojos']; // poné los nombres exactos
+
+  const encontrados = await prisma.producto.findMany({
+  where: { activo: true, nombre: { in: NOMBRES_DESTACADOS } },
+  include: { categoria: true },
   });
+
+  // Respeta el orden de la lista (el findMany no lo garantiza)
+  const productosDestacados = NOMBRES_DESTACADOS
+    .map((n) => encontrados.find((p) => p.nombre === n))
+    .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   return (
     <>
