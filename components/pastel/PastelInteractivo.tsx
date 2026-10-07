@@ -142,12 +142,14 @@ export default function PastelInteractivo({ mini = false }: PastelProps) {
         {/* Sombra de contacto */}
         <ellipse cx="300" cy="523" rx="217" ry="32" fill="#2B2320" opacity=".2" />
 
-        {/* Plato cerámico */}
-        <g className="cake-plate">
-          <path d="M88 483v14c0 36 424 36 424 0v-14" fill="#3D3330" />
-          <ellipse cx="300" cy="483" rx="212" ry="48" fill="#E4D0CA" />
-          <ellipse cx="300" cy="479" rx="190" ry="36" stroke="#3D3330" strokeWidth="1" />
-        </g>
+        {/* Plato cerámico: solo en la variante mini del ritual */}
+        {mini && (
+          <g className="cake-plate">
+            <path d="M88 483v14c0 36 424 36 424 0v-14" fill="#3D3330" />
+            <ellipse cx="300" cy="483" rx="212" ry="48" fill="#E4D0CA" />
+            <ellipse cx="300" cy="479" rx="190" ry="36" stroke="#3D3330" strokeWidth="1" />
+          </g>
+        )}
 
         {/* Capa Base */}
         <g className="cake-layer layer-base" filter={`url(#shadow-${sufijo})`}>
@@ -237,11 +239,6 @@ export default function PastelInteractivo({ mini = false }: PastelProps) {
   return (
     <div className={`hero-visual ${desarmado ? 'exploded' : ''}`}>
       {!mini && <div className="hero-halo" aria-hidden="true" />}
-      {!mini && (
-        <span className="orbit-note" aria-hidden="true">
-          PEQUEÑAS CAPAS · GRANDES MOMENTOS
-        </span>
-      )}
 
       {!mini ? (
         <button
@@ -260,37 +257,18 @@ export default function PastelInteractivo({ mini = false }: PastelProps) {
       )}
 
       {!mini && (
-        <>
-          <span className="visual-note note-one" aria-hidden="true">
-            un poquito
-            <br />
-            <em>de magia</em>
-            <svg viewBox="0 0 70 45">
-              <path d="M5 5Q5 35 60 35m-10-8 12 8-12 5" />
-            </svg>
-          </span>
-          <span className="visual-note note-two" aria-hidden="true">
-            el toque
-            <br />
-            Florencia ✳
-          </span>
-          <div className="hero-seal" aria-hidden="true">
-            HECHO
-            <br />
-            <strong>con amor</strong>
-            <br />
-            PARA TI
-          </div>
-          <div className="confections" aria-hidden="true">
-            <span className="confection cream-rosette">
-              <i />
-              <i />
-              <i />
-            </span>
-            <span className="confection clay-macaron" />
-            <span className="confection sugar-pearl" />
-          </div>
-        </>
+        <p className="hero-caption" aria-hidden="true">
+          PEQUEÑAS CAPAS · GRANDES MOMENTOS
+        </p>
+      )}
+      {!mini && (
+        <div className="hero-seal" aria-hidden="true">
+          HECHO
+          <br />
+          <strong>con amor</strong>
+          <br />
+          PARA TI
+        </div>
       )}
     </div>
   );

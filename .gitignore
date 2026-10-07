@@ -27,3 +27,8 @@ yarn-error.log*
 .idea/
 .DS_Store
 Thumbs.db
+
+# Generados localmente
+dev-server.log
+*.tsbuildinfo
+next-env.d.ts

@@ -5,6 +5,7 @@ import { useMovimiento } from '@/components/movimiento/MovimientoContext';
 
 interface CanvasCremaProps {
   alpha?: number;
+  ambient?: boolean;
 }
 
 interface Drop {
@@ -18,7 +19,7 @@ interface Drop {
   stretch: number;
 }
 
-export default function CanvasCrema({ alpha = 0.78 }: CanvasCremaProps) {
+export default function CanvasCrema({ alpha = 0.78, ambient = false }: CanvasCremaProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { efectivoPausado } = useMovimiento();
 
@@ -91,15 +92,21 @@ export default function CanvasCrema({ alpha = 0.78 }: CanvasCremaProps) {
 
         const r = drop.radius;
         const cream = ctx.createRadialGradient(-r * 0.3, -r * 0.4, 0, 0, 0, r * 1.25);
-        cream.addColorStop(0, '#FFFAF7');
-        cream.addColorStop(0.48, '#F7EBE8');
-        cream.addColorStop(1, '#E4D0CA');
+        if (ambient) {
+          cream.addColorStop(0, '#FFF9F6');
+          cream.addColorStop(0.5, '#F6E7E0');
+          cream.addColorStop(1, '#EBDCD4');
+        } else {
+          cream.addColorStop(0, '#FFFAF7');
+          cream.addColorStop(0.48, '#F7EBE8');
+          cream.addColorStop(1, '#E4D0CA');
+        }
 
-        ctx.globalAlpha = alpha;
+        ctx.globalAlpha = ambient ? alpha * 0.55 : alpha;
         ctx.fillStyle = cream;
-        ctx.shadowColor = 'rgba(43, 35, 32, 0.2)';
-        ctx.shadowBlur = 10;
-        ctx.shadowOffsetY = 6;
+        ctx.shadowColor = ambient ? 'rgba(43, 35, 32, 0.06)' : 'rgba(43, 35, 32, 0.2)';
+        ctx.shadowBlur = ambient ? 4 : 10;
+        ctx.shadowOffsetY = ambient ? 2 : 6;
 
         ctx.beginPath();
         ctx.moveTo(-r * 0.12, -r * 1.45);
@@ -148,11 +155,17 @@ export default function CanvasCrema({ alpha = 0.78 }: CanvasCremaProps) {
       canvas.height = Math.round(height * ratio);
       ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-      const count = width < 600 ? 8 : 19;
+      const count = ambient ? (width < 600 ? 4 : 7) : width < 600 ? 8 : 19;
       drops = Array.from({ length: count }, (_, i) => ({
         x: (i % 2 ? 0.95 + Math.random() * 0.035 : 0.015 + Math.random() * 0.025) * width,
         y: Math.random() * height,
-        radius: width < 600 ? 4 + Math.random() * 6 : 8 + Math.random() * 13,
+        radius: ambient
+          ? width < 600
+            ? 3 + Math.random() * 3
+            : 5 + Math.random() * 5
+          : width < 600
+            ? 4 + Math.random() * 6
+            : 8 + Math.random() * 13,
         speed: 0.18 + Math.random() * 0.28,
         phase: Math.random() * Math.PI * 2,
         vx: 0,
@@ -206,7 +219,7 @@ export default function CanvasCrema({ alpha = 0.78 }: CanvasCremaProps) {
       document.removeEventListener('visibilitychange', onVisibilityChange);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     };
-  }, [efectivoPausado, alpha]);
+  }, [efectivoPausado, alpha, ambient]);
 
   return <canvas ref={canvasRef} className="cream-canvas" aria-hidden="true" />;
 }

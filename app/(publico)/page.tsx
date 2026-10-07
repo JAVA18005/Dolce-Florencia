@@ -22,7 +22,7 @@ export default async function InicioPage() {
     <>
       {/* ────────── Hero Section ────────── */}
       <section className="hero">
-        <CanvasCrema alpha={0.78} />
+        <CanvasCrema alpha={0.3} ambient />
 
         <div className="wrap hero-grid">
           <div className="hero-copy">
@@ -64,7 +64,6 @@ export default async function InicioPage() {
           <a href="#ritual">
             Desliza. Lo dulce está por venir <span>↓</span>
           </a>
-          <span>01 — 04</span>
         </div>
       </section>
 

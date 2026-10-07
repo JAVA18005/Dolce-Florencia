@@ -386,7 +386,7 @@ p {
 .hero {
   position: relative;
   overflow: hidden;
-  background: var(--fucsia-pastel);
+  background: radial-gradient(ellipse at 82% 38%, var(--fucsia-pastel), transparent 55%), var(--hueso);
   color: var(--cafe-deep);
 }
 
@@ -476,20 +476,12 @@ p {
 
 .hero-halo {
   position: absolute;
-  inset: 4% -4% 4% 0;
-  background: radial-gradient(ellipse at 40% 35%, var(--rosa), var(--crema) 65%, var(--hueso));
-  border-radius: 48% 48% 42% 42%;
-  box-shadow: inset 12px 12px 30px rgba(255, 255, 255, 0.35), inset -15px -15px 26px rgba(107, 122, 94, 0.16);
+  inset: 7% -4% 3% 1%;
+  background: var(--fucsia-pastel);
+  border-radius: 42% 58% 46% 54% / 54% 42% 58% 46%;
+  box-shadow: inset 14px 14px 28px rgba(255, 255, 255, 0.6), inset -12px -12px 22px rgba(107, 122, 94, 0.18);
   z-index: -1;
-  transform: rotate(-8deg);
-}
-
-.hero-halo:after {
-  content: '';
-  position: absolute;
-  inset: -14px;
-  border: 1px solid rgba(217, 79, 128, 0.35);
-  border-radius: inherit;
+  transform: rotate(-10deg);
 }
 
 .cake-art {
@@ -526,50 +518,10 @@ p {
   transform: rotate(2deg) scale(.92);
 }
 
-.orbit-note {
-  position: absolute;
-  top: 7%;
-  left: 15%;
-  font-size: var(--fs-caption);
-  letter-spacing: .22em;
-  color: var(--fucsia-accion);
-  transform: rotate(-8deg);
-}
-
-.visual-note {
-  position: absolute;
-  font-family: var(--serif);
-  font-size: var(--fs-title-sm);
-  color: var(--cafe-deep);
-  line-height: 1.05;
-  z-index: 2;
-}
-
-.note-one {
-  top: 27%;
-  left: -5%;
-  transform: rotate(-13deg);
-}
-
-.note-one svg {
-  width: 60px;
-  stroke: var(--fucsia);
-  fill: none;
-  stroke-width: 1;
-  transform: rotate(10deg);
-  margin: var(--space-2) 0 0 var(--space-4);
-}
-
-.note-two {
-  right: -2%;
-  top: 65%;
-  transform: rotate(9deg);
-}
-
 .hero-seal {
   position: absolute;
-  right: -3%;
-  top: 15%;
+  right: 0;
+  top: 0;
   height: 95px;
   width: 95px;
   display: flex;
@@ -578,12 +530,13 @@ p {
   justify-content: center;
   border: 1px dashed var(--fucsia);
   border-radius: 50%;
-  background: var(--cafe-deep);
+  background: var(--hueso);
+  box-shadow: 0 8px 18px rgba(43, 35, 32, 0.12);
   font-size: var(--fs-caption);
   letter-spacing: .17em;
   line-height: 1.3;
-  transform: rotate(15deg);
-  color: var(--rosa);
+  transform: rotate(10deg);
+  color: var(--cafe);
 }
 
 .hero-seal strong {
@@ -592,6 +545,14 @@ p {
   font-weight: 400;
   letter-spacing: 0;
   color: var(--fucsia);
+}
+
+.hero-caption {
+  margin: var(--space-3) auto 0;
+  text-align: center;
+  font-size: var(--fs-caption);
+  letter-spacing: .18em;
+  color: var(--cafe-suave);
 }
 
 .cake-interactive {
@@ -626,11 +587,11 @@ p {
 
 .hero-bottom a {
   letter-spacing: .03em;
-  color: var(--rosa);
+  color: var(--fucsia);
 }
 
 .hero-bottom a:hover {
-  color: var(--fucsia);
+  color: var(--fucsia-accion);
 }
 
 /* ────────── Ritual ────────── */
@@ -1405,6 +1366,12 @@ p {
 @media (max-width: 540px) {
   .hero h1 {
     font-size: var(--fs-display-sm);
+  }
+  .hero-seal {
+    height: 76px;
+    width: 76px;
+    right: 2%;
+    top: 2%;
   }
   .product-grid {
     grid-template-columns: 1fr;

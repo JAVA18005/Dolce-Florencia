@@ -1,0 +1,58 @@
+
+> dolce-florencia@1.0.0 dev
+> next dev -H 0.0.0.0
+
+   ▲ Next.js 15.5.26
+   - Local:        http://localhost:3000
+   - Network:      http://0.0.0.0:3000
+   - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 3s
+ ○ Compiling /api/health ...
+ ✓ Compiled /api/health in 816ms (299 modules)
+prisma:query SELECT 1
+ GET /api/health 200 in 1158ms
+ ○ Compiling / ...
+ ✓ Compiled / in 2.8s (925 modules)
+prisma:query SELECT 1
+prisma:query SELECT "public"."Producto"."id", "public"."Producto"."nombre", "public"."Producto"."descripcion", "public"."Producto"."categoriaId", "public"."Producto"."precioCentavos", "public"."Producto"."imagenUrl", "public"."Producto"."modeloArUrl", "public"."Producto"."modeloArIosUrl", "public"."Producto"."aptoMascotas", "public"."Producto"."activo", "public"."Producto"."orden", "public"."Producto"."creadoEn", "public"."Producto"."actualizadoEn" FROM "public"."Producto" WHERE "public"."Producto"."activo" = $1 ORDER BY "public"."Producto"."orden" ASC LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."Categoria"."id", "public"."Categoria"."nombre", "public"."Categoria"."orden" FROM "public"."Categoria" WHERE "public"."Categoria"."id" IN ($1,$2,$3) OFFSET $4
+ GET / 200 in 3424ms
+ ○ Compiling /menu ...
+ ✓ Compiled /menu in 856ms (887 modules)
+prisma:query SELECT 1
+prisma:query SELECT "public"."Categoria"."id", "public"."Categoria"."nombre", "public"."Categoria"."orden" FROM "public"."Categoria" WHERE 1=1 ORDER BY "public"."Categoria"."orden" ASC OFFSET $1
+prisma:query SELECT "public"."Producto"."id", "public"."Producto"."nombre", "public"."Producto"."descripcion", "public"."Producto"."categoriaId", "public"."Producto"."precioCentavos", "public"."Producto"."imagenUrl", "public"."Producto"."modeloArUrl", "public"."Producto"."modeloArIosUrl", "public"."Producto"."aptoMascotas", "public"."Producto"."activo", "public"."Producto"."orden", "public"."Producto"."creadoEn", "public"."Producto"."actualizadoEn" FROM "public"."Producto" LEFT JOIN "public"."Categoria" AS "orderby_1" ON ("orderby_1"."id") = ("public"."Producto"."categoriaId") WHERE "public"."Producto"."activo" = $1 ORDER BY "orderby_1"."orden" ASC, "public"."Producto"."orden" ASC OFFSET $2
+prisma:query SELECT "public"."Categoria"."id", "public"."Categoria"."nombre" FROM "public"."Categoria" WHERE "public"."Categoria"."id" IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) OFFSET $19
+ GET /menu 200 in 1564ms
+ ○ Compiling /reservas ...
+ ✓ Compiled /reservas in 1465ms (976 modules)
+prisma:query SELECT "public"."DiaBloqueado"."fecha" FROM "public"."DiaBloqueado" WHERE 1=1 ORDER BY "public"."DiaBloqueado"."fecha" ASC OFFSET $1
+ GET /reservas 200 in 2318ms
+ ○ Compiling /pedidos ...
+ ✓ Compiled /pedidos in 624ms (990 modules)
+prisma:query SELECT "public"."Producto"."id", "public"."Producto"."nombre", "public"."Producto"."precioCentavos", "public"."Producto"."categoriaId" FROM "public"."Producto" LEFT JOIN "public"."Categoria" AS "orderby_1" ON ("orderby_1"."id") = ("public"."Producto"."categoriaId") WHERE "public"."Producto"."activo" = $1 ORDER BY "orderby_1"."orden" ASC, "public"."Producto"."nombre" ASC OFFSET $2
+prisma:query SELECT "public"."Categoria"."id", "public"."Categoria"."nombre" FROM "public"."Categoria" WHERE "public"."Categoria"."id" IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) OFFSET $19
+prisma:query SELECT "public"."DiaBloqueado"."fecha" FROM "public"."DiaBloqueado" WHERE 1=1 ORDER BY "public"."DiaBloqueado"."fecha" ASC OFFSET $1
+ GET /pedidos 200 in 1144ms
+ ○ Compiling /nosotros ...
+ ✓ Compiled /nosotros in 510ms (995 modules)
+ GET /nosotros 200 in 761ms
+ ✓ Compiled in 730ms (376 modules)
+ ✓ Compiled in 140ms (376 modules)
+ ✓ Compiled in 133ms (376 modules)
+ ✓ Compiled in 427ms (390 modules)
+ ✓ Compiled in 277ms (390 modules)
+ ✓ Compiled in 273ms (390 modules)
+ ✓ Compiled in 322ms (390 modules)
+ ✓ Compiled in 240ms (390 modules)
+ ✓ Compiled in 244ms (390 modules)
+ ✓ Compiled in 279ms (390 modules)
+ ✓ Compiled in 122ms (390 modules)
+ ✓ Compiled in 157ms (390 modules)
+ ✓ Compiled in 533ms (376 modules)
+ ✓ Compiled in 127ms (376 modules)
+ ✓ Compiled in 118ms (376 modules)
+ ✓ Compiled in 105ms (376 modules)
+ ✓ Compiled in 165ms (376 modules)
